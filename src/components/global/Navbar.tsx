@@ -7,7 +7,7 @@ export const Navbar: React.FC = () => (
         </svg>
       </button>
       <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-        Innovance 3.0
+        Nexturday
       </h1>
       <div className="flex gap-4">
         <button className="p-2 hover:bg-zinc-800 rounded-lg transition-colors">
