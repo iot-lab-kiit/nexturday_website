@@ -1,21 +1,17 @@
 import React from "react";
-import HeroImage from "/images/innovance.png";
-import EventDetails from "./EventDetails";
+import EventDetail from "./EventDetail";
 
 const HeroSection: React.FC = () => (
     <div className="mb-8">
         <div className="flex flex-col lg:flex-row gap-8">
-            <HeroImage />
-
-            {/* Event Details for Large Screens */}
+            <img src="/images/innovance.png" alt="innovance" />
             <div className="hidden lg:flex flex-col gap-6 flex-1">
                 <h1 className="text-4xl font-bold">Innovance 3.0</h1>
-                <EventDetails />
+                <EventDetail />
             </div>
 
-            {/* Event Details for Small Screens */}
             <div className="lg:hidden mt-6 space-y-3 px-2">
-                <EventDetails />
+                <EventDetail />
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@ import React from "react";
 import EventDetailItem from "./EventDetailItem";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
-const EventDetails: React.FC = () => (
+const EventDetail: React.FC = () => (
     <div className="flex flex-col gap-4">
         <EventDetailItem
             icon={<Calendar className="w-5 h-5 text-purple-400" />}
@@ -22,4 +22,4 @@ const EventDetails: React.FC = () => (
     </div>
 );
 
-export default EventDetails;
+export default EventDetail;
