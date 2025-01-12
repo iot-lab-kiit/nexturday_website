@@ -72,7 +72,7 @@ export const verifyToken = async (token: string) => {
     const response = await fetch(`${process.env.VITE_SERVER_URL}/auth/verify`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ token }),
     });
