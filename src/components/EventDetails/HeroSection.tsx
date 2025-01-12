@@ -6,7 +6,7 @@ const HeroSection: React.FC = () => (
         <div className="flex flex-col lg:flex-row gap-8">
             <img src="/images/innovance.png" alt="innovance" />
             <div className="hidden lg:flex flex-col gap-6 flex-1">
-                <h1 className="text-4xl font-bold">Innovance 3.0</h1>
+                <h1 className="text-4xl mt-4 font-bold">Innovance 3.0</h1>
                 <EventDetail />
             </div>
 
