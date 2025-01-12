@@ -1,92 +1,26 @@
-import React, { useState } from "react";
-
-const Navbar: React.FC = () => {
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-
-  const toggleProfileDropdown = () => {
-    setIsProfileDropdownOpen((prev) => !prev);
-  };
-
-  return (
-    <nav className=" bg-[#141118] p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Navbar Name */}
-        <div className="text-white text-lg font-bold">NEXTURDAY</div>
-
-        {/* Icons Section */}
-        <div className="flex items-center space-x-4">
-          {/* Notification Icon */}
-          <button
-            className="relative p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-600"
-            aria-label="Notifications"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 7.165 7 8.97 7 11v3.159c0 .538-.214 1.055-.595 1.436L5 17h5m5 0a3.001 3.001 0 01-6 0m6 0H9"
-              ></path>
-            </svg>
-          </button>
-
-          {/* Account/Profile Icon */}
-          <div className="relative">
-            <button
-              onClick={toggleProfileDropdown}
-              className="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-600"
-              aria-label="Account"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5.121 17.804A9.003 9.003 0 0112 15a9.003 9.003 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                ></path>
-              </svg>
-            </button>
-
-            {/* Dropdown Menu */}
-            {isProfileDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50">
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Profile
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Settings
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Logout
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
+export const Navbar: React.FC = () => (
+  <div className="fixed top-0 left-0 right-0 bg-black/95 backdrop-blur-md border-b border-zinc-800/50 z-50">
+    <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <button className="lg:hidden hover:bg-zinc-800 p-2 rounded-lg transition-colors">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+        Innovance 3.0
+      </h1>
+      <div className="flex gap-4">
+        <button className="p-2 hover:bg-zinc-800 rounded-lg transition-colors">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </button>
+        <button className="p-2 hover:bg-zinc-800 rounded-lg transition-colors">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+          </svg>
+        </button>
       </div>
-    </nav>
-  );
-};
-
-export default Navbar;
+    </div>
+  </div>
+);
