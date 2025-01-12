@@ -8,8 +8,8 @@ import { RegisterButton } from './RegisterButton';
 import LoadingSpinner from '../global/LoadingSpinner';
 import { Navbar } from '../global/Navbar';
 
-const InnovancePage: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
+const EventPage: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -38,4 +38,4 @@ const InnovancePage: React.FC = () => {
   );
 };
 
-export default InnovancePage;
+export default EventPage;
