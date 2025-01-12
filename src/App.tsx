@@ -1,16 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./App.css";
-import Layout from "./components/Layout";
-import Login from "./components/Login";
+import Login from "./components/Auth/Login";
+import EventDetails from "./components/EventDetails/EventDetails";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Layout />}>
-
-        </Route>
+        <Route path="/event-details" element={<EventDetails />} />
       </Routes>
     </BrowserRouter>
   );
