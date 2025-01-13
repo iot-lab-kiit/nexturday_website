@@ -1,6 +1,6 @@
 import React from "react";
 import { Waves } from "lucide-react";
-import { useAuthStore } from ".././zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore";
 
 interface CardProps {
   children: React.ReactNode;
@@ -87,9 +87,8 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             {images.map((_, index) => (
               <div
                 key={index}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentIndex ? "bg-white" : "bg-white/50"
-                }`}
+                className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? "bg-white" : "bg-white/50"
+                  }`}
               ></div>
             ))}
           </div>
