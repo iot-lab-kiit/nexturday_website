@@ -1,4 +1,4 @@
-import { Navbar } from '../components/global/Navbar'
+import {Navbar}  from '../components/Navbar'
 import Carousel from './Carousel';
 import Hero from './hero';
 import List from './list';  

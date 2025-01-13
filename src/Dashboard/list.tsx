@@ -4,13 +4,13 @@ import React from 'react';
 interface Event {
   id: number;
   name: string;
-  date: string; // ISO format
+  date: string; 
   location: string;
   society: string;
-  image: string; // URL for the event image
+  image: string; 
 }
 
-// Example Event Data
+//sample event 
 const events: Event[] = [
   {
     id: 1,
@@ -37,7 +37,7 @@ const events: Event[] = [
   },
 ];
 
-// Helper Function to Sort Events by Latest Date
+
 const sortByLatest = (events: Event[]) => {
   return events.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
