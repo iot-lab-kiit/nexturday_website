@@ -4,7 +4,7 @@ import HeroImage from "./HeroImage";
 
 const HeroSection: React.FC = () => (
   <div className="mb-8">
-    <div className="flex flex-col lg:flex-row gap-8">
+    <div className="flex flex-col md:flex-row gap-8">
       <HeroImage />
       <div className="hidden lg:flex flex-col gap-6 flex-1">
         <h1 className="text-4xl mt-4 font-bold">Innovance 3.0</h1>

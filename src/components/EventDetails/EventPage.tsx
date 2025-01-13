@@ -10,11 +10,14 @@ import { Navbar } from '../global/Navbar';
 
 const EventPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [eventDetails, setEventDetails] = useState<any>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+    const fetchEventDetails = async () => {
+      // Fetch event details here
+    }
+    fetchEventDetails();
+    setIsLoading(false);
   }, []);
 
   return (
