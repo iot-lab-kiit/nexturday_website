@@ -17,8 +17,8 @@ export const VenueSection = () => {
                         <MapPin className="w-5 h-5 text-purple-400" />
                     </div>
                     <div>
-                        <p className="font-semibold text-lg mb-1">{currentEvent ? currentEvent.details[0].venue.name : "---"}</p>
-                        {currentEvent?.details[0].venue.mapUrl && (
+                        <p className="font-semibold text-lg mb-1">{currentEvent ? currentEvent.details[0].venue?.name : "---"}</p>
+                        {currentEvent?.details[0].venue?.mapUrl && (
                             <a href={currentEvent.details[0].venue.mapUrl} target="_blank" className="text-purple-400 hover:text-purple-300 transition-colors text-sm flex items-center gap-2">
                                 Get directions
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

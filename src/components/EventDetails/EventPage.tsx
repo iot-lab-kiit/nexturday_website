@@ -3,7 +3,6 @@ import HeroSection from './HeroSection';
 import { EventInfo } from './EventInfo';
 import { VenueSection } from './VenueSection';
 import { Guidelines } from './Guidelines';
-import { RegisterButton } from './RegisterButton';
 import LoadingSpinner from '../global/LoadingSpinner';
 import { Navbar } from '../global/Navbar';
 import { useParams } from 'react-router';
@@ -68,7 +67,6 @@ const EventPage: React.FC = () => {
           <EventInfo />
           <VenueSection />
           <Guidelines />
-          <RegisterButton />
         </main>
       )}
     </div>

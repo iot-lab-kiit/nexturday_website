@@ -4,20 +4,20 @@ import { Card, CardContent } from "./CardComponents";
 import { Clock, TimerIcon, Building2, Globe, Mail, Languages } from 'lucide-react';
 
 export const EventInfo: React.FC = () => {
-    const currentEvent = useEventStore((state) => state.currentEvent)
-    
+    const currentEvent = useEventStore((state) => state.currentEvent);
+
     const details: EventDetailType[] = [
         { Icon: Languages, title: 'Language', content: 'Hindi, English' },
         { Icon: Clock, title: 'Time', content: '10 AM onwards' },
         { Icon: TimerIcon, title: 'Duration', content: '6 hours' },
-        { Icon: Building2, title: 'Organizer', content: 'IoT Lab' },
-        { Icon: Globe, title: 'Website', content: 'innovance.iotkit.in', isLink: true },
-        { Icon: Mail, title: 'Email', content: 'iot.lab@kiit.ac.in', isLink: true, isEmail: true }
+        { Icon: Building2, title: 'Organizer', content: currentEvent?.society.name || '---' },
+        { Icon: Globe, title: 'Website', content: currentEvent?.websiteUrl || "#", isLink: true },
+        { Icon: Mail, title: 'Email', content: currentEvent?.emails[0] || "---" }
     ];
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {details.map(({ Icon, title, content, isLink, isEmail }) => (
+            {details.map(({ Icon, title, content, isLink }) => (
                 <Card key={title} className="bg-zinc-900/50 backdrop-blur-sm border-zinc-800/50 hover:bg-zinc-800/50 transition-colors">
                     <CardContent className="p-4">
                         <div className="flex items-center gap-4">
@@ -28,7 +28,8 @@ export const EventInfo: React.FC = () => {
                                 <p className="text-sm text-gray-400">{title}</p>
                                 {isLink ? (
                                     <a
-                                        href={isEmail ? `mailto:${content}` : `https://${content}`}
+                                        href={`${content}`}
+                                        target="_blank"
                                         className="text-purple-400 hover:text-purple-300 transition-colors"
                                     >
                                         {content}

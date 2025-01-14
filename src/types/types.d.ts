@@ -32,6 +32,7 @@ export interface Event {
   societyId: string;
   about: string;
   websiteUrl: string;
+  joined: boolean;
   emails: string[];
   guidlines: string[];
   details: [

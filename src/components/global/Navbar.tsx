@@ -21,9 +21,9 @@ export const Navbar: React.FC = () => {
 
   return (
     <div className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-b border-zinc-800/50 z-50 h-16">
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-full">
+      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-full">
         <a href="/" className="hover:opacity-80 transition-opacity">
-          <h1 className="text-xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
             Nexturday
           </h1>
         </a>
