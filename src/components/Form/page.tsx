@@ -31,7 +31,15 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-8">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-8"
+    style={{
+      background: `
+        radial-gradient(78.04% 121.39% at 91.04% 12.83%, rgba(40, 3, 53, 0.87) 0%, rgba(41, 41, 41, 0.26) 100%),
+        radial-gradient(68.46% 198.58% at -18.46% 107.11%, #05537D 0%, rgba(0, 0, 0, 0) 100%)
+      `,
+      boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'
+    }}
+    >
       <div className="p-6 sm:p-10 rounded-lg shadow-lg max-w-4xl w-full  text-white">
         <h1 className="text-center mb-6 sm:mb-10 font-medium font-bitter md:text-5xl text-2xl sm:text-5xl lg:text-6xl">
           Registration Form

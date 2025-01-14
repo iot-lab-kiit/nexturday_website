@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Chrome } from 'lucide-react';
 import image from '../../assets/Frame2.png';
 
+
 const NexterLanding = () => {
   const navigate = useNavigate();
   const loggedIn = useAuthStore((state) => state.loggedIn);
@@ -16,7 +17,7 @@ const NexterLanding = () => {
 
   return (
     <div 
-      className="min-h-screen "
+      className="min-h-screen"
       style={{
         background: `
           radial-gradient(78.04% 121.39% at 91.04% 12.83%, rgba(40, 3, 53, 0.87) 0%, rgba(41, 41, 41, 0.26) 100%),
@@ -25,23 +26,24 @@ const NexterLanding = () => {
         boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'
       }}
     >
-      <div className="max-w-6xl mx-auto ">
-       
+      <div className="p-6:"></div>
+      <div className="max-w-6xl mx-auto">
+  
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8 ">
+          <div className="space-y-8 p-6">
             
           <header className="flex items-center space-x-3 mb-12 ">
           <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-lg">IoT</span>
           </div>
-          <span className="text-white text-xl">IoT lab</span>
+          <span className="text-white text-xl ">IoT lab</span>
         </header>
 
             <h1 className="space-y-2">
               <span 
                 style={{
-                  background: 'linear-gradient(82.82deg, #FF00E1 66.01%, #FFD8FA 116.37%)',
+                  background: 'linear-gradient(82.82deg, #FF00E1 26.01%, #FFD8FA 116.37%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   fontFamily: 'Inter',
