@@ -1,8 +1,11 @@
 import { EventDetailType } from "../../types/types";
+import { useEventStore } from "../../zustand/useEventStore";
 import { Card, CardContent } from "./CardComponents";
 import { Clock, TimerIcon, Building2, Globe, Mail, Languages } from 'lucide-react';
 
 export const EventInfo: React.FC = () => {
+    const currentEvent = useEventStore((state) => state.currentEvent)
+    
     const details: EventDetailType[] = [
         { Icon: Languages, title: 'Language', content: 'Hindi, English' },
         { Icon: Clock, title: 'Time', content: '10 AM onwards' },

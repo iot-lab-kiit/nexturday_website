@@ -1,9 +1,8 @@
 import { signInWithGoogle, signOutUser } from "../../firebaseConfig";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { Chrome } from 'lucide-react';
 import image from '../../assets/Frame2.png';
-
 
 const NexterLanding = () => {
   const navigate = useNavigate();
@@ -16,7 +15,7 @@ const NexterLanding = () => {
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen"
       style={{
         background: `
@@ -28,20 +27,20 @@ const NexterLanding = () => {
     >
       <div className="p-6:"></div>
       <div className="max-w-6xl mx-auto">
-  
+
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 p-6">
-            
-          <header className="flex items-center space-x-3 mb-12 ">
-          <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-lg">IoT</span>
-          </div>
-          <span className="text-white text-xl ">IoT lab</span>
-        </header>
+
+            <header className="flex items-center space-x-3 mb-12 ">
+              <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">IoT</span>
+              </div>
+              <span className="text-white text-xl ">IoT lab</span>
+            </header>
 
             <h1 className="space-y-2">
-              <span 
+              <span
                 style={{
                   background: 'linear-gradient(82.82deg, #FF00E1 26.01%, #FFD8FA 116.37%)',
                   WebkitBackgroundClip: 'text',
@@ -55,7 +54,7 @@ const NexterLanding = () => {
               >
                 NEXTER
               </span>
-              <span 
+              <span
                 style={{
                   background: 'linear-gradient(255.77deg, #006FFF 51.85%, #B7D6FF 128.1%)',
                   WebkitBackgroundClip: 'text',
@@ -70,17 +69,17 @@ const NexterLanding = () => {
                 DAY
               </span>
             </h1>
-            
+
             <p className="text-gray-200 text-xl">
               One app for all <br />
               Login here to get started
             </p>
             <p className="text-gray-300">
-              
+
             </p>
 
             {/* Login Button */}
-            <div className="py-9 flex items-center space-x-4">  
+            <div className="py-9 flex items-center space-x-4">
               {loggedIn ? (
                 <>
                   <img
@@ -109,17 +108,17 @@ const NexterLanding = () => {
 
           <div className="relative h-[600px]">
             <div className="overflow-hidden">
-              <img 
-                src={image} 
+              <img
+                src={image}
                 alt="App screenshot 1"
                 className="w-full"
               />
             </div>
           </div>
         </div>
-        
+
       </div>
-      
+
     </div>
   );
 };

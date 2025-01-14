@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { useAuthStore } from "./zustand/UseAuthStore";
+import { useAuthStore } from "./zustand/useAuthStore";
 import { User } from "./types/types";
 import axios from "axios";
 const firebaseConfig = {

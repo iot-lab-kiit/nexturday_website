@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { signInWithGoogle, signOutUser } from "../../firebaseConfig";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/useAuthStore";
 
 export const Navbar: React.FC = () => {
   const loggedIn = useAuthStore((state) => state.loggedIn);
   const authData = useAuthStore((state) => state.authData);
+  const [showDropdown, setShowDropdown] = useState(false);
+
   return (
-    <div className="fixed top-0 left-0 right-0 bg-black/95 backdrop-blur-md border-b border-zinc-800/50 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <button className="lg:hidden hover:bg-zinc-800 p-2 rounded-lg transition-colors">
+    <div className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-b border-zinc-800/50 z-50 h-16">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-full">
+        <button className="lg:hidden hover:bg-zinc-800/50 p-2.5 rounded-xl transition-all duration-300">
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -24,61 +26,39 @@ export const Navbar: React.FC = () => {
           </svg>
         </button>
 
-        <a href="/">
-        <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-          Nexturday
-        </h1>
+        <a href="/" className="hover:opacity-80 transition-opacity">
+          <h1 className="text-xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Nexturday
+          </h1>
         </a>
-        
-        <div className="flex gap-4 items-center">
-          <button className="p-2 color-white hover:bg-zinc-800 rounded-lg transition-colors">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
-          </button>
-          <button className="p-2 hover:bg-zinc-800 rounded-lg transition-colors">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-              />
-            </svg>
-          </button>
+
+        <div className="flex gap-5 items-center">
           {loggedIn ? (
             <>
-              <img
-                src={authData.photoURL?.toString()}
-                alt="Profile"
-                className="w-8 h-8 rounded-full"
-              />
+              {authData.photoURL ? (
+                <img
+                  src={authData.photoURL.toString()}
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  alt="Profile"
+                  className="w-9 h-9 rounded-xl object-cover ring-2 ring-purple-500/20 hover:ring-purple-500/40 transition-all duration-300"
+                />
+              ) : (
+                <div className="w-9 h-9 rounded-xl bg-zinc-800/50 animate-pulse" />
+              )}
               <button
                 onClick={signOutUser}
-                className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
+                className="px-4 py-2 hover:bg-zinc-800/50 rounded-xl transition-all duration-300 text-sm font-medium text-zinc-300 hover:text-white"
               >
                 Sign Out
               </button>
             </>
           ) : (
             <button
-              onClick={signInWithGoogle}
-              className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
+              onClick={() => {
+                signInWithGoogle();
+                window.location.href = "/login";
+              }}
+              className="px-4 py-2 bg-gradient-to-r from-purple-500/10 to-blue-500/10 hover:from-purple-500/20 hover:to-blue-500/20 rounded-xl transition-all duration-300 text-sm font-medium text-zinc-300 hover:text-white"
             >
               Sign In
             </button>
