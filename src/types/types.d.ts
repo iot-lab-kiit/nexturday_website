@@ -45,7 +45,11 @@ export interface Event {
       to: string;
       type: string;
       updatedAt: string;
-      venue: string | null;
+      venue: {
+        id: string;
+        mapUrl: string;
+        name: string;
+      }
       venueId: string | null;
     }
   ];
