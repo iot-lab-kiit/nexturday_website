@@ -6,7 +6,6 @@ import toast from "react-hot-toast"
 import PopularEvents from "./PopularEvents"
 import UpcomingEvents from "./UpcomingEvents"
 import { useAuthStore } from "../../zustand/useAuthStore"
-import { signInWithGoogle } from "../../firebaseConfig"
 import { ArrowRight, LogIn } from "lucide-react"
 
 const Dashboard = () => {

@@ -6,7 +6,7 @@ export const RegisterButton: React.FC = () => {
   const { eventID } = useParams();
   const currentEvent = useEventStore((state) => state.currentEvent);
 
-  if (currentEvent?.joined == false) {
+  if (currentEvent?.joined == true) {
     return (
       <div className="bg-black/95 backdrop-blur-md border border-zinc-800/50 rounded-lg">
         <div className="px-4 py-4 flex flex-wrap lg:flex-nowrap items-center gap-4">
