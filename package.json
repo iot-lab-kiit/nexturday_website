@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coreui/coreui": "^5.2.0",
+    "@coreui/react": "^5.4.1",
+    "@fancyapps/ui": "^5.0.36",
     "@hookform/resolvers": "^3.9.1",
     "axios": "^1.7.9",
     "colorthief": "^2.6.0",

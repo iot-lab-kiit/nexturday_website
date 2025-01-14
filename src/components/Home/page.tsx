@@ -7,6 +7,8 @@ import PopularEvents from "./PopularEvents"
 import UpcomingEvents from "./UpcomingEvents"
 import { useAuthStore } from "../../zustand/useAuthStore"
 import { ArrowRight, LogIn } from "lucide-react"
+import Carousel from "./Carousel/page";
+
 
 const Dashboard = () => {
     const [loading, setLoading] = useState(true)
@@ -94,6 +96,7 @@ const Dashboard = () => {
 
     return (
         <div>
+            <Carousel />
             <PopularEvents />
             <UpcomingEvents />
         </div>

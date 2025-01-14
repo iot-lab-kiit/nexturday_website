@@ -6,6 +6,7 @@ import Dashboard from "./components/Home/page";
 import EventRegisterForm from "./components/EventRegisterForm/page";
 import NotFound from "./components/Home/NotFound";
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
         <Route path="/event-details/:eventID" element={<EventDetails />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
+  
       </Routes>
     </BrowserRouter>
   );
