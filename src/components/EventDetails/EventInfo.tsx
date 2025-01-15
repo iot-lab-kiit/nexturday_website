@@ -1,18 +1,18 @@
 import { EventDetailType } from "../../types/types";
 import { useEventStore } from "../../zustand/useEventStore";
 import { Card, CardContent } from "./CardComponents";
-import { Clock, TimerIcon, Building2, Globe, Mail, Languages } from 'lucide-react';
+import { Clock, TimerIcon, Building2, Globe, Mail, Phone } from 'lucide-react';
 
 export const EventInfo: React.FC = () => {
     const currentEvent = useEventStore((state) => state.currentEvent);
 
     const details: EventDetailType[] = [
-        { Icon: Languages, title: 'Language', content: 'Hindi, English' },
-        { Icon: Clock, title: 'Time', content: '10 AM onwards' },
-        { Icon: TimerIcon, title: 'Duration', content: '6 hours' },
+        { Icon: Phone, title: 'Phone', content: (currentEvent && currentEvent.phoneNumbers.length > 0) ? currentEvent.phoneNumbers.join(', ') : "---" },
+        { Icon: Clock, title: 'Time', content: '---' },
+        { Icon: TimerIcon, title: 'Duration', content: '---' },
         { Icon: Building2, title: 'Organizer', content: currentEvent?.society.name || '---' },
-        { Icon: Globe, title: 'Website', content: currentEvent?.websiteUrl || "#", isLink: true },
-        { Icon: Mail, title: 'Email', content: currentEvent?.emails[0] || "---" }
+        { Icon: Globe, title: 'Website', content: (currentEvent && currentEvent.websiteUrl != "") ? currentEvent.websiteUrl : "Website not available!", isLink: (currentEvent && currentEvent.websiteUrl != "") ? true : false },
+        { Icon: Mail, title: 'Email', content: (currentEvent && currentEvent.emails.length > 0) ? currentEvent.emails.join(', ') : "---" },
     ];
 
     return (

@@ -16,6 +16,7 @@ import ErrorDisplay from '../global/ErrorDisplay';
 
 const EventPage: React.FC = () => {
   const { eventID } = useParams();
+  const setSubEventIndex = useEventStore((state) => state.setSubEventIndex);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
@@ -23,6 +24,7 @@ const EventPage: React.FC = () => {
   const setCurrentEvent = useEventStore((state) => state.setCurrentEvent);
 
   useEffect(() => {
+    setSubEventIndex(0);
     if (!eventID) {
       setError(true);
       return;
@@ -43,6 +45,7 @@ const EventPage: React.FC = () => {
 
         if (eventDetailsApiResponse.status === 200) {
           setCurrentEvent(eventDetailsApiResponse.data.data);
+          console.log(eventDetailsApiResponse.data.data);
           toast.success('Event fetched successfully');
         }
       } catch (err) {
