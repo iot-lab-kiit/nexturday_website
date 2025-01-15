@@ -11,25 +11,29 @@ import { useAuthStore } from '../../zustand/useAuthStore';
 import toast from 'react-hot-toast';
 import { useEventStore } from '../../zustand/useEventStore';
 import AboutSection from './AboutSection';
+import TabSwitcher from './TabSwitcher';
+import ErrorDisplay from './ErrorDisplay';
 
 const EventPage: React.FC = () => {
   const { eventID } = useParams();
 
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
   const authData = useAuthStore((state) => state.authData);
   const setCurrentEvent = useEventStore((state) => state.setCurrentEvent);
 
   useEffect(() => {
     if (!eventID) {
+      setError(true);
       return;
     }
 
     const fetchAllEvents = async () => {
       setLoading(true);
+      setError(false);
 
       try {
         const eventURL = `https://nexterday.iotkiit.in/api/events/${eventID}`;
-        console.log("Event url: " + eventURL);
         const eventDetailsApiResponse = await axios.get(eventURL, {
           headers: {
             'content-type': 'application/json',
@@ -38,12 +42,12 @@ const EventPage: React.FC = () => {
         });
 
         if (eventDetailsApiResponse.status === 200) {
-          console.log(eventDetailsApiResponse.data.data);
-          toast.success('Event fetched successfully');
           setCurrentEvent(eventDetailsApiResponse.data.data);
+          toast.success('Event fetched successfully');
         }
       } catch (err) {
         console.error(err);
+        setError(true);
         toast.error('Failed to fetch events');
       } finally {
         setLoading(false);
@@ -60,9 +64,17 @@ const EventPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 pt-20 flex justify-center items-center min-h-[80vh]">
           <LoadingSpinner />
         </div>
+      ) : error ? (
+        <div className="max-w-7xl mx-auto px-4 pt-20">
+          <ErrorDisplay
+            message="Failed to load event details. Please try again later."
+            onRetry={() => window.location.reload()}
+          />
+        </div>
       ) : (
         <main className="max-w-7xl mx-auto px-4 pt-20">
           <HeroSection />
+          <TabSwitcher />
           <AboutSection />
           <EventInfo />
           <VenueSection />
