@@ -10,6 +10,7 @@ import { ArrowRight, LogIn } from "lucide-react"
 import Carousel from "./Carousel/page";
 
 
+
 const Dashboard = () => {
     const [loading, setLoading] = useState(true)
 
