@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import { useEventStore } from '../../zustand/useEventStore';
 import AboutSection from './AboutSection';
 import TabSwitcher from './TabSwitcher';
-import ErrorDisplay from './ErrorDisplay';
+import ErrorDisplay from '../global/ErrorDisplay';
 
 const EventPage: React.FC = () => {
   const { eventID } = useParams();
@@ -55,7 +55,7 @@ const EventPage: React.FC = () => {
     };
 
     fetchAllEvents();
-  }, [eventID, authData.token, setCurrentEvent]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white">
