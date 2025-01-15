@@ -9,8 +9,7 @@ import { useAuthStore } from "../../zustand/useAuthStore"
 import { ArrowRight, LogIn } from "lucide-react"
 import Carousel from "./Carousel/page";
 import ErrorDisplay from "../global/ErrorDisplay"
-
-
+import { signOutUser } from "../../firebaseConfig"
 
 const Dashboard = () => {
     const [loading, setLoading] = useState(true)
@@ -23,6 +22,11 @@ const Dashboard = () => {
         const fetchAllEvents = async () => {
             setLoading(true);
             setError(false);
+
+            if (authData.token == null || authData.token === '') {
+                setLoading(false);
+                return;
+            }
 
             try {
                 const upcomingUrl = 'https://nexterday.iotkiit.in/api/events?page=1&field=createdAt&direction=desc';
@@ -55,9 +59,14 @@ const Dashboard = () => {
                 setEventDetails(eventDetails);
 
                 toast.success('Events fetched successfully');
-            } catch (err) {
+            } catch (err: any) {
                 console.error(err);
+                if (err.response?.status === 401) {
+                    signOutUser();
+                    return;
+                }
                 setError(true);
+                toast.error(`Failed to fetch events. Please try again later`);
             } finally {
                 setLoading(false);
             }

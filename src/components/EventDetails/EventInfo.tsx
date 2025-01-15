@@ -1,3 +1,4 @@
+import { signOutUser } from "../../firebaseConfig";
 import { EventDetailType } from "../../types/types";
 import { useEventStore } from "../../zustand/useEventStore";
 import { Card, CardContent } from "./CardComponents";
@@ -5,11 +6,41 @@ import { Clock, TimerIcon, Building2, Globe, Mail, Phone } from 'lucide-react';
 
 export const EventInfo: React.FC = () => {
     const currentEvent = useEventStore((state) => state.currentEvent);
+    const subEventIndex = useEventStore((state) => state.subEventIndex);
+
+    const calculateDuration = () => {
+        try {
+            const subEventFrom = currentEvent?.details[subEventIndex].from;
+            const subEventTo = currentEvent?.details[subEventIndex].to;
+
+            if (!subEventFrom || !subEventTo) {
+                return "---";
+            }
+
+            const fromDate = new Date(subEventFrom);
+            const toDate = new Date(subEventTo);
+
+            if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime())) {
+                return "---";
+            }
+
+            const diffInMs = toDate.getTime() - fromDate.getTime();
+            const diffInHours = Math.max(0, Math.round(diffInMs / (1000 * 60 * 60)));
+
+            return `${diffInHours} hrs`;
+        } catch (error: any) {
+            console.error("Error calculating duration:", error);
+            if (error.response?.status === 401) {
+                signOutUser();
+            }
+            return "---";
+        }
+    }
 
     const details: EventDetailType[] = [
         { Icon: Phone, title: 'Phone', content: (currentEvent && currentEvent.phoneNumbers.length > 0) ? currentEvent.phoneNumbers.join(', ') : "---" },
         { Icon: Clock, title: 'Time', content: '---' },
-        { Icon: TimerIcon, title: 'Duration', content: '---' },
+        { Icon: TimerIcon, title: 'Duration', content: calculateDuration() },
         { Icon: Building2, title: 'Organizer', content: currentEvent?.society.name || '---' },
         { Icon: Globe, title: 'Website', content: (currentEvent && currentEvent.websiteUrl != "") ? currentEvent.websiteUrl : "Website not available!", isLink: (currentEvent && currentEvent.websiteUrl != "") ? true : false },
         { Icon: Mail, title: 'Email', content: (currentEvent && currentEvent.emails.length > 0) ? currentEvent.emails.join(', ') : "---" },

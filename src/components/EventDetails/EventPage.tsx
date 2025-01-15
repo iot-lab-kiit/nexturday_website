@@ -13,6 +13,7 @@ import { useEventStore } from '../../zustand/useEventStore';
 import AboutSection from './AboutSection';
 import TabSwitcher from './TabSwitcher';
 import ErrorDisplay from '../global/ErrorDisplay';
+import { signOutUser } from '../../firebaseConfig';
 
 const EventPage: React.FC = () => {
   const { eventID } = useParams();
@@ -48,8 +49,12 @@ const EventPage: React.FC = () => {
           console.log(eventDetailsApiResponse.data.data);
           toast.success('Event fetched successfully');
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
+        if (err.response?.status === 401) {
+          signOutUser();
+          return;
+        }
         setError(true);
         toast.error('Failed to fetch events');
       } finally {
