@@ -13,6 +13,9 @@ interface EventStoreInterface {
 
     currentEvent: Event | null;
     setCurrentEvent: (currentEvent: Event | null) => void;
+
+    subEventIndex: number;
+    setSubEventIndex: (subEventIndex: number) => void;
 }
 
 export const useEventStore = create<EventStoreInterface>((set) => ({
@@ -24,4 +27,7 @@ export const useEventStore = create<EventStoreInterface>((set) => ({
 
     currentEvent: null,
     setCurrentEvent: (currentEvent: Event | null) => set({ currentEvent }),
+
+    subEventIndex: 0,
+    setSubEventIndex: (subEventIndex: number) => set({ subEventIndex }),
 }));
