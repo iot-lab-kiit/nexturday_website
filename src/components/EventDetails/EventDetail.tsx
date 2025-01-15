@@ -6,7 +6,7 @@ import { formatDate } from "../../utils/utils";
 const EventDetail = () => {
     const currentEvent = useEventStore((state) => state.currentEvent);
     const subEventIndex = useEventStore((state) => state.subEventIndex);
-    
+
     const getDateRange = () => {
         if (!currentEvent) {
             return "---";
@@ -36,7 +36,7 @@ const EventDetail = () => {
             <EventDetailItem
                 icon={<MapPin className="w-5 h-5 text-purple-400" />}
                 label="Venue"
-                value={currentEvent ? currentEvent.details[subEventIndex].venue.name : "---"}
+                value={currentEvent && currentEvent.details[subEventIndex].venue ? currentEvent.details[subEventIndex].venue.name : "---"}
             />
         </div>
     )

@@ -23,6 +23,7 @@ const EventPage: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const authData = useAuthStore((state) => state.authData);
   const setCurrentEvent = useEventStore((state) => state.setCurrentEvent);
+  const setHideFooter = useEventStore((state) => state.setHideFooter);
 
   useEffect(() => {
     setSubEventIndex(0);
@@ -34,6 +35,7 @@ const EventPage: React.FC = () => {
     const fetchAllEvents = async () => {
       setLoading(true);
       setError(false);
+      setHideFooter(true);
 
       try {
         const eventURL = `https://nexterday.iotkiit.in/api/events/${eventID}`;
@@ -59,6 +61,7 @@ const EventPage: React.FC = () => {
         toast.error('Failed to fetch events');
       } finally {
         setLoading(false);
+        setHideFooter(false);
       }
     };
 
@@ -66,10 +69,10 @@ const EventPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="bg-black text-white">
       <Navbar />
       {loading ? (
-        <div className="max-w-7xl mx-auto px-4 pt-20 flex justify-center items-center min-h-[80vh]">
+        <div className="max-w-7xl mx-auto px-4 pt-20 flex justify-center items-center h-[calc(100vh-4rem)]">
           <LoadingSpinner />
         </div>
       ) : error ? (

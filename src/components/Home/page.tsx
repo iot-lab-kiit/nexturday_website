@@ -12,19 +12,22 @@ import ErrorDisplay from "../global/ErrorDisplay"
 import { signOutUser } from "../../firebaseConfig"
 
 const Dashboard = () => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<boolean>(false);
 
-    const authData = useAuthStore((state) => state.authData)
-    const setEventDetails = useEventStore((state) => state.setEventDetails)
+    const authData = useAuthStore((state) => state.authData);
+    const setEventDetails = useEventStore((state) => state.setEventDetails);
+    const setHideFooter = useEventStore((state) => state.setHideFooter);
 
     useEffect(() => {
         const fetchAllEvents = async () => {
             setLoading(true);
             setError(false);
+            setHideFooter(true);
 
             if (authData.token == null || authData.token === '') {
                 setLoading(false);
+                setHideFooter(false);
                 return;
             }
 
@@ -69,6 +72,7 @@ const Dashboard = () => {
                 toast.error(`Failed to fetch events. Please try again later`);
             } finally {
                 setLoading(false);
+                setHideFooter(false);
             }
         };
 
@@ -78,7 +82,7 @@ const Dashboard = () => {
     return (
         <div>
             {loading ? (
-                <div className="flex justify-center items-center h-screen">
+                <div className="max-w-7xl mx-auto px-4 pt-20 flex justify-center items-center h-[calc(100vh-4rem)]">
                     <LoadingSpinner />
                 </div>
             ) : (authData.token === null || authData.token === '') ? (

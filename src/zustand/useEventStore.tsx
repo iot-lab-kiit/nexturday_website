@@ -16,6 +16,9 @@ interface EventStoreInterface {
 
     subEventIndex: number;
     setSubEventIndex: (subEventIndex: number) => void;
+
+    hideFooter: boolean;
+    setHideFooter: (hideFooter: boolean) => void;
 }
 
 export const useEventStore = create<EventStoreInterface>((set) => ({
@@ -30,4 +33,7 @@ export const useEventStore = create<EventStoreInterface>((set) => ({
 
     subEventIndex: 0,
     setSubEventIndex: (subEventIndex: number) => set({ subEventIndex }),
+
+    hideFooter: false,
+    setHideFooter: (hideFooter: boolean) => set({ hideFooter }),
 }));

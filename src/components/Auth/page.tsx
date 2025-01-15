@@ -16,7 +16,7 @@ const NexterLanding = () => {
 
   return (
     <div
-      className="min-h-screen"
+      className=""
       style={{
         background: `
           radial-gradient(78.04% 121.39% at 91.04% 12.83%, rgba(40, 3, 53, 0.87) 0%, rgba(41, 41, 41, 0.26) 100%),
