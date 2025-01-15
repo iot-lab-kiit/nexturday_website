@@ -39,7 +39,7 @@ export const EventInfo: React.FC = () => {
 
     const details: EventDetailType[] = [
         { Icon: Phone, title: 'Phone', content: (currentEvent && currentEvent.phoneNumbers.length > 0) ? currentEvent.phoneNumbers.join(', ') : "---" },
-        { Icon: Clock, title: 'Time', content: '---' },
+        { Icon: Clock, title: 'When', content: currentEvent ? new Date(currentEvent.details[subEventIndex].from).toLocaleDateString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : "---" },
         { Icon: TimerIcon, title: 'Duration', content: calculateDuration() },
         { Icon: Building2, title: 'Organizer', content: currentEvent?.society.name || '---' },
         { Icon: Globe, title: 'Website', content: (currentEvent && currentEvent.websiteUrl != "") ? currentEvent.websiteUrl : "Website not available!", isLink: (currentEvent && currentEvent.websiteUrl != "") ? true : false },
