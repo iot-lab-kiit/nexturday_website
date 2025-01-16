@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { useAuthStore } from "../../zustand/useAuthStore";
 import axios from "axios";
+import { branches, years } from "../../data/data";
+import ErrorDisplay from "../global/ErrorDisplay";
+import LoadingSpinner from "../global/LoadingSpinner";
 
 interface FormField {
   id: string;
@@ -14,50 +17,28 @@ interface FormField {
 
 const EventRegisterForm = () => {
   const { eventID } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
     phone: "",
+    whatsappNumber: "",
     rollNumber: "",
     branch: "",
     year: "",
   });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const authData = useAuthStore((state) => state.authData);
-  const branches = [
-    { value: "CSE", label: "CSE" },
-    { value: "IT", label: "IT" },
-    { value: "CSSE", label: "CSSE" },
-    { value: "CSCE", label: "CSCE" },
-    { value: "ECE", label: "ECE" },
-    { value: "ECS", label: "ECS" },
-    { value: "EEE", label: "EEE" },
-    { value: "ME", label: "ME" },
-    { value: "CIVIL", label: "Civil" },
-  ];
-
-  const years = [
-    { value: "1", label: "1st Year" },
-    { value: "2", label: "2nd Year" },
-    { value: "3", label: "3rd Year" },
-    { value: "4", label: "4th Year" },
-  ];
 
   const formFields: FormField[] = [
     {
-      id: "firstName",
+      id: "fullName",
       type: "text",
-      placeholder: "First Name",
-      validation: (value) =>
-        !value.trim() ? "First name is required" : undefined,
-    },
-    {
-      id: "lastName",
-      type: "text",
-      placeholder: "Last Name",
-      validation: (value) =>
-        !value.trim() ? "Last name is required" : undefined,
+      placeholder: "Full Name",
+      validation: (value) => !value.trim() ? "Full name is required" : undefined,
     },
     {
       id: "email",
@@ -65,8 +46,7 @@ const EventRegisterForm = () => {
       placeholder: "KIIT Email Address",
       validation: (value) => {
         if (!value.trim()) return "Email is required";
-        if (!value.endsWith("@kiit.ac.in"))
-          return "Must use KIIT email address";
+        if (!value.endsWith("@kiit.ac.in")) return "Must use KIIT email address";
         return undefined;
       },
     },
@@ -81,34 +61,83 @@ const EventRegisterForm = () => {
       },
     },
     {
+      id: "whatsappNumber",
+      type: "tel",
+      placeholder: "WhatsApp Number",
+      validation: (value) => {
+        if (!value.trim()) return "WhatsApp number is required";
+        if (!/^\d{10}$/.test(value)) return "Enter valid 10-digit WhatsApp number";
+        return undefined;
+      },
+    },
+    {
       id: "rollNumber",
       type: "text",
       placeholder: "Roll Number",
-      validation: (value) =>
-        !value.trim() ? "Roll number is required" : undefined,
+      validation: (value) => !value.trim() ? "Roll number is required" : undefined,
     },
     {
       id: "branch",
       type: "select",
       placeholder: "Select Branch",
-      validation: (value) => (!value ? "Branch is required" : undefined),
+      validation: (value) => !value ? "Branch is required" : undefined,
       options: branches,
     },
     {
       id: "year",
       type: "select",
       placeholder: "Select Year",
-      validation: (value) => (!value ? "Year is required" : undefined),
+      validation: (value) => !value ? "Year is required" : undefined,
       options: years,
     },
   ];
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "https://nexterday.iotkiit.in/api/participants",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authData?.token}`,
+            },
+          }
+        );
+
+        console.log(response);
+        if (response.data?.data?.detail) {
+          const { data: { data: userProfile } } = response;
+          setFormData({
+            fullName: userProfile.detail.name || "",
+            email: authData?.email || "",
+            phone: userProfile.detail.phoneNumber || "",
+            whatsappNumber: userProfile.detail.whatsappNumber || "",
+            rollNumber: authData?.email?.replace("@kiit.ac.in", "") || "",
+            branch: userProfile.detail.branch || "",
+            year: userProfile.detail.studyYear || "",
+          });
+          toast.success("Profile data loaded successfully");
+        }
+      } catch (err: any) {
+        const errorMessage = err.response?.data?.message || "Failed to fetch profile";
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (authData?.token) {
+      fetchUserProfile();
+    }
+  }, [authData]);
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
     formFields.forEach((field) => {
-      const error = field.validation?.(
-        formData[field.id as keyof typeof formData]
-      );
+      const error = field.validation?.(formData[field.id as keyof typeof formData]);
       if (error) newErrors[field.id] = error;
     });
     setErrors(newErrors);
@@ -117,34 +146,13 @@ const EventRegisterForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
-    const formElement = e.target as HTMLFormElement;
-    const newFormData = {
-      firstName: formElement.firstName.value,
-      lastName: formElement.lastName.value,
-      email: formElement.email.value,
-      phone: formElement.phone.value,
-      rollNumber: formElement.rollNumber.value,
-      branch: formElement.branch.value,
-      year: formElement.year.value,
-    };
-
-    setFormData(newFormData);
-
-    if (validateForm()) {
-      toast.success("Registration successful!");
-      console.log(newFormData);
-    }
     try {
-      await axios.post(
-        `https://nexterday.iotkiit.in/api/participants`,
-        {
-          name: `${newFormData.firstName} ${newFormData.lastName}`,
-          branch: newFormData.branch,
-          phoneNumber: newFormData.phone,
-          whatsappNumber: newFormData.phone,
-          studyYear: newFormData.year,
-        },
+      setLoading(true);
+      const response = await axios.post(
+        `https://nexterday.iotkiit.in/api/events/participants/${eventID}`,
+        formData,
         {
           headers: {
             "Content-Type": "application/json",
@@ -152,69 +160,59 @@ const EventRegisterForm = () => {
           },
         }
       );
-    } catch (err) {
-      console.log(err);
-    }
-    console.log(eventID, "TEST");
-    const response = await axios.post(
-      `https://nexterday.iotkiit.in/api/events/participants/${eventID}`,
-      {
-        // ...existing data...
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authData?.token}`,
-        },
-      }
-    );
 
-    console.log(response.data);
+      console.log("Response: ", response);
+
+      if (response.data.success === 200) {
+        toast.success("Registration successful!");
+        window.location.href = `/event-details/${eventID}`;
+      }
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || "Registration failed";
+      setError(errorMessage);
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
     if (errors[id]) {
-      console.log(eventID);
       setErrors((prev) => ({ ...prev, [id]: "" }));
     }
   };
 
   const renderField = (field: FormField) => {
-    const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${
-      errors[field.id] ? "border-red-500" : "border-zinc-700"
-    } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
+    const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${errors[field.id] ? "border-red-500" : "border-zinc-700"
+      } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
 
     if (field.type === "select") {
       return (
         <div key={field.id}>
           <select
             id={field.id}
-            className={`${baseClassName} ${
-              formData[field.id as keyof typeof formData]
-                ? "bg-purple-500"
-                : "bg-black"
-            } [&>option:checked]:bg-purple-500`}
+            className={`${baseClassName} ${formData[field.id as keyof typeof formData]
+              ? "text-white"
+              : "text-zinc-500"
+              }`}
             value={formData[field.id as keyof typeof formData]}
             onChange={handleChange}
           >
-            <option value="" className="text-white bg-black">
+            <option value="" className="text-zinc-500 bg-zinc-900">
               {field.placeholder}
             </option>
             {field.options?.map((option) => (
               <option
                 key={option.value}
                 value={option.value}
-                className="bg-purple-500 text-white"
+                className="text-white bg-zinc-900"
               >
                 {option.label}
               </option>
             ))}
           </select>
-
           {errors[field.id] && (
             <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>
           )}
@@ -239,8 +237,20 @@ const EventRegisterForm = () => {
     );
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <ErrorDisplay message={error} />;
+  }
+
   return (
-    <div className="bg-black text-white relative overflow-hidden">
+    <div className="bg-black text-white relative overflow-hidden min-h-screen">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(40,3,53,0.7),transparent_50%)]" />
 
@@ -251,8 +261,7 @@ const EventRegisterForm = () => {
               Event Registration
             </h1>
             <p className="text-zinc-400 max-w-2xl mx-auto">
-              Fill in your details below to secure your spot at the event. All
-              fields are required.
+              Fill in your details below to secure your spot at the event.
             </p>
           </div>
 
@@ -261,11 +270,10 @@ const EventRegisterForm = () => {
               <h2 className="text-xl font-semibold text-purple-400 mb-4">
                 Personal Information
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-6">
                 {renderField(formFields[0])}
                 {renderField(formFields[1])}
               </div>
-              {renderField(formFields[2])}
             </div>
 
             <div className="space-y-6">
@@ -273,8 +281,8 @@ const EventRegisterForm = () => {
                 Contact Details
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {renderField(formFields[2])}
                 {renderField(formFields[3])}
-                {renderField(formFields[4])}
               </div>
             </div>
 
@@ -282,18 +290,22 @@ const EventRegisterForm = () => {
               <h2 className="text-xl font-semibold text-purple-400 mb-4">
                 Academic Information
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {renderField(formFields[5])}
-                {renderField(formFields[6])}
+              <div className="space-y-6">
+                {renderField(formFields[4])}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {renderField(formFields[5])}
+                  {renderField(formFields[6])}
+                </div>
               </div>
             </div>
 
             <div className="pt-6">
               <button
                 type="submit"
+                disabled={loading}
                 className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all transform hover:scale-[1.02] hover:shadow-lg shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Complete Registration
+                {loading ? "Processing..." : "Complete Registration"}
               </button>
               <p className="text-center text-zinc-500 text-sm mt-4">
                 By registering, you agree to our terms and conditions
