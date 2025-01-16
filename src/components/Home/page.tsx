@@ -32,17 +32,14 @@ const Dashboard = () => {
             }
 
             try {
-                const upcomingUrl = 'https://nexterday.iotkiit.in/api/events?page=1&field=createdAt&direction=desc';
-                const popularUrl = 'https://nexterday.iotkiit.in/api/events?page=1&direction=desc&field=participationCount';
-
                 const [upcomingResponse, popularResponse] = await Promise.all([
-                    axios.get(upcomingUrl, {
+                    axios.get(`${import.meta.env.VITE_SERVER_URL}/events?page=1&field=createdAt&direction=desc`, {
                         headers: {
                             'content-type': 'application/json',
                             'Authorization': `Bearer ${authData.token}`
                         }
                     }),
-                    axios.get(popularUrl, {
+                    axios.get(`${import.meta.env.VITE_SERVER_URL}/events?page=1&direction=desc&field=participationCount`, {
                         headers: {
                             'content-type': 'application/json',
                             'Authorization': `Bearer ${authData.token}`

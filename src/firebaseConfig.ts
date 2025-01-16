@@ -1,19 +1,23 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 import { useAuthStore } from "./zustand/useAuthStore";
 import { User } from "./types/types";
 import axios from "axios";
-const firebaseConfig = {
-  apiKey: "AIzaSyAPAj0HjnHJFg11lTyCllqaakd8ha5xRj8",
-  authDomain: "nexterdayevents-2d99e.firebaseapp.com",
-  projectId: "nexterdayevents-2d99e",
-  storageBucket: "nexterdayevents-2d99e.firebasestorage.app",
-  messagingSenderId: "114832360976",
-  appId: "1:114832360976:web:6b767dfb5740cdd1baac95"
-};
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp({
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+});
+
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
@@ -25,22 +29,22 @@ export const signInWithGoogle = async () => {
       accessToken: await result.user.getIdToken(),
       displayName: result.user.displayName,
       email: result.user.email,
-      photoURL: result.user.photoURL
+      photoURL: result.user.photoURL,
     };
     console.log("User signed in: ", user);
     useAuthStore.getState().setAuthData({
       token: user.accessToken,
       displayName: user.displayName,
       email: user.email,
-      photoURL: user.photoURL
+      photoURL: user.photoURL,
     });
     useAuthStore.getState().setLoggedIn(true);
-    const response = await axios.get("https://nexterday.iotkiit.in/api/auth/verify", {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`
-        }
-      });
-      console.log('Data fetched: ', response.data); 
+    const response = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/auth/verify`,
+      { headers: { Authorization: `Bearer ${user.accessToken}` } }
+    );
+
+    console.log("Data fetched: ", response.data);
   } catch (error) {
     console.error("Error signing in with Google: ", error);
   }
@@ -51,11 +55,11 @@ export const signOutUser = async () => {
     await signOut(auth);
     console.log("User signed out");
     useAuthStore.getState().setAuthData({
-        token: null,
-        displayName: null,
-        email: null,
-        photoURL: null
-      });
+      token: null,
+      displayName: null,
+      email: null,
+      photoURL: null,
+    });
     useAuthStore.getState().setLoggedIn(false);
   } catch (error) {
     console.error("Error signing out: ", error);

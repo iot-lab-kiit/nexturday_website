@@ -105,7 +105,7 @@ const EventRegisterForm = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "https://nexterday.iotkiit.in/api/participants",
+          `${import.meta.env.VITE_SERVER_URL}/participants`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -176,7 +176,7 @@ const EventRegisterForm = () => {
 
       if (hasProfileChanges) {
         const updateProfileApiResponse = await axios.patch(
-          'https://nexterday.iotkiit.in/api/participants',
+          `${import.meta.env.VITE_SERVER_URL}/participants`,
           {
             name: formData.fullName,
             branch: formData.branch,
@@ -199,7 +199,7 @@ const EventRegisterForm = () => {
       }
 
       const response = await axios.post(
-        `https://nexterday.iotkiit.in/api/events/participants/${eventID}`,
+        `${import.meta.env.VITE_SERVER_URL}/events/participants/${eventID}`,
         formData,
         {
           headers: {

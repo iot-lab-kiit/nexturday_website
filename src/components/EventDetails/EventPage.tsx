@@ -38,8 +38,7 @@ const EventPage: React.FC = () => {
       setHideFooter(true);
 
       try {
-        const eventURL = `https://nexterday.iotkiit.in/api/events/${eventID}`;
-        const eventDetailsApiResponse = await axios.get(eventURL, {
+        const eventDetailsApiResponse = await axios.get(`${import.meta.env.VITE_SERVER_URL}/events/${eventID}`, {
           headers: {
             'content-type': 'application/json',
             'Authorization': `Bearer ${authData.token}`
