@@ -30,6 +30,14 @@ const EventRegisterForm = () => {
     year: "",
   });
 
+  const [originalProfileData, setOriginalProfileData] = useState({
+    name: "",
+    branch: "",
+    phoneNumber: "",
+    whatsappNumber: "",
+    studyYear: ""
+  });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const authData = useAuthStore((state) => state.authData);
 
@@ -118,6 +126,14 @@ const EventRegisterForm = () => {
             branch: userProfile.detail.branch || "",
             year: userProfile.detail.studyYear || "",
           });
+
+          setOriginalProfileData({
+            name: userProfile.detail.name || "",
+            branch: userProfile.detail.branch || "",
+            phoneNumber: userProfile.detail.phoneNumber || "",
+            whatsappNumber: userProfile.detail.whatsappNumber || "",
+            studyYear: userProfile.detail.studyYear || ""
+          });
           toast.success("Profile data loaded successfully");
         }
       } catch (err: any) {
@@ -150,6 +166,38 @@ const EventRegisterForm = () => {
 
     try {
       setLoading(true);
+
+      const hasProfileChanges =
+        originalProfileData.name !== formData.fullName ||
+        originalProfileData.branch !== formData.branch ||
+        originalProfileData.phoneNumber !== formData.phone ||
+        originalProfileData.whatsappNumber !== formData.whatsappNumber ||
+        originalProfileData.studyYear !== formData.year;
+
+      if (hasProfileChanges) {
+        const updateProfileApiResponse = await axios.patch(
+          'https://nexterday.iotkiit.in/api/participants',
+          {
+            name: formData.fullName,
+            branch: formData.branch,
+            phoneNumber: formData.phone,
+            whatsappNumber: formData.whatsappNumber,
+            studyYear: formData.year
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authData?.token}`,
+            },
+          }
+        );
+
+        console.log(updateProfileApiResponse);
+        if (updateProfileApiResponse.data.success === true) {
+          toast.success("Profile Data updated successfully");
+        }
+      }
+
       const response = await axios.post(
         `https://nexterday.iotkiit.in/api/events/participants/${eventID}`,
         formData,
@@ -163,7 +211,7 @@ const EventRegisterForm = () => {
 
       console.log("Response: ", response);
 
-      if (response.data.success === 200) {
+      if (response.data.success === true) {
         toast.success("Registration successful!");
         window.location.href = `/event-details/${eventID}`;
       }
@@ -213,6 +261,26 @@ const EventRegisterForm = () => {
               </option>
             ))}
           </select>
+          {errors[field.id] && (
+            <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>
+          )}
+        </div>
+      );
+    }
+
+    if (field.id === 'email' || field.id === 'rollNumber') {
+      return (
+        <div key={field.id}>
+          <input
+            type={field.type}
+            id={field.id}
+            className={`${baseClassName} cursor-not-allowed opacity-50 bg-zinc-800/50 border-zinc-800 text-zinc-400`}
+            placeholder={field.placeholder}
+            value={formData[field.id as keyof typeof formData]}
+            onChange={handleChange}
+            disabled
+            title="This field cannot be edited"
+          />
           {errors[field.id] && (
             <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>
           )}
