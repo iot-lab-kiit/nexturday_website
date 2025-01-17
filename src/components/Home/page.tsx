@@ -6,7 +6,7 @@ import LoadingSpinner from "../global/LoadingSpinner"
 import toast from "react-hot-toast"
 import PopularEvents from "./PopularEvents"
 import UpcomingEvents from "./UpcomingEvents"
-import { useAuthStore } from "../../zustand/useAuthStore"
+import { useAuthStore } from "../../zustand/UseAuthStore"
 import { ArrowRight, LogIn } from "lucide-react"
 import Carousel from "./Carousel/page";
 import ErrorDisplay from "../global/ErrorDisplay"
@@ -112,12 +112,15 @@ const Dashboard = () => {
                     />
                 </div>
             ) : (
-                <div style={{
+                <div
+                className="bg-[#03001]" 
+                style={{
                     // background: `
                     //   radial-gradient(78.04% 121.39% at 91.04% 12.83%, rgba(40, 3, 53, 0.87) 0%, rgba(41, 41, 41, 0.26) 100%),
                     //   radial-gradient(68.46% 198.58% at -18.46% 107.11%, #05537D 0%, rgba(0, 0, 0, 0) 100%)
                     // `,
-                    background: 'rgba(31, 31, 31, 0.87)',
+                    // background: 'rgba(31, 31, 31, 0.87)',
+                    
                     boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'
                   }}>
                     <Carousel />

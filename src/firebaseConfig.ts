@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { useAuthStore } from "./zustand/useAuthStore";
+import { useAuthStore } from "./zustand/UseAuthStore";
 import { User } from "./types/types";
 import axios from "axios";
 

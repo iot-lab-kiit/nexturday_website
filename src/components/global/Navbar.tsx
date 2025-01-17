@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { signInWithGoogle, signOutUser } from "../../firebaseConfig";
-import { useAuthStore } from "../../zustand/useAuthStore";
-
+import { useAuthStore } from "../../zustand/UseAuthStore";
 export const Navbar: React.FC = () => {
   const loggedIn = useAuthStore((state) => state.loggedIn);
   const authData = useAuthStore((state) => state.authData);
