@@ -33,9 +33,11 @@ const NexterLanding = () => {
           <div className="space-y-8 p-6">
 
             <header className="flex items-center space-x-3 mb-12 ">
-              <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">IoT</span>
-              </div>
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtexwZdQi92pIVJsxG0-6yTnSzSKS6wexQYQ&s"
+              alt="IoT lab logo"
+              className="w-12 h-12 rounded-full"
+              />
               <span className="text-white text-xl ">IoT lab</span>
             </header>
 
