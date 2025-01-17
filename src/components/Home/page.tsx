@@ -84,8 +84,8 @@ const Dashboard = () => {
                     <LoadingSpinner />
                 </div>
             ) : (authData.token === null || authData.token === '') ? (
-                <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-black/95">
-                    <div className="max-w-md w-full px-8 py-12 bg-zinc-900/50 backdrop-blur-xl border border-zinc-800/50 rounded-2xl text-center">
+                <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-[black]">
+                    <div className="max-w-md w-full px-8 py-12  backdrop-blur-xl border border-zinc-800/50 rounded-2xl text-center">
                         <div className="mb-6">
                             <LogIn className="w-16 h-16 mx-auto text-purple-400 animate-pulse" />
                         </div>

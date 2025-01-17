@@ -10,21 +10,24 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-b border-zinc-800/50 z-50 h-16">
+    <div className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-b border-zinc-800/50 z-50 h-16 mb-6">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-full">
         <a href="/" className="hover:opacity-80 transition-opacity">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Nexturday
+          <h1 className="text-xl text-white font-bold text-transparent">
+            Nexterday
           </h1>
         </a>
 
@@ -54,7 +57,7 @@ export const Navbar: React.FC = () => {
                   </div>
                   <div className="py-1">
                     <button
-                      onClick={() => window.location.href = "/profile"}
+                      onClick={() => (window.location.href = "/profile")}
                       className="w-full px-4 py-2 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-300"
                     >
                       Profile

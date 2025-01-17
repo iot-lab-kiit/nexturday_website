@@ -1,32 +1,33 @@
-body {
-    background-color: black;
-}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
-/* Modern Sleek Scrollbar */
+body {
+  background-color: black;
+  font-family: "Raleway", serif;
+}
 ::-webkit-scrollbar {
-    width: 12px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(24, 24, 27, 0.95);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(168, 85, 247, 0.1);
+  background: rgba(24, 24, 27, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(168, 85, 247, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgb(168, 85, 247), rgb(59, 130, 246));
-    border-radius: 6px;
-    border: 2px solid rgba(24, 24, 27, 0.95);
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+  background: linear-gradient(180deg, rgb(103, 51, 152), rgb(59, 130, 246));
+  border-radius: 2px; /* Reduced border radius for a sleeker look */
+  border: 1px solid rgba(24, 24, 27, 0.95); /* Thinner border */
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4); /* Slightly reduced shadow */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgb(192, 132, 252), rgb(96, 165, 250));
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.8);
+  background: linear-gradient(180deg, rgb(192, 132, 252), rgb(96, 165, 250));
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
 }
 
 /* Firefox Scrollbar */
 * {
-    scrollbar-width: thin;
-    scrollbar-color: rgb(168, 85, 247) rgba(24, 24, 27, 0.95);
+  scrollbar-width: thin; /* Ensures a thinner scrollbar in Firefox */
+  scrollbar-color: rgb(168, 85, 247) rgba(24, 24, 27, 0.95);
 }

@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEventStore } from "../../../zustand/useEventStore";
-import Carousel from "./Carousel";
-import Fancybox from "./Fancybox";
-
+// import Carousel from "./Carousel";
+// import Fancybox from "./Fancybox";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+import { Autoplay, Pagination } from "swiper/modules";
 import "./style.css";
 
 export default function App() {
@@ -16,28 +18,43 @@ export default function App() {
     .slice(0, 5);
 
   return (
-    <div>
-      <Fancybox
-        options={{
-          Carousel: {
-            infinite: false,
-          },
+    <div style={{ width: "80vh", height: "70vh" }} className="mx-auto md:py-12">
+      <Swiper
+        modules={[Autoplay, Pagination]}
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
         }}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
+        style={{ height: "100%" }}
+       
       >
-        <Carousel options={{ infinite: false }}>
-          {filteredUpcomingEvents?.map((event, index) => (
-            <div
-              key={index}
-              className="f-carousel__slide"
-              data-fancybox="gallery"
-              data-src={event.images[0]?.url}
-              data-thumb-src={event.images[0]?.url}
+        {filteredUpcomingEvents?.map((event, index) => (
+          <SwiperSlide key={index}>
+            <a
+              href={`/event-details/${event.id}`}
+              target="_blank"
+              rel="noreferrer"
             >
-              <img alt="" src={event.images[0]?.url} width="400" height="300" />
-            </div>
-          ))}
-        </Carousel>
-      </Fancybox>
+              <img
+                src={event.images[0]?.url}
+                alt={`Slide ${index}`}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "0.4rem",
+                }}
+              />
+            </a>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 }
