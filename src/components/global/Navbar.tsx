@@ -52,6 +52,14 @@ export const Navbar: React.FC = () => {
                       Sign Out
                     </button>
                   </div>
+                  <div className="py-1">
+                    <button
+                      onClick={() => window.location.href = "/profile"}
+                      className="w-full px-4 py-2 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-300"
+                    >
+                      Profile
+                    </button>
+                  </div>
                 </div>
               )}
             </>

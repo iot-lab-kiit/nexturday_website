@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { useEventStore } from "../../zustand/useEventStore"
 import axios from "axios"
@@ -114,7 +115,14 @@ const Dashboard = () => {
                     />
                 </div>
             ) : (
-                <div>
+                <div style={{
+                    // background: `
+                    //   radial-gradient(78.04% 121.39% at 91.04% 12.83%, rgba(40, 3, 53, 0.87) 0%, rgba(41, 41, 41, 0.26) 100%),
+                    //   radial-gradient(68.46% 198.58% at -18.46% 107.11%, #05537D 0%, rgba(0, 0, 0, 0) 100%)
+                    // `,
+                    background: 'rgba(31, 31, 31, 0.87)',
+                    boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'
+                  }}>
                     <Carousel />
                     <PopularEvents />
                     <UpcomingEvents />
