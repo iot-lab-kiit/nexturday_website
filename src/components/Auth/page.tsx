@@ -3,11 +3,13 @@ import { useAuthStore } from "../../zustand/UseAuthStore";
 import { useNavigate } from "react-router-dom";
 import frame3Image from "../../assets/Frame3.png";
 import { Icon } from "@iconify/react";
-
+import { useEventStore } from "../../zustand/useEventStore";
 const NexterLanding = () => {
   const navigate = useNavigate();
   const loggedIn = useAuthStore((state) => state.loggedIn);
   const authData = useAuthStore((state) => state.authData);
+  const hideFooter = useEventStore((state) => state.hideFooter);
+  useEventStore.setState({ hideFooter: true });
 
   const handleSignIn = async () => {
     await signInWithGoogle();
@@ -16,46 +18,46 @@ const NexterLanding = () => {
 
   return (
     <div
-      className="h-screen bg-[#03001]"
+      className="h-full bg-[#03001]"
       style={{
         backgroundImage: `url(${frame3Image})`,
         backgroundSize: "cover",
       }}
     >
-      <div className="mx-auto justify-center items-center h-full flex flex-col lg:flex-row">
-        <div className="space-y-6 mx-auto p-6 text-center lg:text-left">
+      <div className="justify-center items-center h-[91vh] flex flex-col lg:flex-row ">
+        <div className="space-y-6 p-6 text-center  lg:text-left ml-[10%]">
           <header className="flex items-center justify-center lg:justify-start space-x-3">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtexwZdQi92pIVJsxG0-6yTnSzSKS6wexQYQ&s"
               alt="IoT lab logo"
               className="w-10 h-10 rounded-full"
             />
-            <span className="text-white text-xl">IoT lab</span>
+            <span className="text-white font-bold">IoT lab</span>
           </header>
 
-          <h1 className="">
+          <div className="">
             <span
               style={{
-                background:
-                  "linear-gradient(82.82deg, #FF00E1 26.01%, #FFD8FA 116.37%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontFamily: "Inter",
+                // background:
+                //   "linear-gradient(82.82deg, #FF00E1 26.01%, #FFD8FA 116.37%)",
+                // WebkitBackgroundClip: "text",
+                // WebkitTextFillColor: "transparent",
+                // fontFamily: "Inter"/\,
                 fontSize: "101.26px",
                 fontWeight: 700,
                 lineHeight: "95.9px",
                 display: "block",
               }}
+              className="text-white"
             >
               NEXTER
             </span>
             <span
               style={{
-                background:
-                  "linear-gradient(255.77deg, #006FFF 51.85%, #B7D6FF 128.1%)",
+                background: "rgb(103, 51, 152)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                fontFamily: "Inter",
+                // fontFamily: "Inter",
                 fontSize: "101.26px",
                 fontWeight: 700,
                 lineHeight: "95.9px",
@@ -64,10 +66,10 @@ const NexterLanding = () => {
             >
               DAY
             </span>
-          </h1>
+          </div>
 
-          <p className="text-gray-200 text-xl">
-            One app for all <br />
+          <p className="text-gray-200 ">
+            One app for all .
             Login here to get started
           </p>
           <div className="flex justify-center lg:justify-start">
