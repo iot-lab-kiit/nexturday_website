@@ -7,7 +7,7 @@ import LoadingSpinner from '../global/LoadingSpinner';
 import { Navbar } from '../global/Navbar';
 import { useParams } from 'react-router';
 import axios from 'axios';
-import { useAuthStore } from '../../zustand/useAuthStore';
+import { useAuthStore } from '../../zustand/UseAuthStore';
 import toast from 'react-hot-toast';
 import { useEventStore } from '../../zustand/useEventStore';
 import AboutSection from './AboutSection';

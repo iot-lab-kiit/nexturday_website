@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import { useAuthStore } from "../../zustand/useAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore";
 import axios from "axios";
 import { branches, years } from "../../data/data";
 import ErrorDisplay from "../global/ErrorDisplay";

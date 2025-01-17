@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useAuthStore } from "../../zustand/useAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore";
 import { EventCard } from "../Home/EventCard";
+import { Event } from "../../types/types";
 
 const JoinedEvents = () => {
   const [joinedEvents, setJoinedEvents] = useState([]);
@@ -39,7 +40,7 @@ const JoinedEvents = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {joinedEvents?.length > 0 ? (
           joinedEvents?.map((event, index) => (
-            <EventCard key={index} {...event} />
+            <EventCard key={index} {...event as Event} />
           ))
         ) : (
           <p className="text-gray-400 col-span-full text-center">

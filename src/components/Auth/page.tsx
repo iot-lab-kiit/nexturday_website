@@ -8,7 +8,6 @@ const NexterLanding = () => {
   const navigate = useNavigate();
   const loggedIn = useAuthStore((state) => state.loggedIn);
   const authData = useAuthStore((state) => state.authData);
-  const hideFooter = useEventStore((state) => state.hideFooter);
   useEventStore.setState({ hideFooter: true });
 
   const handleSignIn = async () => {
