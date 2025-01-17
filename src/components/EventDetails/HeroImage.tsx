@@ -4,7 +4,7 @@ const HeroImage = () => {
     const currentEvent = useEventStore((state) => state.currentEvent);
 
     const renderImage = () => {
-        if (currentEvent && !currentEvent.images?.[0]?.url) {
+        if (!currentEvent || !currentEvent.images?.[0]?.url) {
             return (
                 <div className="w-full h-full rounded-3xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 flex items-center justify-center p-8">
                     <div className="flex flex-col items-center gap-4">

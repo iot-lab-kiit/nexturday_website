@@ -42,3 +42,22 @@ export const eventData: EventData = {
   ],
   registrationFee: "₹200",
 };
+
+export const branches = [
+  { value: "CSE", label: "CSE" },
+  { value: "IT", label: "IT" },
+  { value: "CSSE", label: "CSSE" },
+  { value: "CSCE", label: "CSCE" },
+  { value: "ECE", label: "ECE" },
+  { value: "ECS", label: "ECS" },
+  { value: "EEE", label: "EEE" },
+  { value: "ME", label: "ME" },
+  { value: "CIVIL", label: "Civil" },
+];
+
+export const years = [
+  { value: "1", label: "1st Year" },
+  { value: "2", label: "2nd Year" },
+  { value: "3", label: "3rd Year" },
+  { value: "4", label: "4th Year" },
+];

@@ -32,7 +32,7 @@ export const RegisterButton: React.FC = () => {
         <div className="text-left flex-1">
           <div className="flex flex-row items-center gap-2">
             <p className="text-sm text-gray-400">Starts from</p>
-            <p className="text-2xl font-bold">₹{currentEvent?.price}</p>
+            <p className="text-2xl font-bold">₹{currentEvent?.price || " ---"}</p>
           </div>
         </div>
         <div className="flex justify-center lg:justify-end flex-1">

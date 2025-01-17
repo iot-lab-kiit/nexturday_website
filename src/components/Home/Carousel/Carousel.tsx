@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, PropsWithChildren } from 'react';
+import { useRef, useEffect, PropsWithChildren } from 'react';
 
 import { Carousel as NativeCarousel } from '@fancyapps/ui';
 import '@fancyapps/ui/dist/carousel/carousel.css';

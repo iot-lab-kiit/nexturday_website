@@ -69,7 +69,7 @@ export const signInWithGoogle = async () => {
 
 export const verifyToken = async (token: string) => {
   try {
-    const response = await fetch(`${process.env.VITE_SERVER_URL}/auth/verify`, {
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/verify`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
