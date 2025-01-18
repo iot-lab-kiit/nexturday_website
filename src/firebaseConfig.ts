@@ -32,11 +32,14 @@ export const signInWithGoogle = async () => {
       email: result.user.email,
       photoURL: result.user.photoURL,
     };
+
     console.log("User signed in: ", user);
     if (!user.email?.endsWith("@kiit.ac.in")) {
       toast.error("Please use a KIIT email address.");
       await signOutUser(); 
-      window.location.href = "/login"; 
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 3000);
       return;
     }
 

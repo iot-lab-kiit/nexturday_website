@@ -24,6 +24,7 @@ const PopularEvents = () => {
         pagination={{
           clickable: true,
         }}
+        
         autoplay={{
           delay: 2,
           disableOnInteraction: false,
@@ -34,6 +35,7 @@ const PopularEvents = () => {
           popularEvents.map((event, index) => (
             <SwiperSlide key={index}>
               <EventCard {...event} />
+              
             </SwiperSlide>
           ))
         ) : (
@@ -44,7 +46,11 @@ const PopularEvents = () => {
           </SwiperSlide>
         )}
       </Swiper>
+      <div className="text-center mt-4">
+        <p className="text-white">Swipe to see more</p>
+      </div>
     </section>
+    
   );
 };
 

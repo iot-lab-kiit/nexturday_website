@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEventStore } from "../../../zustand/useEventStore";
-// import Carousel from "./Carousel";
-// import Fancybox from "./Fancybox";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCoverflow, Navigation, Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
-import { Autoplay, Pagination } from "swiper/modules";
 import "./style.css";
 
 export default function App() {
@@ -18,42 +16,63 @@ export default function App() {
     .slice(0, 5);
 
   return (
-    <div style={{ width: "80vh", height: "70vh" }} className="mx-auto md:py-12">
+    <div className="w-full h-full mx-auto md:py-12">
       <Swiper
-        modules={[Autoplay, Pagination]}
-        spaceBetween={0}
+        effect={"coverflow"}
+        grabCursor={true}
+        centeredSlides={true}
+        loop={true}
         slidesPerView={1}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
-          dynamicBullets: true,
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
         }}
-        style={{ height: "100%" }}
-       
+        coverflowEffect={{
+          rotate: 0,
+          stretch: -75,
+          depth: 250,
+          modifier: 3.5,
+          slideShadows: false,
+        }}
+        navigation={{
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        }}
+        modules={[EffectCoverflow, Navigation,Autoplay]}
       >
         {filteredUpcomingEvents?.map((event, index) => (
           <SwiperSlide key={index}>
-            <a
-              href={`/event-details/${event.id}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src={event.images[0]?.url}
-                alt={`Slide ${index}`}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "0.4rem",
-                }}
-              />
-            </a>
+            <div className="w-full h-full flex justify-center items-center rounded-lg">
+              <a
+                href={`/event-details/${event.id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className="border-2 border-white p-2 rounded-lg bg-blur">
+                  <div className="w-84 h-80 relative rounded-lg overflow-hidden ">
+                    <img
+                      src={event.images[0]?.url}
+                      alt={`Slide ${index}`}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                </div>
+              </a>
+            </div>
           </SwiperSlide>
         ))}
+        
       </Swiper>
     </div>
   );
