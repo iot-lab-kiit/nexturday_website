@@ -8,6 +8,7 @@ import {
 import { useAuthStore } from "./zustand/UseAuthStore";
 import { User } from "./types/types";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const app = initializeApp({
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -32,6 +33,13 @@ export const signInWithGoogle = async () => {
       photoURL: result.user.photoURL,
     };
     console.log("User signed in: ", user);
+    if (!user.email?.endsWith("@kiit.ac.in")) {
+      toast.error("Please use a KIIT email address.");
+      await signOutUser(); 
+      window.location.href = "/login"; 
+      return;
+    }
+
     useAuthStore.getState().setAuthData({
       token: user.accessToken,
       displayName: user.displayName,
