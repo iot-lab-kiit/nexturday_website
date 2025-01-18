@@ -15,6 +15,10 @@ const NexterLanding = () => {
     navigate("/");
   };
 
+  // useEffect(() => {
+  //   console.log(authData.photoURL);
+  // }, [authData]);
+
   return (
     <div
       className="h-full bg-[#03001]"
@@ -68,14 +72,13 @@ const NexterLanding = () => {
           </div>
 
           <p className="text-gray-200 ">
-            One app for all .
-            Login here to get started
+            One app for all . Login here to get started
           </p>
           <div className="flex justify-center lg:justify-start">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png"
               alt="Google Play Store Download Button"
-              className="w-[12%] flex justify-center lg:justify-start"
+              className="w-[45%] md:w-[12%] flex justify-center lg:justify-start"
             />
           </div>
 

@@ -80,11 +80,13 @@ export const EventCard = (event: Event) => {
   return (
     <a
       href={`/event-details/${event.id}`}
-      className="group relative rounded-2xl overflow-hidden bg-black backdrop-blur-sm border border-zinc-800/50  transition-all duration-300 hover:shadow-gray-700 hover:shadow-lg"
+      className="group relative rounded-2xl overflow-hidden backdrop-blur-sm border border-zinc-800/50   transition-all duration-300 hover:shadow-gray-700 hover:shadow-lg"
     >
-      <div className="w-full aspect-square p-4">{renderImage()}</div>
+      <div className="w-full aspect-square p-4 bg-zinc-800/50 rounded-t-xl">
+        {renderImage()}
+      </div>
 
-      <div className="px-4 pb-4 flex gap-6">
+      <div className="px-4 pb-4 flex gap-6 bg-zinc-800/50 rounded-b-xl">
         <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 backdrop-blur-sm rounded-lg p-3">
           <div className="text-center">
             <div className="text-zinc-400 text-sm font-medium">

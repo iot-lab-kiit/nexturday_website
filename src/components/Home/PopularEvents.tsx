@@ -19,7 +19,7 @@ const PopularEvents = () => {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
         freeMode={true}
-        mousewheel={true}
+        // mousewheel={true}
         keyboard={true}
         pagination={{
           clickable: true,
@@ -32,18 +32,17 @@ const PopularEvents = () => {
       >
         {popularEvents && popularEvents.length > 0 ? (
           popularEvents.map((event, index) => (
-        <SwiperSlide key={index}>
-          <EventCard {...event} />
-        </SwiperSlide>
+            <SwiperSlide key={index}>
+              <EventCard {...event} />
+            </SwiperSlide>
           ))
         ) : (
           <SwiperSlide>
-        <p className="text-gray-400 col-span-full text-center">
-          No popular events found.
-        </p>
+            <p className="text-gray-400 col-span-full text-center">
+              No popular events found.
+            </p>
           </SwiperSlide>
         )}
-        
       </Swiper>
     </section>
   );
