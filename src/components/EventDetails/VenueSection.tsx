@@ -21,7 +21,7 @@ export const VenueSection = () => {
                     <div>
                         <p className="font-semibold text-lg mb-1 text-white">{currentEvent && currentEvent.details[subEventIndex].venue?.name.length > 0 ? currentEvent.details[subEventIndex].venue?.name : "---"}</p>
                         {currentEvent?.details[subEventIndex].venue?.mapUrl && (
-                            <a href={currentEvent.details[0].venue.mapUrl} target="_blank" className="text-purple-400 hover:text-purple-300 transition-colors text-sm flex items-center gap-2">
+                            <a href={currentEvent.details[0].venue?.mapUrl || "#"} target="_blank" className="text-purple-400 hover:text-purple-300 transition-colors text-sm flex items-center gap-2">
                                 Get directions
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />

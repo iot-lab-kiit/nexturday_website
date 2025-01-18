@@ -119,10 +119,10 @@ const EventRegisterForm = () => {
           const { data: { data: userProfile } } = response;
           setFormData({
             fullName: userProfile.detail.name || "",
-            email: authData?.email || "",
+            email: userProfile?.email || authData?.email || "",
             phone: userProfile.detail.phoneNumber || "",
             whatsappNumber: userProfile.detail.whatsappNumber || "",
-            rollNumber: authData?.email?.replace("@kiit.ac.in", "") || "",
+            rollNumber: userProfile?.rollNo || authData?.email?.replace("@kiit.ac.in", "") || "",
             branch: userProfile.detail.branch || "",
             year: userProfile.detail.studyYear || "",
           });
