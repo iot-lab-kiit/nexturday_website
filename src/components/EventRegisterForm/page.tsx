@@ -6,6 +6,7 @@ import axios from "axios";
 import { branches, years } from "../../data/data";
 import ErrorDisplay from "../global/ErrorDisplay";
 import LoadingSpinner from "../global/LoadingSpinner";
+import { CloudFog } from "lucide-react";
 
 interface FormField {
   id: string;
@@ -122,8 +123,18 @@ const EventRegisterForm = () => {
         const {
           data: { data: userProfile },
         } = response;
-        
-        if (response.data?.data?.detail || response.data?.data?.rollNo || response.data?.data?.email) {
+        console.log("userProfile", userProfile);
+        console.log(
+          "response",
+          response.data?.data?.detail ||
+            response.data?.data?.rollNo ||
+            response.data?.data?.email
+        );
+        if (
+          response.data?.data?.detail ||
+          response.data?.data?.rollNo ||
+          response.data?.data?.email
+        ) {
           setFormData({
             fullName: userProfile.detail.name || "",
             email: userProfile?.email || authData?.email || "",
