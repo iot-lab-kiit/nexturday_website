@@ -21,9 +21,10 @@ const PopularEvents = () => {
         freeMode={true}
         // mousewheel={true}
         keyboard={true}
-        pagination={{
-          clickable: true,
-        }}
+        // pagination={{
+        //   clickable: true,
+        //   el: '.custom-pagination',
+        // }}
         
         autoplay={{
           delay: 2,

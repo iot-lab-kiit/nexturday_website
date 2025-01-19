@@ -1,6 +1,6 @@
-import { useParams } from 'react-router-dom';
-import { useEventStore } from '../../zustand/useEventStore';
-import { CheckCircle2 } from 'lucide-react';
+import { useParams } from "react-router-dom";
+import { useEventStore } from "../../zustand/useEventStore";
+import { CheckCircle2 } from "lucide-react";
 
 export const RegisterButton: React.FC = () => {
   const { eventID } = useParams();
@@ -17,7 +17,9 @@ export const RegisterButton: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-400">Registration Status</p>
-                <p className="font-medium text-green-400">Successfully Registered</p>
+                <p className="font-medium text-green-400">
+                  Successfully Registered
+                </p>
               </div>
             </div>
           </div>
@@ -31,8 +33,12 @@ export const RegisterButton: React.FC = () => {
       <div className="px-4 py-4 flex flex-wrap lg:flex-nowrap items-center gap-4">
         <div className="text-left flex-1">
           <div className="flex flex-row items-center gap-2">
-            <p className="text-sm text-gray-400">Starts from</p>
-            <p className="text-2xl font-bold">₹{currentEvent?.price || " ---"}</p>
+            {currentEvent?.price && (
+              <p className="text-sm text-gray-400">Starts from ₹</p>
+            )}
+            <p className="text-2xl font-bold">
+              {currentEvent?.price || "It's Free!"}
+            </p>
           </div>
         </div>
         <div className="flex justify-center lg:justify-end flex-1">
