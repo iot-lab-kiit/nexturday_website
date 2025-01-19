@@ -37,7 +37,7 @@ export const RegisterButton: React.FC = () => {
               <p className="text-sm text-gray-400">Starts from ₹</p>
             )}
             <p className="text-2xl font-bold">
-              {currentEvent?.price || "It's Free!"}
+              {currentEvent?.price || "No Registration Fee"}
             </p>
           </div>
         </div>

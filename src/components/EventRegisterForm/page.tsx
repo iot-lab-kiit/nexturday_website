@@ -28,7 +28,7 @@ const EventRegisterForm = () => {
     whatsappNumber: "",
     rollNumber: "",
     branch: "",
-    year: "",
+    studyYear: "",
   });
 
   const [originalProfileData, setOriginalProfileData] = useState({
@@ -97,7 +97,7 @@ const EventRegisterForm = () => {
       options: branches,
     },
     {
-      id: "year",
+      id: "studyYear",
       type: "select",
       placeholder: "Select Year",
       validation: (value) => (!value ? "Year is required" : undefined),
@@ -124,12 +124,7 @@ const EventRegisterForm = () => {
           data: { data: userProfile },
         } = response;
         console.log("userProfile", userProfile);
-        console.log(
-          "response",
-          response.data?.data?.detail ||
-            response.data?.data?.rollNo ||
-            response.data?.data?.email
-        );
+
         if (
           response.data?.data?.detail ||
           response.data?.data?.rollNo ||
@@ -145,7 +140,7 @@ const EventRegisterForm = () => {
               authData?.email?.replace("@kiit.ac.in", "") ||
               "",
             branch: userProfile?.detail?.branch || "",
-            year: userProfile?.detail?.studyYear || "",
+            studyYear: userProfile?.detail?.studyYear || 2,
           });
 
           setOriginalProfileData({
@@ -153,7 +148,7 @@ const EventRegisterForm = () => {
             branch: userProfile?.detail?.branch || "",
             phoneNumber: userProfile?.detail?.phoneNumber || "",
             whatsappNumber: userProfile?.detail?.whatsappNumber || "",
-            studyYear: userProfile?.detail?.studyYear || "",
+            studyYear: userProfile?.detail?.studyYear || 2,
           });
           toast.success("Profile data loaded successfully");
         }
@@ -196,7 +191,7 @@ const EventRegisterForm = () => {
         originalProfileData.branch !== formData.branch ||
         originalProfileData.phoneNumber !== formData.phone ||
         originalProfileData.whatsappNumber !== formData.whatsappNumber ||
-        originalProfileData.studyYear !== formData.year;
+        originalProfileData.studyYear !== formData.studyYear;
 
       if (hasProfileChanges) {
         const updateProfileApiResponse = await axios.patch(
@@ -206,7 +201,7 @@ const EventRegisterForm = () => {
             branch: formData.branch,
             phoneNumber: formData.phone,
             whatsappNumber: formData.whatsappNumber,
-            studyYear: formData.year,
+            studyYear: formData.studyYear,
           },
           {
             headers: {
@@ -259,20 +254,18 @@ const EventRegisterForm = () => {
   };
 
   const renderField = (field: FormField) => {
-    const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${
-      errors[field.id] ? "border-red-500" : "border-zinc-700"
-    } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
+    const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${errors[field.id] ? "border-red-500" : "border-zinc-700"
+      } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
 
     if (field.type === "select") {
       return (
         <div key={field.id}>
           <select
             id={field.id}
-            className={`${baseClassName} ${
-              formData[field.id as keyof typeof formData]
+            className={`${baseClassName} ${formData[field.id as keyof typeof formData]
                 ? "text-white"
                 : "text-zinc-500"
-            }`}
+              }`}
             value={formData[field.id as keyof typeof formData]}
             onChange={handleChange}
           >
