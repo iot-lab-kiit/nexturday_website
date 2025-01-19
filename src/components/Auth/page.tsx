@@ -1,18 +1,16 @@
 import { signInWithGoogle, signOutUser } from "../../firebaseConfig";
 import { useAuthStore } from "../../zustand/UseAuthStore";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import frame3Image from "../../assets/Frame3.png";
 import { Icon } from "@iconify/react";
 import { useEventStore } from "../../zustand/useEventStore";
 const NexterLanding = () => {
-  const navigate = useNavigate();
   const loggedIn = useAuthStore((state) => state.loggedIn);
   const authData = useAuthStore((state) => state.authData);
   useEventStore.setState({ hideFooter: true });
 
   const handleSignIn = async () => {
     await signInWithGoogle();
-    navigate("/");
   };
 
   // useEffect(() => {
@@ -72,7 +70,7 @@ const NexterLanding = () => {
           </div>
 
           <p className="text-gray-200 ">
-            One app for all . Login here to get started
+            One app for all . Login with your <strong>kiit email</strong>!
           </p>
           <div className="flex justify-center lg:justify-start">
             <img

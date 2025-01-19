@@ -36,10 +36,10 @@ export const signInWithGoogle = async () => {
     console.log("User signed in: ", user);
     if (!user.email?.endsWith("@kiit.ac.in")) {
       toast.error("Please use a KIIT email address.");
-      await signOutUser(); 
+      await signOutUser();
       setTimeout(() => {
         window.location.href = "/login";
-      }, 3000);
+      }, 4000);
       return;
     }
 
@@ -56,6 +56,7 @@ export const signInWithGoogle = async () => {
     );
 
     console.log("Data fetched: ", response.data);
+    window.location.href = "/";
   } catch (error) {
     console.error("Error signing in with Google: ", error);
   }

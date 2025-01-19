@@ -93,7 +93,7 @@ const Dashboard = () => {
                             Access Required
                         </h2>
                         <p className="text-zinc-400 text-sm sm:text-base mb-8">
-                            Please sign in to explore amazing events and opportunities
+                            Please sign in with your <b>kiit email</b> to explore amazing events and opportunities
                         </p>
                         <a href="/login">
                             <button className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 flex items-center justify-center gap-3">
