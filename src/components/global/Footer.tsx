@@ -38,7 +38,8 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/contact"
+                  href="https://iotkiit.in/contact"
+                  target="_blank"
                   className="hover:text-purple-400 transition-all duration-300 flex items-center gap-2 group"
                 >
                   <span className="h-[1px] w-0 bg-purple-400 group-hover:w-4 transition-all duration-300"></span>
@@ -66,15 +67,19 @@ const Footer = () => {
                 <Globe className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform duration-300" />
                 <a
                   href="https://iotkiit.in"
+                  target="_blank"
                   className="hover:text-purple-400 transition-colors"
                 >
                   iotkiit.in
                 </a>
               </div>
-              <div className="flex items-center gap-3 group cursor-pointer">
+              <a
+                href="https://maps.app.goo.gl/K2hVdXF2YmG5gXFz7"
+                target="_blank"
+                className="flex items-center gap-3 group">
                 <MapPin className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform duration-300" />
-                <span>KIIT University, Bhubaneswar</span>
-              </div>
+                <span>Campus 15, KIIT, Bhubaneswar</span>
+              </a>
             </div>
           </div>
         </div>
@@ -84,6 +89,7 @@ const Footer = () => {
             Made with <span className="text-red-500 animate-pulse">♥</span> by{" "}
             <a
               href="https://iotkiit.in"
+              target="_blank"
               className="text-purple-400 hover:text-purple-300 transition-colors font-medium"
             >
               IoT Lab

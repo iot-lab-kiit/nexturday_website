@@ -6,7 +6,6 @@ import axios from "axios";
 import { branches, years } from "../../data/data";
 import ErrorDisplay from "../global/ErrorDisplay";
 import LoadingSpinner from "../global/LoadingSpinner";
-// import { CloudFog } from "lucide-react";
 
 interface FormField {
   id: string;
@@ -36,7 +35,7 @@ const EventRegisterForm = () => {
     branch: "",
     phoneNumber: "",
     whatsappNumber: "",
-    studyYear: "",
+    studyYear: 2,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -191,7 +190,7 @@ const EventRegisterForm = () => {
         originalProfileData.branch !== formData.branch ||
         originalProfileData.phoneNumber !== formData.phone ||
         originalProfileData.whatsappNumber !== formData.whatsappNumber ||
-        originalProfileData.studyYear !== formData.studyYear;
+        originalProfileData.studyYear !== Number(formData.studyYear);
 
       if (hasProfileChanges) {
         const updateProfileApiResponse = await axios.patch(
@@ -201,7 +200,7 @@ const EventRegisterForm = () => {
             branch: formData.branch,
             phoneNumber: formData.phone,
             whatsappNumber: formData.whatsappNumber,
-            studyYear: formData.studyYear,
+            studyYear: Number(formData.studyYear),
           },
           {
             headers: {
@@ -242,7 +241,6 @@ const EventRegisterForm = () => {
       setLoading(false);
     }
   };
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
