@@ -16,7 +16,7 @@ export default function App() {
     .slice(0, 5);
 
   return (
-    <div className="w-full h-full mx-auto md:py-12">
+    <div className="w-[80%] h-full mx-auto md:py-12">
       <Swiper
         effect={"coverflow"}
         grabCursor={true}

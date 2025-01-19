@@ -35,7 +35,7 @@ const EventRegisterForm = () => {
     branch: "",
     phoneNumber: "",
     whatsappNumber: "",
-    studyYear: ""
+    studyYear: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -46,7 +46,8 @@ const EventRegisterForm = () => {
       id: "fullName",
       type: "text",
       placeholder: "Full Name",
-      validation: (value) => !value.trim() ? "Full name is required" : undefined,
+      validation: (value) =>
+        !value.trim() ? "Full name is required" : undefined,
     },
     {
       id: "email",
@@ -54,7 +55,8 @@ const EventRegisterForm = () => {
       placeholder: "KIIT Email Address",
       validation: (value) => {
         if (!value.trim()) return "Email is required";
-        if (!value.endsWith("@kiit.ac.in")) return "Must use KIIT email address";
+        if (!value.endsWith("@kiit.ac.in"))
+          return "Must use KIIT email address";
         return undefined;
       },
     },
@@ -74,7 +76,8 @@ const EventRegisterForm = () => {
       placeholder: "WhatsApp Number",
       validation: (value) => {
         if (!value.trim()) return "WhatsApp number is required";
-        if (!/^\d{10}$/.test(value)) return "Enter valid 10-digit WhatsApp number";
+        if (!/^\d{10}$/.test(value))
+          return "Enter valid 10-digit WhatsApp number";
         return undefined;
       },
     },
@@ -82,20 +85,21 @@ const EventRegisterForm = () => {
       id: "rollNumber",
       type: "text",
       placeholder: "Roll Number",
-      validation: (value) => !value.trim() ? "Roll number is required" : undefined,
+      validation: (value) =>
+        !value.trim() ? "Roll number is required" : undefined,
     },
     {
       id: "branch",
       type: "select",
       placeholder: "Select Branch",
-      validation: (value) => !value ? "Branch is required" : undefined,
+      validation: (value) => (!value ? "Branch is required" : undefined),
       options: branches,
     },
     {
       id: "year",
       type: "select",
       placeholder: "Select Year",
-      validation: (value) => !value ? "Year is required" : undefined,
+      validation: (value) => (!value ? "Year is required" : undefined),
       options: years,
     },
   ];
@@ -115,14 +119,20 @@ const EventRegisterForm = () => {
         );
 
         console.log(response);
-        if (response.data?.data?.detail) {
-          const { data: { data: userProfile } } = response;
+        const {
+          data: { data: userProfile },
+        } = response;
+        
+        if (response.data?.data?.detail || response.data?.data?.rollNo || response.data?.data?.email) {
           setFormData({
             fullName: userProfile.detail.name || "",
             email: userProfile?.email || authData?.email || "",
             phone: userProfile.detail.phoneNumber || "",
             whatsappNumber: userProfile.detail.whatsappNumber || "",
-            rollNumber: userProfile?.rollNo || authData?.email?.replace("@kiit.ac.in", "") || "",
+            rollNumber:
+              userProfile?.rollNo ||
+              authData?.email?.replace("@kiit.ac.in", "") ||
+              "",
             branch: userProfile.detail.branch || "",
             year: userProfile.detail.studyYear || "",
           });
@@ -132,12 +142,13 @@ const EventRegisterForm = () => {
             branch: userProfile.detail.branch || "",
             phoneNumber: userProfile.detail.phoneNumber || "",
             whatsappNumber: userProfile.detail.whatsappNumber || "",
-            studyYear: userProfile.detail.studyYear || ""
+            studyYear: userProfile.detail.studyYear || "",
           });
           toast.success("Profile data loaded successfully");
         }
       } catch (err: any) {
-        const errorMessage = err.response?.data?.message || "Failed to fetch profile";
+        const errorMessage =
+          err.response?.data?.message || "Failed to fetch profile";
         setError(errorMessage);
         toast.error(errorMessage);
       } finally {
@@ -153,7 +164,9 @@ const EventRegisterForm = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
     formFields.forEach((field) => {
-      const error = field.validation?.(formData[field.id as keyof typeof formData]);
+      const error = field.validation?.(
+        formData[field.id as keyof typeof formData]
+      );
       if (error) newErrors[field.id] = error;
     });
     setErrors(newErrors);
@@ -182,7 +195,7 @@ const EventRegisterForm = () => {
             branch: formData.branch,
             phoneNumber: formData.phone,
             whatsappNumber: formData.whatsappNumber,
-            studyYear: formData.year
+            studyYear: formData.year,
           },
           {
             headers: {
@@ -224,7 +237,9 @@ const EventRegisterForm = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
     if (errors[id]) {
@@ -233,18 +248,20 @@ const EventRegisterForm = () => {
   };
 
   const renderField = (field: FormField) => {
-    const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${errors[field.id] ? "border-red-500" : "border-zinc-700"
-      } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
+    const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${
+      errors[field.id] ? "border-red-500" : "border-zinc-700"
+    } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
 
     if (field.type === "select") {
       return (
         <div key={field.id}>
           <select
             id={field.id}
-            className={`${baseClassName} ${formData[field.id as keyof typeof formData]
-              ? "text-white"
-              : "text-zinc-500"
-              }`}
+            className={`${baseClassName} ${
+              formData[field.id as keyof typeof formData]
+                ? "text-white"
+                : "text-zinc-500"
+            }`}
             value={formData[field.id as keyof typeof formData]}
             onChange={handleChange}
           >
@@ -268,7 +285,7 @@ const EventRegisterForm = () => {
       );
     }
 
-    if (field.id === 'email' || field.id === 'rollNumber') {
+    if (field.id === "email" || field.id === "rollNumber") {
       return (
         <div key={field.id}>
           <input
