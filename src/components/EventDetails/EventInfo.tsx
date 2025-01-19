@@ -55,18 +55,20 @@ export const EventInfo: React.FC = () => {
                             <div className="p-3 rounded-full bg-purple-400/10">
                                 <Icon className="w-5 h-5 text-purple-400" />
                             </div>
-                            <div>
+                            <div className="flex-1 min-w-0">
                                 <p className="text-sm text-gray-400">{title}</p>
                                 {isLink ? (
                                     <a
                                         href={`${content}`}
                                         target="_blank"
-                                        className="text-purple-400 hover:text-purple-300 transition-colors"
+                                        className="text-purple-400 hover:text-purple-300 transition-colors break-words"
                                     >
                                         {content}
                                     </a>
                                 ) : (
-                                    <p className="font-medium">{content}</p>
+                                    <p className="font-medium break-words">
+                                        {content}
+                                    </p>
                                 )}
                             </div>
                         </div>
