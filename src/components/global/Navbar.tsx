@@ -48,18 +48,18 @@ export const Navbar: React.FC = () => {
                 <div className="absolute right-0 mt-2 w-48 rounded-xl bg-zinc-900 border border-zinc-800 shadow-lg">
                   <div className="py-1">
                     <button
-                      onClick={signOutUser}
-                      className="w-full px-4 py-2 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-300"
-                    >
-                      Sign Out
-                    </button>
-                  </div>
-                  <div className="py-1">
-                    <button
                       onClick={() => (window.location.href = "/profile")}
                       className="w-full px-4 py-2 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-300"
                     >
                       Profile
+                    </button>
+                  </div>
+                  <div className="py-1">
+                    <button
+                      onClick={signOutUser}
+                      className="w-full px-4 py-2 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-300"
+                    >
+                      Sign Out
                     </button>
                   </div>
                 </div>

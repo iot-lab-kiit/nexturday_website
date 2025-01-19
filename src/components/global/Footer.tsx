@@ -20,7 +20,7 @@ const Footer = () => {
             <ul className="space-y-3 text-gray-300">
               <li>
                 <a
-                  href="/events"
+                  href="/"
                   className="hover:text-purple-400 transition-all duration-300 flex items-center gap-2 group"
                 >
                   <span className="h-[1px] w-0 bg-purple-400 group-hover:w-4 transition-all duration-300"></span>
@@ -29,7 +29,8 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/about"
+                  href="https://iotkiit.in"
+                  target="_blank"
                   className="hover:text-purple-400 transition-all duration-300 flex items-center gap-2 group"
                 >
                   <span className="h-[1px] w-0 bg-purple-400 group-hover:w-4 transition-all duration-300"></span>
@@ -86,7 +87,8 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-zinc-800/50 text-center">
           <p className="text-gray-300 text-sm">
-            Made with <span className="text-red-500 animate-pulse">♥</span> by{" "}
+            Made with <span className="text-red-500 animate-pulse">♥</span> &{" "}
+            <span className="text-amber-600 animate-pulse">☕</span> by{" "}
             <a
               href="https://iotkiit.in"
               target="_blank"
