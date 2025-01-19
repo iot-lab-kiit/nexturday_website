@@ -21,13 +21,13 @@ export const VenueSection = () => {
           <div>
             <p className="font-semibold text-lg mb-1 text-white">
               {currentEvent &&
-              currentEvent.details[subEventIndex].venue?.name.length > 0
-                ? currentEvent.details[subEventIndex].venue?.name
+              currentEvent?.details[subEventIndex].venue?.name.length > 0
+                ? currentEvent?.details[subEventIndex]?.venue?.name
                 : "Online"}
             </p>
-            {currentEvent?.details[subEventIndex].venue?.mapUrl && (
+            {currentEvent?.details[subEventIndex]?.venue?.mapUrl && (
               <a
-                href={currentEvent.details[0].venue?.mapUrl || "#"}
+                href={currentEvent?.details[0]?.venue?.mapUrl || "#"}
                 target="_blank"
                 className="text-purple-400 hover:text-purple-300 transition-colors text-sm flex items-center gap-2"
               >

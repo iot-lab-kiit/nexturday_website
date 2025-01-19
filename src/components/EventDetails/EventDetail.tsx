@@ -44,8 +44,8 @@ const EventDetail = () => {
         icon={<MapPin className="w-5 h-5 text-purple-400" />}
         label="Venue"
         value={
-          currentEvent && currentEvent.details[subEventIndex].venue
-            ? currentEvent.details[subEventIndex].venue.name
+          currentEvent && currentEvent?.details[subEventIndex]?.venue
+            ? currentEvent?.details[subEventIndex]?.venue?.name
             : "Online"
         }
       />
