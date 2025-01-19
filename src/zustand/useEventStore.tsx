@@ -5,8 +5,9 @@ interface EventStoreInterface {
     eventDetails: {
         popular: Event[];
         upcoming: Event[];
+        recent: Event[];    
     } | null;
-    setEventDetails: (eventDetails: { popular: Event[]; upcoming: Event[] } | null) => void;
+    setEventDetails: (eventDetails: { popular: Event[]; upcoming: Event[]; recent: Event[] } | null) => void;
 
     eventIndex: number;
     setEventIndex: (eventIndex: number) => void;
@@ -23,7 +24,7 @@ interface EventStoreInterface {
 
 export const useEventStore = create<EventStoreInterface>((set) => ({
     eventDetails: null,
-    setEventDetails: (eventDetails: { popular: Event[]; upcoming: Event[] } | null) => set({ eventDetails }),
+    setEventDetails: (eventDetails: { popular: Event[]; upcoming: Event[]; recent: Event[] } | null) => set({ eventDetails }),
 
     eventIndex: 0,
     setEventIndex: (eventIndex: number) => set({ eventIndex }),

@@ -4,7 +4,7 @@ import { EventCard } from "./EventCard";
 const UpcomingEvents = () => {
     const upcomongEvents = useEventStore((state) => state.eventDetails)?.upcoming
     return (
-        <section className="max-w-7xl mx-auto px-4 py-16">
+        <section id="upcomingevents" className="max-w-7xl mx-auto px-4 py-16">
             <h1 className="text-xl font-bold mb-8 bg-gradient-to-r text-center text-white">
                 Upcoming Events
             </h1>

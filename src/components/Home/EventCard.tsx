@@ -7,7 +7,7 @@ export const EventCard = (event: Event) => {
   const renderImage = () => {
     if (!event.images?.[0]?.url) {
       return (
-        <div className="w-full h-full rounded-xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 flex items-center justify-center p-8">
+        <div className=" w-full h-full rounded-xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 flex items-center justify-center p-8">
           <div className="flex flex-col items-center gap-4">
             <svg
               className="w-24 h-24 text-purple-400/80"

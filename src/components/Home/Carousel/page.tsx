@@ -7,7 +7,7 @@ import "./style.css";
 
 export default function App() {
   const eventDetails = useEventStore((state) => state.eventDetails);
-  const filteredUpcomingEvents = eventDetails?.upcoming
+  const filteredUpcomingEvents = eventDetails?.recent
     .sort((a, b) => {
       const aDate: any = new Date(a.from);
       const bDate: any = new Date(b.from);
