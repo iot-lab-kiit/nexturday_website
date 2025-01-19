@@ -125,24 +125,24 @@ const EventRegisterForm = () => {
         
         if (response.data?.data?.detail || response.data?.data?.rollNo || response.data?.data?.email) {
           setFormData({
-            fullName: userProfile.detail.name || "",
+            fullName: userProfile?.detail?.name || "",
             email: userProfile?.email || authData?.email || "",
-            phone: userProfile.detail.phoneNumber || "",
-            whatsappNumber: userProfile.detail.whatsappNumber || "",
+            phone: userProfile?.detail?.phoneNumber || "",
+            whatsappNumber: userProfile?.detail?.whatsappNumber || "",
             rollNumber:
               userProfile?.rollNo ||
               authData?.email?.replace("@kiit.ac.in", "") ||
               "",
-            branch: userProfile.detail.branch || "",
-            year: userProfile.detail.studyYear || "",
+            branch: userProfile?.detail?.branch || "",
+            year: userProfile?.detail?.studyYear || "",
           });
 
           setOriginalProfileData({
-            name: userProfile.detail.name || "",
-            branch: userProfile.detail.branch || "",
-            phoneNumber: userProfile.detail.phoneNumber || "",
-            whatsappNumber: userProfile.detail.whatsappNumber || "",
-            studyYear: userProfile.detail.studyYear || "",
+            name: userProfile?.detail?.name || "",
+            branch: userProfile?.detail?.branch || "",
+            phoneNumber: userProfile?.detail?.phoneNumber || "",
+            whatsappNumber: userProfile?.detail?.whatsappNumber || "",
+            studyYear: userProfile?.detail?.studyYear || "",
           });
           toast.success("Profile data loaded successfully");
         }
