@@ -252,18 +252,20 @@ const EventRegisterForm = () => {
   };
 
   const renderField = (field: FormField) => {
-    const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${errors[field.id] ? "border-red-500" : "border-zinc-700"
-      } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
+    const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${
+      errors[field.id] ? "border-red-500" : "border-zinc-700"
+    } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
 
     if (field.type === "select") {
       return (
         <div key={field.id}>
           <select
             id={field.id}
-            className={`${baseClassName} ${formData[field.id as keyof typeof formData]
+            className={`${baseClassName} ${
+              formData[field.id as keyof typeof formData]
                 ? "text-white"
                 : "text-zinc-500"
-              }`}
+            }`}
             value={formData[field.id as keyof typeof formData]}
             onChange={handleChange}
           >
@@ -370,6 +372,22 @@ const EventRegisterForm = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {renderField(formFields[2])}
                 {renderField(formFields[3])}
+              </div>
+              <div className="px-1 flex items-center py-2">
+                <input
+                  type="checkbox"
+                  id="sameAsPhone"
+                  onChange={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      whatsappNumber: formData.phone,
+                    }))
+                  }
+                  className="accent-purple-400 cursor-pointer h-4 w-4"
+                />
+                <label htmlFor="sameAsPhone" className="text-sm ml-2 text-gray-400">
+                  Same as Phone Number
+                </label>
               </div>
             </div>
 
