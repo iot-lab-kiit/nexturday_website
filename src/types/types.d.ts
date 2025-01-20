@@ -59,6 +59,7 @@ export interface Event {
   price: number;
   from: string;
   to: string;
+  deadline: string;
   participationCount: number;
   createdAt: string;
   updatedAt: string;
