@@ -4,6 +4,7 @@ body {
   background-color: black;
   font-family: "Raleway", serif;
 }
+
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -16,9 +17,12 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, rgb(103, 51, 152), rgb(59, 130, 246));
-  border-radius: 2px; /* Reduced border radius for a sleeker look */
-  border: 1px solid rgba(24, 24, 27, 0.95); /* Thinner border */
-  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4); /* Slightly reduced shadow */
+  border-radius: 2px;
+  /* Reduced border radius for a sleeker look */
+  border: 1px solid rgba(24, 24, 27, 0.95);
+  /* Thinner border */
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+  /* Slightly reduced shadow */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -28,6 +32,62 @@ body {
 
 /* Firefox Scrollbar */
 * {
-  scrollbar-width: thin; /* Ensures a thinner scrollbar in Firefox */
+  scrollbar-width: thin;
+  /* Ensures a thinner scrollbar in Firefox */
   scrollbar-color: rgb(168, 85, 247) rgba(24, 24, 27, 0.95);
+}
+
+.mySwiper {
+  padding: 2rem 0;
+}
+
+.swiper-slide {
+  transition: all 0.4s ease;
+  opacity: 0.5;
+  transform: scale(0.85);
+}
+
+.swiper-slide-active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 0.7;
+  transform: scale(0.9);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(147, 51, 234, 0.3);
+  border-color: rgba(147, 51, 234, 0.4);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 1.2rem;
+}
+
+.card-wrapper {
+  padding: 1rem;
+  transition: all 0.4s ease;
+}
+
+.swiper-slide-active .card-wrapper {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }

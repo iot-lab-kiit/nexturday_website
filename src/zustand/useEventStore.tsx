@@ -5,7 +5,7 @@ interface EventStoreInterface {
     eventDetails: {
         popular: Event[];
         upcoming: Event[];
-        recent: Event[];    
+        recent: Event[];
     } | null;
     setEventDetails: (eventDetails: { popular: Event[]; upcoming: Event[]; recent: Event[] } | null) => void;
 
