@@ -26,6 +26,16 @@ const Dashboard = () => {
   async function nextPageUpcomingEvents() {
     setUpcomingPage((upcomingPage) => {
       console.log(upcomingPage);
+      const eventDetails = {
+        popular: getEventDetails?.popular as any,
+        upcoming: null as any,
+        recent: getEventDetails?.upcoming as any,
+      };
+      setEventDetails(eventDetails);
+      window.scrollTo({
+        top: document.getElementById("upcomingevents")?.offsetTop,
+        behavior: "smooth",
+      });
       axios
         .get(
           `${import.meta.env.VITE_SERVER_URL}/events?page=${
@@ -47,10 +57,7 @@ const Dashboard = () => {
           };
           setEventDetails(eventDetails);
           setMaxUpcomingPages(response.data.data.totalPages);
-          window.scrollTo({
-            top: document.getElementById("upcomingevents")?.offsetTop,
-            behavior: "smooth",
-          });
+          
         });
       return upcomingPage + 1;
     });
@@ -59,6 +66,16 @@ const Dashboard = () => {
     setUpcomingPage((upcomingPage) => {
       if (upcomingPage === 1) return upcomingPage;
       console.log(upcomingPage);
+      const eventDetails = {
+        popular: getEventDetails?.popular as any,
+        upcoming: null as any,
+        recent: getEventDetails?.upcoming as any,
+      };
+      setEventDetails(eventDetails);
+      window.scrollTo({
+        top: document.getElementById("upcomingevents")?.offsetTop,
+        behavior: "smooth",
+      });
       axios
         .get(
           `${import.meta.env.VITE_SERVER_URL}/events?page=${
@@ -80,10 +97,7 @@ const Dashboard = () => {
           };
           setEventDetails(eventDetails);
           setMaxUpcomingPages(response.data.data.totalPages);
-          window.scrollTo({
-            top: document.getElementById("upcomingevents")?.offsetTop,
-            behavior: "smooth",
-          });
+          
         });
       return upcomingPage - 1;
     });
@@ -233,7 +247,9 @@ const Dashboard = () => {
             </button>
             <span className="text-white">{upcomingPage}</span>
             <button
-              className={`text-white ${upcomingPage == maxUpcomingPages ? "hidden" : ""}`}
+              className={`text-white ${
+                upcomingPage == maxUpcomingPages ? "hidden" : ""
+              }`}
               onClick={nextPageUpcomingEvents}
             >
               <ChevronRight className="w-6 h-6" />
