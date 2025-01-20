@@ -31,13 +31,15 @@ export const Navbar: React.FC = () => {
 
         const data = await response.json();
         setIsFavourite(data.data.isFavorite);
-        // console.log("Favorite event response:", data);
       } catch (error) {
-        console.error("Error favoriting event:", error);
+        console.error("Error fetching event favorite status:", error);
       }
     }
-    fetchEventfavourite();
-  }, [currentEvent]);
+
+    if (currentEvent?.id && authData.token) {
+      fetchEventfavourite();
+    }
+  }, [currentEvent, authData.token]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -71,11 +73,11 @@ export const Navbar: React.FC = () => {
               throw new Error("Network response was not ok");
             }
             response.json().then((response) => {
-              console.log("Favorite event response:", response);
+              console.log("Unfavorite event response:", response);
             });
           });
         } catch (error) {
-          console.error("Error favoriting event:", error);
+          console.error("Error unfavoriting event:", error);
         }
         return !state;
       }
@@ -118,12 +120,12 @@ export const Navbar: React.FC = () => {
             className={`w-full rounded-2xl px-8 py-2 text-left text-sm transition-all duration-300 
               ${
                 window.location.href.includes("event-details") ? "" : " hidden"
-              } ${favourite ? "text-red-500 scale-125" : "text-zinc-300"}`}
+              } ${favourite ? "text-red-500" : "text-zinc-300"}`}
             onClick={(e) => {
+              handleFavoriteClick();
               e.currentTarget
                 .querySelector("svg")
-                ?.classList.add("scale-125", "text-red-500");
-              handleFavoriteClick();
+                ?.classList.toggle("scale-125", favourite);
             }}
           >
             <svg
