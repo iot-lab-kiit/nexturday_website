@@ -24,20 +24,19 @@ const HeroImage = () => {
             <img
                 src={currentEvent?.images[0].url || ""}
                 alt={currentEvent?.name || "Event Image"}
-                className="w-full h-auto object-contain bg-zinc-900/50 transition-transform hover:scale-105 duration-700 ease-in-out"
+                className="w-full h-full object-cover object-center bg-zinc-900/50 transition-transform hover:scale-105 duration-700 ease-in-out"
             />
         );
     };
 
     return (
         <div className="relative w-full h-auto max-w-[600px] lg:w-[600px] flex-shrink-0">
-            <div className="relative w-full h-[400px] rounded-2xl overflow-hidden">
+            <div className="relative w-full h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 z-10" />
                 {renderImage()}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
         </div>
-
     )
 }
 

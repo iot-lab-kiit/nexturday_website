@@ -45,7 +45,7 @@ export const Registration: React.FC = () => {
                             <div>
                                 <p className="text-sm text-gray-400">Registration Status</p>
                                 <p className="font-medium text-red-400">
-                                    Registration Deadline Exceeded
+                                    Registration have closed!
                                 </p>
                             </div>
                         </div>
