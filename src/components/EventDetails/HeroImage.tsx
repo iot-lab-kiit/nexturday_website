@@ -25,7 +25,7 @@ const HeroImage = () => {
                 src={currentEvent?.images[0].url || ""}
                 alt={currentEvent?.name || "Event Image"}
                  loading="lazy"
-                className="w-full h-full object-cover object-center bg-zinc-900/50 transition-transform hover:scale-105 duration-700 ease-in-out"
+                className="w-full h-full object-contain object-center bg-zinc-900/50 transition-transform hover:scale-105 duration-700 ease-in-out"
             />
         );
     };

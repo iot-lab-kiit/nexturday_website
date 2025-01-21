@@ -68,7 +68,7 @@ export default function App() {
                         alt={`Event ${index + 1}`}
                         className="object-contain w-full h-full transform transition-transform duration-500 rounded-xl group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/40 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
+                      {/* <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/40 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" /> */}
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
                         <h3 className="text-white font-bold text-xl mb-2 truncate transition-colors">
                           {event.name}

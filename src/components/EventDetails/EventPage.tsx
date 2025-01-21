@@ -11,6 +11,7 @@ import { useAuthStore } from '../../zustand/UseAuthStore';
 import toast from 'react-hot-toast';
 import { useEventStore } from '../../zustand/useEventStore';
 import AboutSection from './AboutSection';
+import SubEventsAbout from './SubEventsAbout';
 import TabSwitcher from './TabSwitcher';
 import ErrorDisplay from '../global/ErrorDisplay';
 import { signOutUser } from '../../firebaseConfig';
@@ -84,8 +85,9 @@ const EventPage: React.FC = () => {
       ) : (
         <main className="max-w-7xl mx-auto px-4 pt-20">
           <HeroSection />
-          <TabSwitcher />
           <AboutSection />
+          <TabSwitcher />
+          <SubEventsAbout />
           <EventInfo />
           <VenueSection />
           <Guidelines />
