@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
-
 html{
   scroll-behavior: smooth;
 }
@@ -22,11 +21,8 @@ body {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, rgb(103, 51, 152), rgb(59, 130, 246));
   border-radius: 2px;
-  /* Reduced border radius for a sleeker look */
   border: 1px solid rgba(24, 24, 27, 0.95);
-  /* Thinner border */
   box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
-  /* Slightly reduced shadow */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -37,12 +33,7 @@ body {
 /* Firefox Scrollbar */
 * {
   scrollbar-width: thin;
-  /* Ensures a thinner scrollbar in Firefox */
   scrollbar-color: rgb(168, 85, 247) rgba(24, 24, 27, 0.95);
-}
-
-.mySwiper {
-  padding: 2rem 0;
 }
 
 .swiper-slide {
@@ -59,7 +50,7 @@ body {
 
 .swiper-slide-prev,
 .swiper-slide-next {
-  opacity: 0.7;
+  opacity: 0.6;
   transform: scale(0.9);
 }
 
@@ -67,8 +58,8 @@ body {
 .swiper-button-prev {
   color: white;
   background: rgba(0, 0, 0, 0.4);
-  width: 44px;
-  height: 44px;
+  width: 440px;
+  height: 440px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(4px);
