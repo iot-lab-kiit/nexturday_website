@@ -7,10 +7,17 @@ import "./style.css";
 export default function App() {
   const eventDetails = useEventStore((state) => state.eventDetails);
   const filteredUpcomingEvents = eventDetails?.recent
+    .filter((event) => {
+      const eventDate = new Date(event.from);
+      const currentDate = new Date();
+      const sevenDaysLater = new Date();
+      sevenDaysLater.setDate(currentDate.getDate() + 7);
+      return eventDate >= currentDate && eventDate <= sevenDaysLater;
+    })
     .sort((a, b) => {
       const aDate: any = new Date(a.from);
       const bDate: any = new Date(b.from);
-      return bDate - aDate;
+      return aDate - bDate;
     })
     .slice(0, 5);
 
