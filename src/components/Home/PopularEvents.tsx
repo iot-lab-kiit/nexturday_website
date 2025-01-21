@@ -17,16 +17,16 @@ const PopularEvents = () => {
         spaceBetween={10}
         breakpoints={{
           640: {
-        slidesPerView: 1,
-        spaceBetween: 20,
+            slidesPerView: 1,
+            spaceBetween: 20,
           },
           768: {
-        slidesPerView: 2,
-        spaceBetween: 30,
+            slidesPerView: 2,
+            spaceBetween: 30,
           },
           1024: {
-        slidesPerView: 3,
-        spaceBetween: 40,
+            slidesPerView: 3,
+            spaceBetween: 40,
           },
         }}
         onSlideChange={() => console.log("slide change")}
@@ -40,24 +40,22 @@ const PopularEvents = () => {
         modules={[FreeMode, Pagination, Mousewheel, Keyboard]}
       >
         {popularEvents && popularEvents.length > 0 ? (
+
           popularEvents.map((event, index) => (
-        <SwiperSlide key={index}>
-          <EventCard {...event} />
-        </SwiperSlide>
+            <SwiperSlide key={index}>
+              <EventCard {...event} />
+            </SwiperSlide>
           ))
         ) : (
           <SwiperSlide>
-        <p className="text-gray-400 col-span-full text-center">
-          No popular events found.
-        </p>
+            <p className="text-gray-400 col-span-full text-center">
+              No popular events found.
+            </p>
           </SwiperSlide>
         )}
       </Swiper>
-      <div className="text-center mt-4">
-        <p className="text-white">Swipe to see more</p>
-      </div>
     </section>
-    
+
   );
 };
 

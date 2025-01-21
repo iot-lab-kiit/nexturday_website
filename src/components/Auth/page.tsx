@@ -13,10 +13,6 @@ const NexterLanding = () => {
     await signInWithGoogle();
   };
 
-  // useEffect(() => {
-  //   console.log(authData.photoURL);
-  // }, [authData]);
-
   return (
     <div
       className="h-full bg-[#03001]"
@@ -82,15 +78,22 @@ const NexterLanding = () => {
             />
           </div>
 
-          {/* Login Button */}
           <div className=" flex flex-col items-center space-y-4 lg:space-y-0 lg:flex-row lg:space-x-4">
             {loggedIn ? (
               <>
-                <img
-                  src={authData.photoURL?.toString()}
-                  alt="Profile"
-                  className="w-8 h-8 rounded-full"
-                />
+                <div className="relative w-8 h-8">
+                  <div className="absolute inset-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 via-purple-700 to-purple-900 animate-pulse" />
+                  {authData.photoURL && (
+                    <img
+                      src={authData.photoURL.toString()}
+                      onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+                      onError={(e) => e.currentTarget.classList.add("hidden")}
+                      alt="Profile"
+                      className="absolute inset-0 w-8 h-8 rounded-full object-cover ring-2 ring-purple-500/20 hover:ring-purple-500/40 transition-opacity duration-300 cursor-pointer opacity-0"
+                    />
+                  )}
+                </div>
+
                 <button
                   onClick={signOutUser}
                   className="w-20px border text-white rounded-md p-2 font-semibold flex justify-center items-center gap-3 active:scale-95 transition-all"
