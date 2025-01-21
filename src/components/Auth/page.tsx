@@ -1,7 +1,7 @@
 import { signInWithGoogle, signOutUser } from "../../firebaseConfig";
 import { useAuthStore } from "../../zustand/UseAuthStore";
 // import { useNavigate } from "react-router-dom";
-import frame3Image from "../../assets/Frame3.png";
+import frame3Image from "../../assets/Frame3.webp";
 import { Icon } from "@iconify/react";
 import { useEventStore } from "../../zustand/useEventStore";
 const NexterLanding = () => {
@@ -25,12 +25,13 @@ const NexterLanding = () => {
         backgroundSize: "cover",
       }}
     >
-      <div className="justify-center items-center h-[91vh] flex flex-col lg:flex-row ">
+      <div className=" items-center h-[91vh] flex flex-col lg:flex-row ">
         <div className="space-y-6 p-6 text-center  lg:text-left ml-[10%]">
           <header className="flex items-center justify-center lg:justify-start space-x-3">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtexwZdQi92pIVJsxG0-6yTnSzSKS6wexQYQ&s"
               alt="IoT lab logo"
+              loading="lazy"
               className="w-10 h-10 rounded-full"
             />
             <span className="text-white font-bold">IoT lab</span>
@@ -76,6 +77,7 @@ const NexterLanding = () => {
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png"
               alt="Google Play Store Download Button"
+               loading="lazy"
               className="w-[45%] md:w-[12%] flex justify-center lg:justify-start"
             />
           </div>

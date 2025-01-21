@@ -25,7 +25,7 @@ const provider = new GoogleAuthProvider();
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
-    console.log("Result: ", result);
+
     const user: User = {
       accessToken: await result.user.getIdToken(),
       displayName: result.user.displayName,
@@ -37,9 +37,9 @@ export const signInWithGoogle = async () => {
     if (!user.email?.endsWith("@kiit.ac.in")) {
       toast.error("Please use a KIIT email address.");
       await signOutUser();
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 4000);
+      // setTimeout(() => {
+      //   window.location.href = "/login";
+      // }, 4000);
       return;
     }
 

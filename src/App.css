@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
+
+html{
+  scroll-behavior: smooth;
+}
 body {
   background-color: black;
   font-family: "Raleway", serif;
@@ -91,3 +95,5 @@ body {
   transform: translateY(-10px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
+
+
