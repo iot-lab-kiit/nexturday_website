@@ -22,7 +22,7 @@ const NexterLanding = () => {
       }}
     >
       <div className=" items-center h-[91vh] flex flex-col lg:flex-row ">
-        <div className="space-y-6 p-6 text-center  lg:text-left ml-[10%]">
+        <div className="space-y-6 p-6 text-center  lg:text-left lg:ml-[10%]">
           <header className="flex items-center justify-center lg:justify-start space-x-3">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtexwZdQi92pIVJsxG0-6yTnSzSKS6wexQYQ&s"
@@ -33,18 +33,13 @@ const NexterLanding = () => {
             <span className="text-white font-bold">IoT lab</span>
           </header>
 
-          <div className="">
+            <div className="">
             <span
               style={{
-                // background:
-                //   "linear-gradient(82.82deg, #FF00E1 26.01%, #FFD8FA 116.37%)",
-                // WebkitBackgroundClip: "text",
-                // WebkitTextFillColor: "transparent",
-                // fontFamily: "Inter"/\,
-                fontSize: "101.26px",
-                fontWeight: 700,
-                lineHeight: "95.9px",
-                display: "block",
+              fontSize: "8vw",
+              fontWeight: 700,
+              lineHeight: "1.1",
+              display: "block",
               }}
               className="text-white"
             >
@@ -52,19 +47,18 @@ const NexterLanding = () => {
             </span>
             <span
               style={{
-                background: "rgb(103, 51, 152)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                // fontFamily: "Inter",
-                fontSize: "101.26px",
-                fontWeight: 700,
-                lineHeight: "95.9px",
-                display: "block",
+              background: "rgb(103, 51, 152)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontSize: "8vw",
+              fontWeight: 700,
+              lineHeight: "1.1",
+              display: "block",
               }}
             >
               DAY
             </span>
-          </div>
+            </div>
 
           <p className="text-gray-200 ">
             One app for all . Login with your <strong>kiit email</strong>!
