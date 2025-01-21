@@ -67,14 +67,14 @@ export default function App() {
                   rel="noreferrer"
                   className="w-full block group"
                 >
-                  <div className="bg-gradient-to-b from-purple-900/30 to-gray-900/80 backdrop-blur-sm border border-purple-500/20 rounded-xl overflow-hidden shadow-xl transition-all duration-300">
+                  <div className="">
 
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <img
                        loading="lazy"
                         src={event.images[0]?.url}
                         alt={`Event ${index + 1}`}
-                        className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
+                        className="object-contain w-full h-full transform transition-transform duration-500 rounded-xl group-hover:scale-110"
                       />
                       {/* <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/40 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" /> */}
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
