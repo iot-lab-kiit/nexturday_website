@@ -6,17 +6,10 @@ import "swiper/swiper-bundle.css";
 export default function App() {
   const eventDetails = useEventStore((state) => state.eventDetails);
   const filteredUpcomingEvents = eventDetails?.recent
-    .filter((event) => {
-      const eventDate = new Date(event.from);
-      const currentDate = new Date();
-      const sevenDaysLater = new Date();
-      sevenDaysLater.setDate(currentDate.getDate() + 7);
-      return eventDate >= currentDate && eventDate <= sevenDaysLater;
-    })
     .sort((a, b) => {
       const aDate: any = new Date(a.from);
       const bDate: any = new Date(b.from);
-      return aDate - bDate;
+      return bDate - aDate;
     })
     .slice(0, 5);
 
@@ -67,16 +60,14 @@ export default function App() {
                   rel="noreferrer"
                   className="w-full block group"
                 >
-                  <div className="bg-gradient-to-b from-purple-900/30 to-gray-900/80 backdrop-blur-sm border border-purple-500/20 rounded-xl overflow-hidden shadow-xl transition-all duration-300">
-
-                    <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="bg-gradient-to-b from-purple-900/30 to-gray-900/80 backdrop-blur-sm border border-purple-500/20 rounded-xl overflow-hidden shadow-xl hover:shadow-purple-500/20 transition-all duration-300">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
                       <img
-                       loading="lazy"
                         src={event.images[0]?.url}
                         alt={`Event ${index + 1}`}
                         className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
                       />
-                      {/* <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/40 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" /> */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/40 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
                         <h3 className="text-white font-bold text-xl mb-2 truncate transition-colors">
                           {event.name}
@@ -85,10 +76,10 @@ export default function App() {
                           <span className="inline-block w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
                           <p className="text-purple-200 text-sm">
                             {new Date(event.from).toLocaleDateString(undefined, {
-                              weekday: 'long',
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric'
+                              weekday: "long",
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
                             })}
                           </p>
                         </div>
