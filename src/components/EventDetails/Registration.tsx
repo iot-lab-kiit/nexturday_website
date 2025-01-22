@@ -60,12 +60,13 @@ export const Registration: React.FC = () => {
             <div className="px-4 py-4 flex flex-wrap lg:flex-nowrap items-center gap-4">
                 <div className="text-left flex-1">
                     <div className="flex flex-row items-center gap-2">
-                        {currentEvent?.price && (
-                            <p className="text-sm text-gray-400">Starts from ₹</p>
+                        {currentEvent?.paid ? (
+                            <p className="text-xl md:text-2xl text-gray-400">Starts from ₹{currentEvent?.price || "---"}</p>
+                        ) : (
+                            <p className="text-2xl font-bold">
+                                {currentEvent?.price || "No Registration Fee"}
+                            </p>
                         )}
-                        <p className="text-2xl font-bold">
-                            {currentEvent?.price || "No Registration Fee"}
-                        </p>
                     </div>
                 </div>
                 <div className="flex justify-center lg:justify-end flex-1">
