@@ -1,12 +1,58 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@font-face {
+  font-family: 'Metropolis';
+  src: url('./fonts/Metropolis/Metropolis-Black.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('./fonts/Metropolis/Metropolis-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('./fonts/Metropolis/Metropolis-ExtraBold.otf') format('opentype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('./fonts/Metropolis/Metropolis-ExtraLight.otf') format('opentype');
+  font-weight:100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('./fonts/Metropolis/Metropolis-Light.otf') format('opentype');
+  font-weight:lighter;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('./fonts/Metropolis/Metropolis-Medium.otf') format('opentype');
+  font-weight:medium;
+  font-style: normal;
+}
+
+body {
+  background-color: black;
+  font-family: 'Metropolis', sans-serif;
+}
 
 html{
   scroll-behavior: smooth;
 }
-body {
+/* body {
   background-color: black;
   font-family: "Raleway", serif;
-}
+} */
 
 ::-webkit-scrollbar {
   width: 12px;

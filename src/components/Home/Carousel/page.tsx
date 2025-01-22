@@ -16,7 +16,7 @@ export default function App() {
   return (
     <div className="w-full max-w-[1400px] h-full mx-auto py-8 md:py-16 px-4">
       <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-indigo-500/10 to-purple-500/20 blur-[100px] -z-10" />
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-indigo-500/10 to-purple-500/20 blur-[100px] -z-10" /> */}
         <Swiper
           effect={"coverflow"}
           grabCursor={true}

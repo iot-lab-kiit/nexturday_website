@@ -21,8 +21,8 @@ const NexterLanding = () => {
         backgroundSize: "cover",
       }}
     >
-      <div className=" items-center h-[91vh] flex flex-col lg:flex-row ">
-        <div className="space-y-6 p-6 text-center  lg:text-left lg:ml-[10%]">
+      <div className=" items-center justify-center md:justify-normal  h-[91vh] flex flex-col lg:flex-row ">
+        <div className="space-y-6 p-6 text-center justify-center flex items-center md:items-start flex-col  lg:text-left lg:ml-[10%]">
           <header className="flex items-center justify-center lg:justify-start space-x-3">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtexwZdQi92pIVJsxG0-6yTnSzSKS6wexQYQ&s"

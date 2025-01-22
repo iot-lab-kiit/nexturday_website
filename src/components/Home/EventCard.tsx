@@ -56,7 +56,7 @@ export const EventCard = (event: Event) => {
       <img
         src={event.images[0].url}
         alt={event.name}
-         loading="lazy"
+        loading="lazy"
         className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
         onError={(e) => {
           e.currentTarget.style.display = "none";
@@ -108,10 +108,13 @@ export const EventCard = (event: Event) => {
           </h2>
           <div className="space-y-1.5">
             <p className="text-gray-300 text-sm flex items-center gap-2">
-              {event.details[0].venue 
-                ? event.details[0].venue.name 
-                : event.details.length>0 ?"Multiple venue":"ONLINE"}
+              {event.details.length > 1
+                ? "Multiple Venue"
+                : event.details.length > 0 && event.details[0].venue
+                ? event.details[0].venue.name
+                : "ONLINE"}
             </p>
+
             <p className="text-gray-400 text-sm flex items-center gap-2">
               {event.society.name}
             </p>
