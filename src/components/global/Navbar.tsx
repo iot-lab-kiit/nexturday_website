@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
     async function fetchEventfavourite() {
       try {
         const response = await fetch(
-          `https://nexterday.iotkiit.in/api/events/${currentEvent?.id}`,
+          `${process.env.VITE_SERVER_URL}/events/${currentEvent?.id}`,
           {
             method: "GET",
             headers: {
@@ -60,7 +60,7 @@ export const Navbar: React.FC = () => {
       if (state) {
         try {
           fetch(
-            `https://nexterday.iotkiit.in/api/events/participants/favorite/${currentEvent?.id}`,
+            `${process.env.VITE_SERVER_URL}/events/participants/favorite/${currentEvent?.id}`,
             {
               method: "DELETE",
               headers: {
@@ -83,7 +83,7 @@ export const Navbar: React.FC = () => {
       }
       try {
         fetch(
-          `https://nexterday.iotkiit.in/api/events/participants/favorite/${currentEvent?.id}`,
+          `${process.env.VITE_SERVER_URL}/api/events/participants/favorite/${currentEvent?.id}`,
           {
             method: "POST",
             headers: {
@@ -120,7 +120,7 @@ export const Navbar: React.FC = () => {
             className={`w-full rounded-2xl px-8 py-2 text-left text-sm transition-all duration-300 
               ${
                 window.location.href.includes("event-details") ? "" : " hidden"
-              } ${favourite ? "text-red-500" : "text-zinc-300"}`}
+              } ${favourite ? "text-red-500" : "text-black"}`}
             onClick={(e) => {
               handleFavoriteClick();
               e.currentTarget
@@ -129,9 +129,9 @@ export const Navbar: React.FC = () => {
             }}
           >
             <svg
-              className="w-6 h-6 transition-all duration-200"
-              fill="none"
-              stroke="currentColor"
+              className="w-[1.3rem] h-[1.3rem] transition-all duration-200"
+              fill="currentColor"
+              stroke={favourite ? "red" : "white"}
               strokeWidth="2"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
