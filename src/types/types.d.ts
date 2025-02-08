@@ -50,7 +50,7 @@ export interface Event {
         id: string;
         mapUrl: string;
         name: string;
-      }
+      };
       venueId: string | null;
     }
   ];
@@ -70,4 +70,18 @@ export interface Event {
     key: string;
     url: string;
   }[];
+}
+
+export interface TeamMember {
+  name: string | "",
+  email: string;
+  status: "accepted" | "pending" | "leader";
+}
+export interface Team {
+  id: string;
+  name: string;
+  code: string;
+  members: TeamMember[];
+  maxMembers: number;
+  leader: string;
 }

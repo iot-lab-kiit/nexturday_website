@@ -20,6 +20,9 @@ interface EventStoreInterface {
 
     hideFooter: boolean;
     setHideFooter: (hideFooter: boolean) => void;
+
+    teamName: string,
+    setTeamName: (teamName: string) => void;
 }
 
 export const useEventStore = create<EventStoreInterface>((set) => ({
@@ -37,4 +40,7 @@ export const useEventStore = create<EventStoreInterface>((set) => ({
 
     hideFooter: false,
     setHideFooter: (hideFooter: boolean) => set({ hideFooter }),
+
+    teamName: "",
+    setTeamName: (teamName: string) => set({ teamName }),
 }));

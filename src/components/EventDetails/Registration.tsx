@@ -28,10 +28,18 @@ export const Registration: React.FC = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="flex justify-center lg:justify-end flex-1">
+                        <a href={`/event-details/${eventID}/teams`}>
+                            <button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
+                                Manage Team
+                            </button>
+                        </a>
+                    </div>
                 </div>
             </div>
         );
     }
+
 
     if (isDeadlineExceeded()) {
         return (
