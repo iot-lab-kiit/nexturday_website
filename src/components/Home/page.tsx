@@ -132,7 +132,7 @@ const Dashboard = () => {
             axios.get(
               `${
                 import.meta.env.VITE_SERVER_URL
-              }/events?page=1&direction=desc&field=participationCount`,
+              }/events?page=1&direction=desc&field=from`,
               {
                 headers: {
                   "content-type": "application/json",

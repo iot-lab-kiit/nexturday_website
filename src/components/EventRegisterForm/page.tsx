@@ -21,9 +21,11 @@ const EventRegisterForm = () => {
   const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
+    countryCode: "+91", 
     whatsappNumber: "",
     rollNumber: "",
     branch: "",
@@ -43,11 +45,18 @@ const EventRegisterForm = () => {
 
   const formFields: FormField[] = [
     {
-      id: "fullName",
+      id: "firstName",
       type: "text",
-      placeholder: "Full Name",
+      placeholder: "First Name",
       validation: (value) =>
-        !value.trim() ? "Full name is required" : undefined,
+        !value.trim() ? "First name is required" : undefined,
+    },
+    {
+      id: "lastName",
+      type: "text",
+      placeholder: "Last Name",
+      validation: (value) =>
+        !value.trim() ? "Last name is required" : undefined,
     },
     {
       id: "email",
@@ -118,21 +127,24 @@ const EventRegisterForm = () => {
           }
         );
 
-        console.log(response);
         const {
           data: { data: userProfile },
         } = response;
-        console.log("userProfile", userProfile);
 
         if (
           response.data?.data?.detail ||
           response.data?.data?.rollNo ||
           response.data?.data?.email
         ) {
+          const fullName = userProfile?.detail?.name || "";
+          const [firstName, lastName] = fullName.split(" ");
+
           setFormData({
-            fullName: userProfile?.detail?.name || "",
+            firstName: firstName || "",
+            lastName: lastName || "",
             email: userProfile?.email || authData?.email || "",
             phone: userProfile?.detail?.phoneNumber || "",
+            countryCode: "+91", 
             whatsappNumber: userProfile?.detail?.whatsappNumber || "",
             rollNumber:
               userProfile?.rollNo ||
@@ -186,7 +198,7 @@ const EventRegisterForm = () => {
       setLoading(true);
 
       const hasProfileChanges =
-        originalProfileData.name !== formData.fullName ||
+        originalProfileData.name !== `${formData.firstName} ${formData.lastName}` ||
         originalProfileData.branch !== formData.branch ||
         originalProfileData.phoneNumber !== formData.phone ||
         originalProfileData.whatsappNumber !== formData.whatsappNumber ||
@@ -196,8 +208,10 @@ const EventRegisterForm = () => {
         const updateProfileApiResponse = await axios.patch(
           `${import.meta.env.VITE_SERVER_URL}/participants`,
           {
-            name: formData.fullName,
+            firstname: formData.firstName,
+            lastname: formData.lastName,
             branch: formData.branch,
+            countryCode: formData.countryCode,
             phoneNumber: formData.phone,
             whatsappNumber: formData.whatsappNumber,
             studyYear: Number(formData.studyYear),
@@ -210,7 +224,6 @@ const EventRegisterForm = () => {
           }
         );
 
-        console.log(updateProfileApiResponse);
         if (updateProfileApiResponse.data.success === true) {
           toast.success("Profile Data updated successfully");
         }
@@ -218,7 +231,10 @@ const EventRegisterForm = () => {
 
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/events/participants/${eventID}`,
-        formData,
+        {
+          ...formData,
+          fullName: `${formData.firstName} ${formData.lastName}`,
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -226,8 +242,6 @@ const EventRegisterForm = () => {
           },
         }
       );
-
-      console.log("Response: ", response);
 
       if (response.data.success === true) {
         toast.success("Registration successful!");
@@ -241,6 +255,7 @@ const EventRegisterForm = () => {
       setLoading(false);
     }
   };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -254,7 +269,7 @@ const EventRegisterForm = () => {
   const renderField = (field: FormField) => {
     const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${
       errors[field.id] ? "border-red-500" : "border-zinc-700"
-    } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all`;
+    } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all text-white`;
 
     if (field.type === "select") {
       return (
@@ -304,6 +319,37 @@ const EventRegisterForm = () => {
           />
           {errors[field.id] && (
             <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>
+          )}
+        </div>
+      );
+    }
+
+    if (field.id === "phone") {
+      return (
+        <div key={field.id} className="grid grid-cols-3 gap-2">
+          <select
+            id="countryCode"
+            className={`${baseClassName} col-span-1`}
+            value={formData.countryCode}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, countryCode: e.target.value }))
+            }
+          >
+            <option value="+91">+91 (IN)</option>
+            <option value="+1">+1 (US)</option>
+            <option value="+44">+44 (UK)</option>
+            {/* country codes */}
+          </select>
+          <input
+            type={field.type}
+            id={field.id}
+            className={`${baseClassName} col-span-2`}
+            placeholder={field.placeholder}
+            value={formData[field.id as keyof typeof formData]}
+            onChange={handleChange}
+          />
+          {errors[field.id] && (
+            <p className="text-red-500 text-sm mt-1 col-span-3">{errors[field.id]}</p>
           )}
         </div>
       );
@@ -359,10 +405,11 @@ const EventRegisterForm = () => {
               <h2 className="text-xl font-semibold text-purple-400 mb-4">
                 Personal Information
               </h2>
-              <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {renderField(formFields[0])}
                 {renderField(formFields[1])}
               </div>
+              {renderField(formFields[2])}
             </div>
 
             <div className="space-y-6">
@@ -370,8 +417,8 @@ const EventRegisterForm = () => {
                 Contact Details
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {renderField(formFields[2])}
                 {renderField(formFields[3])}
+                {renderField(formFields[4])}
               </div>
               <div className="px-1 flex items-center py-2">
                 <input
@@ -396,10 +443,10 @@ const EventRegisterForm = () => {
                 Academic Information
               </h2>
               <div className="space-y-6">
-                {renderField(formFields[4])}
+                {renderField(formFields[5])}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {renderField(formFields[5])}
                   {renderField(formFields[6])}
+                  {renderField(formFields[7])}
                 </div>
               </div>
             </div>
