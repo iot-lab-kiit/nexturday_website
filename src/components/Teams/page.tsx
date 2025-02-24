@@ -1,21 +1,25 @@
 import { useState } from 'react';
 import { Users, UserPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { CreateTeamForm } from './CreateTeamForm';
+// import { CreateTeamForm } from './CreateTeamForm';
 import { JoinTeamForm } from './JoinTeamForm';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Teams = () => {
-    const [showCreateForm, setShowCreateForm] = useState<boolean>(false);
+    // const [showCreateForm, setShowCreateForm] = useState<boolean>(false);
     const [showJoinTeamForm, setShowJoinTeamForm] = useState<boolean>(false);
     const currentTeam = null;
+    const navigate = useNavigate();
+    const { eventID } = useParams<{ eventID: string }>();
+
 
     if (!currentTeam) {
         return (
             <>
-                <CreateTeamForm
+                {/* <CreateTeamForm
                     isOpen={showCreateForm}
                     onClose={() => setShowCreateForm(false)}
-                />
+                /> */}
                 <JoinTeamForm
                     isOpen={showJoinTeamForm}
                     onClose={() => setShowJoinTeamForm(false)}
@@ -61,7 +65,7 @@ const Teams = () => {
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        onClick={() => setShowCreateForm(true)}
+                                        onClick={() => navigate(`/event-details/${eventID}/register`)}
                                         className="w-full px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg shadow-purple-500/20"
                                     >
                                         Create New Team
