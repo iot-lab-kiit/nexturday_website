@@ -4,6 +4,8 @@ import { CheckCircle2, Users, X, UserPlus2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useState } from "react";
+import axios from "axios";
+import { useAuthStore } from "../../zustand/UseAuthStore";
 
 export const JoinTeamForm = ({
   isOpen,
@@ -13,18 +15,44 @@ export const JoinTeamForm = ({
   onClose: () => void;
 }) => {
   const [inviteCode, setInviteCode] = useState<string>("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  const { authData } = useAuthStore();
   const { eventID } = useParams();
   const navigate = useNavigate();
 
-  const handleJoinTeam = () => {
+  const handleJoinTeam = async () => {
     if (!inviteCode.trim()) {
       toast.error("Please enter an invite code");
       return;
     }
 
-    toast.success("Team joined successfully!");
-    navigate(`/event-details/${eventID}/teams/${inviteCode}`);
+    console.log(inviteCode);
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/events/participants/team/join/${inviteCode}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Successfully joined the team!");
+        navigate(`/event-details/${eventID}/teamsDashboard`);
+      }
+    } catch (error) {
+      console.error("Join team error:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to join team. Invalid or expired invite code."
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,7 +108,8 @@ export const JoinTeamForm = ({
                       placeholder="Enter team invite code"
                       value={inviteCode}
                       onChange={(e) => setInviteCode(e.target.value)}
-                      className="w-full p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 text-white focus:border-purple-500 transition-all duration-300 uppercase"
+                      className="w-full p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 text-white focus:border-purple-500 transition-all duration-300 "
+                      disabled={isLoading}
                     />
                     <div className="flex gap-4 items-center text-zinc-500 text-sm">
                       <span className="flex items-center gap-2">
@@ -116,9 +145,12 @@ export const JoinTeamForm = ({
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleJoinTeam}
-                    className="w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all duration-300"
+                    disabled={isLoading}
+                    className={`w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg ${
+                      isLoading ? "opacity-50 cursor-not-allowed" : "hover:shadow-purple-500/40"
+                    } transition-all duration-300`}
                   >
-                    Join Team
+                    {isLoading ? "Joining..." : "Join Team"}
                   </motion.button>
                 </div>
               </CardContent>

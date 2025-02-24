@@ -95,6 +95,7 @@ export interface Team {
   members: TeamMember[];
   maxMembers: number;
   leader: string;
+  leaderName: string; 
 }
 
 // Optional: Export all types as a namespace for easier access
