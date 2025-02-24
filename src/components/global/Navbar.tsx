@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
     async function fetchEventfavourite() {
       try {
         const response = await fetch(
-          `https://nexterday.iotkiit.in/api/events/${currentEvent?.id}`,
+          `${import.meta.env.VITE_SERVER_URL}/events/${currentEvent?.id}`,
           {
             method: "GET",
             headers: {
@@ -31,15 +31,13 @@ export const Navbar: React.FC = () => {
 
         const data = await response.json();
         setIsFavourite(data.data.isFavorite);
+        // console.log("Favorite event response:", data);
       } catch (error) {
-        console.error("Error fetching event favorite status:", error);
+        console.error("Error favoriting event:", error);
       }
     }
-
-    if (currentEvent?.id && authData.token) {
-      fetchEventfavourite();
-    }
-  }, [currentEvent, authData.token]);
+    fetchEventfavourite();
+  }, [currentEvent]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,7 +58,7 @@ export const Navbar: React.FC = () => {
       if (state) {
         try {
           fetch(
-            `https://nexterday.iotkiit.in/api/events/participants/favorite/${currentEvent?.id}`,
+            `${import.meta.env.VITE_SERVER_URL}/events/participants/favorite/${currentEvent?.id}`,
             {
               method: "DELETE",
               headers: {
@@ -73,17 +71,17 @@ export const Navbar: React.FC = () => {
               throw new Error("Network response was not ok");
             }
             response.json().then((response) => {
-              console.log("Unfavorite event response:", response);
+              console.log("Favorite event response:", response);
             });
           });
         } catch (error) {
-          console.error("Error unfavoriting event:", error);
+          console.error("Error favoriting event:", error);
         }
         return !state;
       }
       try {
         fetch(
-          `https://nexterday.iotkiit.in/api/events/participants/favorite/${currentEvent?.id}`,
+          `${import.meta.env.VITE_SERVER_URL}/events/participants/favorite/${currentEvent?.id}`,
           {
             method: "POST",
             headers: {
@@ -115,14 +113,23 @@ export const Navbar: React.FC = () => {
           </h1>
         </a>
 
-        <div className="relative flex gap-2" ref={dropdownRef}>
+        <div className="relative flex" ref={dropdownRef}>
           <button
-            className={`p-2 rounded-full hover:bg-zinc-800/50 transition-all duration-300 
-              ${window.location.href.includes("event-details") ? "" : "hidden"}`}
-            onClick={handleFavoriteClick}
+            className={`w-full rounded-2xl px-8 py-2 text-left text-sm transition-all duration-300 
+              ${
+                window.location.href.includes("event-details") ? "" : " hidden"
+              } ${favourite ? "text-red-500 scale-125" : "text-zinc-300"}`}
+            onClick={(e) => {
+              e.currentTarget
+                .querySelector("svg")
+                ?.classList.add("scale-125", "text-red-500");
+              handleFavoriteClick();
+            }}
           >
             <svg
-              className={`w-6 h-6 transition-all duration-200 ${favourite ? "fill-red-500 stroke-red-500" : "stroke-zinc-300"}`}
+              className="w-6 h-6 transition-all duration-200"
+              fill="none"
+              stroke="currentColor"
               strokeWidth="2"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -136,29 +143,16 @@ export const Navbar: React.FC = () => {
           </button>
           {loggedIn ? (
             <>
-              <div
-                className="w-9 h-9 rounded-full cursor-pointer"
-                onClick={() => setShowDropdown(!showDropdown)}
-              >
-                {authData.photoURL ? (
-                  <>
-                    <img
-                      src={authData.photoURL.toString()}
-                      onLoad={(e) => e.currentTarget.classList.add("opacity-100")}
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                        const placeholder = e.currentTarget.parentElement?.querySelector(".placeholder");
-                        if (placeholder) placeholder.classList.remove("hidden");
-                      }}
-                      alt="Profile"
-                      className="w-full h-full rounded-full object-cover ring-2 ring-purple-500/20 hover:ring-purple-500/40 transition-all duration-300 opacity-0"
-                    />
-                    <div className="placeholder hidden w-full h-full rounded-full bg-gradient-to-r from-purple-500 via-purple-700 to-purple-900 animate-pulse"></div>
-                  </>
-                ) : (
-                  <div className="w-full h-full rounded-full bg-gradient-to-r from-purple-500 via-purple-700 to-purple-900 animate-pulse"></div>
-                )}
-              </div>
+              {authData.photoURL ? (
+                <img
+                  src={authData.photoURL.toString()}
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  alt="Profile"
+                  className="w-9 h-9 rounded-xl object-cover ring-2 ring-purple-500/20 hover:ring-purple-500/40 transition-all duration-300 cursor-pointer"
+                />
+              ) : (
+                <div className="w-9 h-9 rounded-xl bg-zinc-800/50 animate-pulse" />
+              )}
 
               {showDropdown && (
                 <div className="absolute right-0 mt-2 w-48 rounded-xl bg-zinc-900 border border-zinc-800 shadow-lg">

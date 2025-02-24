@@ -1,5 +1,8 @@
+import { LucideIcon } from "lucide-react";
+import { ReactNode } from "react";
+
 export interface CardProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
@@ -12,10 +15,10 @@ export interface EventDetailType {
 }
 
 export interface AuthData {
-  token: null | string;
-  displayName: null | string;
-  email: null | string;
-  photoURL: null | string;
+  token: string | null;
+  displayName: string | null;
+  email: string | null;
+  photoURL: string | null;
 }
 
 export interface User {
@@ -23,6 +26,35 @@ export interface User {
   displayName: string | null;
   email: string | null;
   photoURL: string | null;
+}
+
+export interface Venue {
+  id: string;
+  mapUrl: string;
+  name: string;
+}
+
+export interface EventDetail {
+  about: string;
+  createdAt: string;
+  eventId: string;
+  from: string;
+  id: string;
+  name: string;
+  to: string;
+  type: string;
+  updatedAt: string;
+  venue: Venue | null;
+  venueId: string | null;
+}
+
+export interface Society {
+  name: string;
+}
+
+export interface EventImage {
+  key: string;
+  url: string;
 }
 
 export interface Event {
@@ -33,27 +65,10 @@ export interface Event {
   about: string;
   websiteUrl: string;
   joined: boolean;
+  maxTeamSize: number;
   emails: string[];
   guidlines: string[];
-  details: [
-    {
-      about: string;
-      createdAt: string;
-      eventId: string;
-      from: string;
-      id: string;
-      name: string;
-      to: string;
-      type: string;
-      updatedAt: string;
-      venue: {
-        id: string;
-        mapUrl: string;
-        name: string;
-      };
-      venueId: string | null;
-    }
-  ];
+  details: EventDetail[];
   phoneNumbers: string[];
   registrationUrl: string;
   price: number;
@@ -63,20 +78,16 @@ export interface Event {
   participationCount: number;
   createdAt: string;
   updatedAt: string;
-  society: {
-    name: string;
-  };
-  images: {
-    key: string;
-    url: string;
-  }[];
+  society: Society;
+  images: EventImage[];
 }
 
 export interface TeamMember {
-  name: string | "",
+  name: string;
   email: string;
   status: "accepted" | "pending" | "leader";
 }
+
 export interface Team {
   id: string;
   name: string;
@@ -84,4 +95,18 @@ export interface Team {
   members: TeamMember[];
   maxMembers: number;
   leader: string;
+}
+
+// Optional: Export all types as a namespace for easier access
+export namespace Types {
+  export type Card = CardProps;
+  export type EventDetail = EventDetailType;
+  export type Auth = AuthData;
+  export type User = User;
+  export type Venue = Venue;
+  export type Society = Society;
+  export type EventImage = EventImage;
+  export type Event = Event;
+  export type TeamMember = TeamMember;
+  export type Team = Team;
 }

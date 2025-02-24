@@ -230,7 +230,7 @@ const EventRegisterForm = () => {
       }
 
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/events/participants/${eventID}`,
+        `${import.meta.env.VITE_SERVER_URL}/events/participants/team/create/${eventID}`,
         {
           ...formData,
           fullName: `${formData.firstName} ${formData.lastName}`,

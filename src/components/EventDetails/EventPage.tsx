@@ -48,7 +48,6 @@ const EventPage: React.FC = () => {
 
         if (eventDetailsApiResponse.status === 200) {
           setCurrentEvent(eventDetailsApiResponse.data.data);
-          console.log(eventDetailsApiResponse.data.data);
           toast.success('Event fetched successfully');
         }
       } catch (err: any) {
@@ -58,6 +57,7 @@ const EventPage: React.FC = () => {
           return;
         }
         setError(true);
+        toast.error('Failed to fetch events');
         toast.error('Failed to fetch events');
       } finally {
         setLoading(false);

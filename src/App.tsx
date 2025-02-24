@@ -7,6 +7,7 @@ import EventRegisterForm from "./components/EventRegisterForm/page";
 import NotFound from "./components/Home/NotFound";
 import Profile from "./components/Profile/page"
 import Teams from "./components/Teams/page";
+import TeamDashboard from "./components/currentteam/page"
 import { TeamInviteForm } from "./components/Teams/TeamInviteForm/TeamInviteForm";
 import CurrentTeam from "./components/Teams/CurrentTeam";
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/event-details/:eventID/register" element={<EventRegisterForm />} />
         <Route path="/event-details/:eventID/teams" element={<Teams />} />
+        <Route path="/event-details/:eventID/teamsDashboard" element={<TeamDashboard />} />
         <Route path="/event-details/:eventID/teams/:teamID" element={<CurrentTeam />} />
         <Route path="/event-details/:eventID/teams/team-invite/:teamID" element={<TeamInviteForm />} />
         <Route path="/event-details/:eventID" element={<EventDetails />} />

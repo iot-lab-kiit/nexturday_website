@@ -16,6 +16,7 @@ export const CreateTeamForm = ({
 }) => {
     const teamName = useEventStore((state) => state.teamName);
     const setTeamName = useEventStore((state) => state.setTeamName);
+    
 
     const { eventID } = useParams();
     const navigate = useNavigate();
