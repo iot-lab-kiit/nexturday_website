@@ -15,17 +15,29 @@ interface EventStoreInterface {
     currentEvent: Event | null;
     setCurrentEvent: (currentEvent: Event | null) => void;
 
+    
+    markEventAsJoined: (eventId: string | undefined) => void; 
+
     subEventIndex: number;
     setSubEventIndex: (subEventIndex: number) => void;
 
     hideFooter: boolean;
     setHideFooter: (hideFooter: boolean) => void;
 
-    teamName: string,
+    teamName: string;
     setTeamName: (teamName: string) => void;
+
+    isLoading: boolean;
+    setIsLoading: (loading: boolean) => void;
+  
+    error: string | null;
+    setError: (error: string | null) => void;
+  
+    profileChecked: boolean;
+    setProfileChecked: (checked: boolean) => void;
 }
 
-export const useEventStore = create<EventStoreInterface>((set) => ({
+export const useEventStore = create<EventStoreInterface>((set, get) => ({
     eventDetails: null,
     setEventDetails: (eventDetails: { popular: Event[]; upcoming: Event[]; recent: Event[] } | null) => set({ eventDetails }),
 
@@ -35,6 +47,22 @@ export const useEventStore = create<EventStoreInterface>((set) => ({
     currentEvent: null,
     setCurrentEvent: (currentEvent: Event | null) => set({ currentEvent }),
 
+    
+    markEventAsJoined: (eventId) => {
+        const currentEvent = get().currentEvent; 
+        
+        if (currentEvent && eventId === currentEvent.id) {
+            set({
+                currentEvent: {
+                    ...currentEvent, 
+                    joined: true      
+                }
+            });
+        } else {
+            console.warn("markEventAsJoined called but currentEvent.id doesn't match or currentEvent is null.");
+        }
+    },
+
     subEventIndex: 0,
     setSubEventIndex: (subEventIndex: number) => set({ subEventIndex }),
 
@@ -43,4 +71,13 @@ export const useEventStore = create<EventStoreInterface>((set) => ({
 
     teamName: "",
     setTeamName: (teamName: string) => set({ teamName }),
+
+    isLoading: false,
+    setIsLoading: (loading) => set({ isLoading: loading }),
+  
+    error: null,
+    setError: (error) => set({ error }),
+  
+    profileChecked: false,
+    setProfileChecked: (checked) => set({ profileChecked: checked }),
 }));

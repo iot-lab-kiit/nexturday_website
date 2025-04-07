@@ -155,7 +155,16 @@ export const Navbar: React.FC = () => {
               )}
 
               {showDropdown && (
+                
                 <div className="absolute right-0 mt-2 w-48 rounded-xl bg-zinc-900 border border-zinc-800 shadow-lg">
+                  <div className="py-1">
+                    <button
+                     onClick={() => (window.location.href = "/update-profile")}
+                      className="w-full rounded-2xl px-4 py-2 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-300"
+                    >
+                      Update Profile
+                    </button>
+                  </div>
                   <div className="py-1">
                     <button
                       onClick={() => (window.location.href = "/profile")}
