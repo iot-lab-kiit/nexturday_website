@@ -32,8 +32,7 @@ export const Registration: React.FC = () => {
           </div>
         </div>
       );
-    }
-    else {
+    } else {
       return (
         <div className="bg-black/95 backdrop-blur-md border border-zinc-800/50 rounded-lg">
           <div className="px-4 py-4 flex flex-wrap lg:flex-nowrap items-center gap-4">
@@ -104,12 +103,8 @@ export const Registration: React.FC = () => {
           </div>
           <div className="flex justify-center lg:justify-end flex-1">
             <a
-              href={
-                currentEvent?.paid
-                  ? currentEvent?.registrationUrl
-                  : `/event-details/${eventID}/register`
-              }
-              target={currentEvent?.paid ? "_blank" : "_self"}
+              href={`/event-details/${eventID}/payments`}
+              target="_self"
               rel="noreferrer"
             >
               <button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
@@ -120,41 +115,36 @@ export const Registration: React.FC = () => {
         </div>
       </div>
     );
-  }
-  else{
+  } else {
     return (
-        <div className="bg-black/95 backdrop-blur-md border border-zinc-800/50 rounded-lg">
-          <div className="px-4 py-4 flex flex-wrap lg:flex-nowrap items-center gap-4">
-            <div className="text-left flex-1">
-              <div className="flex flex-row items-center gap-2">
-                {currentEvent?.paid ? (
-                  <p className="text-xl md:text-2xl text-gray-400">
-                    Starts from ₹{currentEvent?.price || "---"}
-                  </p>
-                ) : (
-                  <p className="text-2xl font-bold">
-                    {currentEvent?.price || "No Registration Fee"}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex justify-center lg:justify-end flex-1">
-              <a
-                href={
-                  currentEvent?.paid
-                    ? currentEvent?.registrationUrl
-                    : `/event-details/${eventID}/teams`
-                }
-                target={currentEvent?.paid ? "_blank" : "_self"}
-                rel="noreferrer"
-              >
-                <button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
-                  Manage Teams
-                </button>
-              </a>
+      <div className="bg-black/95 backdrop-blur-md border border-zinc-800/50 rounded-lg">
+        <div className="px-4 py-4 flex flex-wrap lg:flex-nowrap items-center gap-4">
+          <div className="text-left flex-1">
+            <div className="flex flex-row items-center gap-2">
+              {currentEvent?.paid ? (
+                <p className="text-xl md:text-2xl text-gray-400">
+                  Starts from ₹{currentEvent?.price || "---"}
+                </p>
+              ) : (
+                <p className="text-2xl font-bold">
+                  {currentEvent?.price || "No Registration Fee"}
+                </p>
+              )}
             </div>
           </div>
+          <div className="flex justify-center lg:justify-end flex-1">
+            <a
+              href={`/event-details/${eventID}/teams`}
+              target="_self"
+              rel="noreferrer"
+            >
+              <button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
+                Manage Teams
+              </button>
+            </a>
+          </div>
         </div>
-      );
+      </div>
+    );
   }
 };
