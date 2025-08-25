@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide scrollbars for carousel container */
+.carousel-container,
+.carousel-container * {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.carousel-container::-webkit-scrollbar,
+.carousel-container *::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+/* Additional global scrollbar hiding for body overflow */
+html {
+  overflow-x: hidden;
+}

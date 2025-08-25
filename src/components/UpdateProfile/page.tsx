@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useAuthStore } from "../../zustand/UseAuthStore"; // Assuming this path is correct
+import { useAuthStore } from "../../zustand/UseAuthStore.tsx"; // Assuming this path is correct
 import axios from "axios";
 import { branches, years } from "../../data/data"; // Assuming this path is correct
 import ErrorDisplay from "../global/ErrorDisplay"; // Assuming this path is correct

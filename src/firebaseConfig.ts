@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { useAuthStore } from "./zustand/UseAuthStore";
+import { useAuthStore } from "./zustand/UseAuthStore.tsx";
 import { User } from "./types/types";
 import axios from "axios";
 import toast from "react-hot-toast";

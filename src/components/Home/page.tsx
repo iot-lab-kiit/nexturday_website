@@ -6,7 +6,7 @@ import LoadingSpinner from "../global/LoadingSpinner";
 import toast from "react-hot-toast";
 import PopularEvents from "./PopularEvents";
 import UpcomingEvents from "./UpcomingEvents";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore.tsx";
 import { ArrowRight, LogIn, ChevronLeft, ChevronRight } from "lucide-react";
 import Carousel from "./Carousel/page";
 import ErrorDisplay from "../global/ErrorDisplay";
@@ -57,7 +57,6 @@ const Dashboard = () => {
           };
           setEventDetails(eventDetails);
           setMaxUpcomingPages(response.data.data.totalPages);
-          
         });
       return upcomingPage + 1;
     });
@@ -97,7 +96,6 @@ const Dashboard = () => {
           };
           setEventDetails(eventDetails);
           setMaxUpcomingPages(response.data.data.totalPages);
-          
         });
       return upcomingPage - 1;
     });
@@ -224,7 +222,7 @@ const Dashboard = () => {
         </div>
       ) : (
         <div
-          className="bg-[#03001]"
+          className="bg-[#03001] carousel-container"
           style={{
             // background: `
             //   radial-gradient(78.04% 121.39% at 91.04% 12.83%, rgba(40, 3, 53, 0.87) 0%, rgba(41, 41, 41, 0.26) 100%),
@@ -236,6 +234,7 @@ const Dashboard = () => {
           }}
         >
           <Carousel />
+          <div className="h-40 md:h-52"></div>
           <PopularEvents />
           <UpcomingEvents />
           <div className="flex justify-center items-center mt-4 space-x-4">

@@ -19,6 +19,10 @@ export interface AuthData {
   displayName: string | null;
   email: string | null;
   photoURL: string | null;
+  teamId?: string | null;
+  branch?: string;
+  studyYear?: string;
+  teamId?: string | null;
 }
 
 export interface User {

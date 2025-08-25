@@ -1,11 +1,18 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, Copy, Pencil, Shield, UserPlus } from "lucide-react";
+import {
+  CheckCircle2,
+  Copy,
+  Pencil,
+  Shield,
+  UserPlus,
+  ArrowLeft,
+} from "lucide-react";
 import { Card, CardContent, CardHeader } from "../EventDetails/CardComponents";
 import { useState, useEffect } from "react";
 import { Team } from "../../types/types";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore.tsx";
 import { useEventStore } from "../../zustand/useEventStore";
 import toast from "react-hot-toast";
 
@@ -40,6 +47,7 @@ interface APITeamResponse {
 
 const CurrentTeam = () => {
   const { eventID } = useParams<{ eventID: string }>();
+  const navigate = useNavigate();
   const [currentTeam, setCurrentTeam] = useState<Team | null>(null);
   const [loading, setLoading] = useState(true);
   const { authData } = useAuthStore();
@@ -152,6 +160,19 @@ const CurrentTeam = () => {
     >
       <Card className="max-w-4xl mx-auto bg-black/50 backdrop-blur-sm border border-zinc-800/50">
         <CardHeader className="p-6 border-b border-zinc-800/50">
+          {/* Back to Event Button */}
+          <div className="mb-4">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate(`/event-details/${eventID}`)}
+              className="flex items-center gap-2 px-3 py-2 text-zinc-400 hover:text-white transition-all duration-300"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-sm">Back to Event</span>
+            </motion.button>
+          </div>
+
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text">

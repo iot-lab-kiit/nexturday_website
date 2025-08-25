@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { toast } from "react-hot-toast";
-import { useParams } from "react-router-dom";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../zustand/UseAuthStore.tsx";
+import { useEventStore } from "../../zustand/useEventStore.tsx";
 import axios from "axios";
 import { branches, years } from "../../data/data";
 import ErrorDisplay from "../global/ErrorDisplay";
@@ -17,16 +18,19 @@ interface FormField {
 
 const EventRegisterForm = () => {
   const { eventID } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const hasFetchedProfile = useRef(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
-    countryCode: "+91", 
+    countryCode: "+91",
     whatsappNumber: "",
+    countryCodeWhatsapp: "+91",
     rollNumber: "",
     branch: "",
     studyYear: "",
@@ -42,6 +46,33 @@ const EventRegisterForm = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const authData = useAuthStore((state) => state.authData);
+  const setAuthData = useAuthStore((state) => state.setAuthData);
+  const currentEvent = useEventStore((state) => state.currentEvent);
+
+  // Autofill academic info from auth store (removed duplicate useEffect)
+  useEffect(() => {
+    if (authData?.branch) {
+      setFormData((prev) => ({
+        ...prev,
+        branch: authData.branch || prev.branch,
+        studyYear: authData.studyYear || prev.studyYear,
+      }));
+    }
+  }, [authData?.branch, authData?.studyYear]);
+
+  // Autofill email and extract roll number from email
+  useEffect(() => {
+    if (authData?.email && authData.email.endsWith('@kiit.ac.in')) {
+      // Extract roll number from email (e.g., 2306124@kiit.ac.in -> 2306124)
+      const rollNumber = authData.email.split('@')[0];
+      
+      setFormData((prev) => ({
+        ...prev,
+        email: authData.email || prev.email,
+        rollNumber: rollNumber || prev.rollNumber,
+      }));
+    }
+  }, [authData?.email]);
 
   const formFields: FormField[] = [
     {
@@ -138,45 +169,64 @@ const EventRegisterForm = () => {
         ) {
           const fullName = userProfile?.detail?.name || "";
           const [firstName, lastName] = fullName.split(" ");
+          const apiEmail = userProfile?.email || authData?.email || "";
+          let apiRollNumber = userProfile?.rollNo || "";
+          
+          // If roll number is not provided but email contains KIIT email, extract roll number from email
+          if (!apiRollNumber && apiEmail && apiEmail.endsWith('@kiit.ac.in')) {
+            apiRollNumber = apiEmail.split('@')[0];
+          }
 
-          setFormData({
-            firstName: firstName || "",
-            lastName: lastName || "",
-            email: userProfile?.email || authData?.email || "",
-            phone: userProfile?.detail?.phoneNumber || "",
-            countryCode: "+91", 
-            whatsappNumber: userProfile?.detail?.whatsappNumber || "",
-            rollNumber:
-              userProfile?.rollNo ||
-              authData?.email?.replace("@kiit.ac.in", "") ||
-              "",
-            branch: userProfile?.detail?.branch || "",
-            studyYear: userProfile?.detail?.studyYear || 2,
-          });
+          const fetchedBranch = userProfile?.detail?.branch || "";
+          const fetchedYear = userProfile?.detail?.studyYear?.toString() || "";
+          setFormData((prev) => ({
+            ...prev,
+            firstName: firstName || prev.firstName,
+            lastName: lastName || prev.lastName,
+            email: apiEmail || prev.email,
+            rollNumber: apiRollNumber || prev.rollNumber,
+            phone: userProfile?.detail?.phoneNumber || prev.phone,
+            countryCode: "+91",
+            whatsappNumber:
+              userProfile?.detail?.whatsappNumber || prev.whatsappNumber,
+            countryCodeWhatsapp: "+91",
+            branch: fetchedBranch,
+            studyYear: fetchedYear,
+          }));
 
           setOriginalProfileData({
             name: userProfile?.detail?.name || "",
-            branch: userProfile?.detail?.branch || "",
+            branch: fetchedBranch,
             phoneNumber: userProfile?.detail?.phoneNumber || "",
             whatsappNumber: userProfile?.detail?.whatsappNumber || "",
-            studyYear: userProfile?.detail?.studyYear || 2,
+            studyYear: Number(fetchedYear) || 2,
+          });
+          // store academic info in auth store
+          setAuthData({
+            ...authData,
+            branch: fetchedBranch,
+            studyYear: fetchedYear,
           });
           toast.success("Profile data loaded successfully");
+          hasFetchedProfile.current = true;
         }
-      } catch (err: any) {
-        const errorMessage =
-          err.response?.data?.message || "Failed to fetch profile";
-        setError(errorMessage);
-        toast.error(errorMessage);
+      } catch (error) {
+        let message = "Failed to fetch profile";
+        if (axios.isAxiosError(error) && error.response?.data?.message) {
+          message = error.response.data.message;
+        }
+        setError(message);
+        toast.error(message);
       } finally {
         setLoading(false);
       }
     };
 
-    if (authData?.token) {
+    if (authData?.token && !hasFetchedProfile.current) {
       fetchUserProfile();
     }
-  }, [authData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authData?.token]); // Only depend on token to prevent infinite loop
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -198,7 +248,8 @@ const EventRegisterForm = () => {
       setLoading(true);
 
       const hasProfileChanges =
-        originalProfileData.name !== `${formData.firstName} ${formData.lastName}` ||
+        originalProfileData.name !==
+          `${formData.firstName} ${formData.lastName}` ||
         originalProfileData.branch !== formData.branch ||
         originalProfileData.phoneNumber !== formData.phone ||
         originalProfileData.whatsappNumber !== formData.whatsappNumber ||
@@ -214,6 +265,7 @@ const EventRegisterForm = () => {
             countryCode: formData.countryCode,
             phoneNumber: formData.phone,
             whatsappNumber: formData.whatsappNumber,
+            countryCodeWhatsapp: formData.countryCodeWhatsapp,
             studyYear: Number(formData.studyYear),
           },
           {
@@ -230,11 +282,10 @@ const EventRegisterForm = () => {
       }
 
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/events/participants/team/create/${eventID}`,
-        {
-          ...formData,
-          fullName: `${formData.firstName} ${formData.lastName}`,
-        },
+        `${
+          import.meta.env.VITE_SERVER_URL
+        }/events/participants/team/create/${eventID}`,
+        { ...formData, fullName: `${formData.firstName} ${formData.lastName}` },
         {
           headers: {
             "Content-Type": "application/json",
@@ -244,13 +295,31 @@ const EventRegisterForm = () => {
       );
 
       if (response.data.success === true) {
-        toast.success("Registration successful!");
-        window.location.href = `/event-details/${eventID}`;
+        // For paid events, redirect to payment page instead of storing teamId immediately
+        if (currentEvent?.paid) {
+          toast.success(
+            "Team created! Please complete payment to activate your team."
+          );
+          navigate(`/event-details/${eventID}/payments`);
+        } else {
+          // For free events, store teamId and go to team dashboard
+          if (response.data.data?.teamId) {
+            setAuthData({
+              ...authData,
+              teamId: response.data.data.teamId,
+            });
+          }
+          toast.success("Registration successful!");
+          navigate(`/event-details/${eventID}/teamsDashboard`);
+        }
       }
-    } catch (err: any) {
-      const errorMessage = err.response?.data?.message || "Registration failed";
-      setError(errorMessage);
-      toast.error(errorMessage);
+    } catch (error) {
+      let message = "Registration failed";
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        message = error.response.data.message;
+      }
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -267,6 +336,12 @@ const EventRegisterForm = () => {
   };
 
   const renderField = (field: FormField) => {
+    // Safety check to prevent accessing undefined field
+    if (!field) {
+      console.error("renderField called with undefined field");
+      return null;
+    }
+
     const baseClassName = `w-full px-4 py-4 bg-black/40 rounded-xl border ${
       errors[field.id] ? "border-red-500" : "border-zinc-700"
     } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all text-white`;
@@ -304,26 +379,6 @@ const EventRegisterForm = () => {
       );
     }
 
-    if (field.id === "email" || field.id === "rollNumber") {
-      return (
-        <div key={field.id}>
-          <input
-            type={field.type}
-            id={field.id}
-            className={`${baseClassName} cursor-not-allowed opacity-50 bg-zinc-800/50 border-zinc-800 text-zinc-400`}
-            placeholder={field.placeholder}
-            value={formData[field.id as keyof typeof formData]}
-            onChange={handleChange}
-            disabled
-            title="This field cannot be edited"
-          />
-          {errors[field.id] && (
-            <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>
-          )}
-        </div>
-      );
-    }
-
     if (field.id === "phone") {
       return (
         <div key={field.id} className="grid grid-cols-3 gap-2">
@@ -338,7 +393,6 @@ const EventRegisterForm = () => {
             <option value="+91">+91 (IN)</option>
             <option value="+1">+1 (US)</option>
             <option value="+44">+44 (UK)</option>
-            {/* country codes */}
           </select>
           <input
             type={field.type}
@@ -349,7 +403,44 @@ const EventRegisterForm = () => {
             onChange={handleChange}
           />
           {errors[field.id] && (
-            <p className="text-red-500 text-sm mt-1 col-span-3">{errors[field.id]}</p>
+            <p className="text-red-500 text-sm mt-1 col-span-3">
+              {errors[field.id]}
+            </p>
+          )}
+        </div>
+      );
+    }
+
+    if (field.id === "whatsappNumber") {
+      return (
+        <div key={field.id} className="grid grid-cols-3 gap-2">
+          <select
+            id="countryCodeWhatsapp"
+            className={`${baseClassName} col-span-1`}
+            value={formData.countryCodeWhatsapp}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                countryCodeWhatsapp: e.target.value,
+              }))
+            }
+          >
+            <option value="+91">+91 (IN)</option>
+            <option value="+1">+1 (US)</option>
+            <option value="+44">+44 (UK)</option>
+          </select>
+          <input
+            type={field.type}
+            id={field.id}
+            className={`${baseClassName} col-span-2`}
+            placeholder={field.placeholder}
+            value={formData[field.id as keyof typeof formData]}
+            onChange={handleChange}
+          />
+          {errors[field.id] && (
+            <p className="text-red-500 text-sm mt-1 col-span-3">
+              {errors[field.id]}
+            </p>
           )}
         </div>
       );
@@ -428,14 +519,19 @@ const EventRegisterForm = () => {
                     setFormData((prev) => ({
                       ...prev,
                       whatsappNumber: formData.phone,
+                      countryCodeWhatsapp: formData.countryCode,
                     }))
                   }
                   className="accent-purple-400 cursor-pointer h-4 w-4"
                 />
-                <label htmlFor="sameAsPhone" className="text-sm ml-2 text-gray-400">
+                <label
+                  htmlFor="sameAsPhone"
+                  className="text-sm ml-2 text-gray-400"
+                >
                   Same as Phone Number
                 </label>
               </div>
+              {/* Removed extra country code field; only phone and WhatsApp in contact */}
             </div>
 
             <div className="space-y-6">

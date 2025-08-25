@@ -1,5 +1,5 @@
 import { signInWithGoogle, signOutUser } from "../../firebaseConfig";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore.tsx";
 // import { useNavigate } from "react-router-dom";
 import frame3Image from "../../assets/Frame3.webp";
 import { Icon } from "@iconify/react";
@@ -33,13 +33,13 @@ const NexterLanding = () => {
             <span className="text-white font-bold">IoT lab</span>
           </header>
 
-            <div className="">
+          <div className="">
             <span
               style={{
-              fontSize: "8vw",
-              fontWeight: 700,
-              lineHeight: "1.1",
-              display: "block",
+                fontSize: "8vw",
+                fontWeight: 700,
+                lineHeight: "1.1",
+                display: "block",
               }}
               className="text-white"
             >
@@ -47,18 +47,18 @@ const NexterLanding = () => {
             </span>
             <span
               style={{
-              background: "rgb(103, 51, 152)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              fontSize: "8vw",
-              fontWeight: 700,
-              lineHeight: "1.1",
-              display: "block",
+                background: "rgb(103, 51, 152)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontSize: "8vw",
+                fontWeight: 700,
+                lineHeight: "1.1",
+                display: "block",
               }}
             >
               DAY
             </span>
-            </div>
+          </div>
 
           <p className="text-gray-200 ">
             One app for all . Login with your <strong>kiit email</strong>!
@@ -67,7 +67,7 @@ const NexterLanding = () => {
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png"
               alt="Google Play Store Download Button"
-               loading="lazy"
+              loading="lazy"
               className="w-[45%] md:w-[12%] flex justify-center lg:justify-start"
             />
           </div>
@@ -80,7 +80,9 @@ const NexterLanding = () => {
                   {authData.photoURL && (
                     <img
                       src={authData.photoURL.toString()}
-                      onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+                      onLoad={(e) =>
+                        e.currentTarget.classList.remove("opacity-0")
+                      }
                       onError={(e) => e.currentTarget.classList.add("hidden")}
                       alt="Profile"
                       className="absolute inset-0 w-8 h-8 rounded-full object-cover ring-2 ring-purple-500/20 hover:ring-purple-500/40 transition-opacity duration-300 cursor-pointer opacity-0"

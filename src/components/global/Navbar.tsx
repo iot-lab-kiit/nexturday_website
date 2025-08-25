@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { signInWithGoogle, signOutUser } from "../../firebaseConfig";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore.tsx";
 import { useEventStore } from "../../zustand/useEventStore";
 
 export const Navbar: React.FC = () => {
@@ -13,9 +13,11 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     async function fetchEventfavourite() {
+      if (!currentEvent?.id) return; // Prevent fetch if no event id
+
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_SERVER_URL}/events/${currentEvent?.id}`,
+          `${import.meta.env.VITE_SERVER_URL}/events/${currentEvent.id}`,
           {
             method: "GET",
             headers: {
@@ -31,13 +33,13 @@ export const Navbar: React.FC = () => {
 
         const data = await response.json();
         setIsFavourite(data.data.isFavorite);
-        // console.log("Favorite event response:", data);
       } catch (error) {
-        console.error("Error favoriting event:", error);
+        console.error("Error fetching event favorite status:", error);
       }
     }
+
     fetchEventfavourite();
-  }, [currentEvent]);
+  }, [currentEvent, authData.token]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -54,54 +56,34 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const handleFavoriteClick = async () => {
-    setIsFavourite((state) => {
-      if (state) {
-        try {
-          fetch(
-            `${import.meta.env.VITE_SERVER_URL}/events/participants/favorite/${currentEvent?.id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${authData.token}`,
-              },
-            }
-          ).then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            response.json().then((response) => {
-              console.log("Favorite event response:", response);
-            });
-          });
-        } catch (error) {
-          console.error("Error favoriting event:", error);
+    if (!currentEvent?.id) return; // Prevent calls with undefined id
+
+    setIsFavourite((prev) => !prev);
+
+    try {
+      const method = favourite ? "DELETE" : "POST";
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/events/participants/favorite/${
+          currentEvent.id
+        }`,
+        {
+          method,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authData.token}`,
+          },
         }
-        return !state;
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-      try {
-        fetch(
-          `${import.meta.env.VITE_SERVER_URL}/events/participants/favorite/${currentEvent?.id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${authData.token}`,
-            },
-          }
-        ).then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          response.json().then((response) => {
-            console.log("Favorite event response:", response);
-          });
-        });
-      } catch (error) {
-        console.error("Error favoriting event:", error);
-      }
-      return !state;
-    });
+
+      const resData = await response.json();
+      console.log("Favorite event response:", resData);
+    } catch (error) {
+      console.error("Error favoriting event:", error);
+    }
   };
 
   return (
@@ -113,22 +95,22 @@ export const Navbar: React.FC = () => {
           </h1>
         </a>
 
-        <div className="relative flex" ref={dropdownRef}>
+        <div className="relative flex items-center gap-4" ref={dropdownRef}>
           <button
-            className={`w-full rounded-2xl px-8 py-2 text-left text-sm transition-all duration-300 
+            className={`rounded-full p-2 text-left text-sm transition-all duration-300 
               ${
                 window.location.href.includes("event-details") ? "" : " hidden"
-              } ${favourite ? "text-red-500 scale-125" : "text-zinc-300"}`}
+              } ${favourite ? "text-purple-400 scale-110" : "text-zinc-300"}`}
             onClick={(e) => {
               e.currentTarget
                 .querySelector("svg")
-                ?.classList.add("scale-125", "text-red-500");
+                ?.classList.add("scale-110", "text-purple-400");
               handleFavoriteClick();
             }}
           >
             <svg
               className="w-6 h-6 transition-all duration-200"
-              fill="none"
+              fill={favourite ? "currentColor" : "none"}
               stroke="currentColor"
               strokeWidth="2"
               viewBox="0 0 24 24"
@@ -148,18 +130,17 @@ export const Navbar: React.FC = () => {
                   src={authData.photoURL.toString()}
                   onClick={() => setShowDropdown(!showDropdown)}
                   alt="Profile"
-                  className="w-9 h-9 rounded-xl object-cover ring-2 ring-purple-500/20 hover:ring-purple-500/40 transition-all duration-300 cursor-pointer"
+                  className="w-9 h-9 rounded-full object-cover ring-2 ring-purple-500/20 hover:ring-purple-500/40 transition-all duration-300 cursor-pointer"
                 />
               ) : (
-                <div className="w-9 h-9 rounded-xl bg-zinc-800/50 animate-pulse" />
+                <div className="w-9 h-9 rounded-full bg-zinc-800/50 animate-pulse" />
               )}
 
               {showDropdown && (
-                
                 <div className="absolute right-0 mt-2 w-48 rounded-xl bg-zinc-900 border border-zinc-800 shadow-lg">
                   <div className="py-1">
                     <button
-                     onClick={() => (window.location.href = "/update-profile")}
+                      onClick={() => (window.location.href = "/update-profile")}
                       className="w-full rounded-2xl px-4 py-2 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-300"
                     >
                       Update Profile

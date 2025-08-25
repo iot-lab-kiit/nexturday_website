@@ -77,9 +77,10 @@ const Footer = () => {
               <a
                 href="https://maps.app.goo.gl/K2hVdXF2YmG5gXFz7"
                 target="_blank"
-                className="flex items-center gap-3 group">
+                className="flex items-center gap-3 group"
+              >
                 <MapPin className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform duration-300" />
-                <span>Campus 15, KIIT, Bhubaneswar</span>
+                <span>Campus 25, KIIT, Bhubaneswar</span>
               </a>
             </div>
           </div>

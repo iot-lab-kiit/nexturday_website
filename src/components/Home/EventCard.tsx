@@ -1,5 +1,6 @@
 import { Event } from "../../types/types";
 import { formatDate } from "../../utils/utils";
+import { Users, User } from "lucide-react";
 
 export const EventCard = (event: Event) => {
   const eventDate = formatDate(event.from);
@@ -81,8 +82,36 @@ export const EventCard = (event: Event) => {
   return (
     <a
       href={`/event-details/${event.id}`}
-      className="group relative rounded-2xl overflow-hidden backdrop-blur-sm border border-zinc-800/50   transition-all duration-300 hover:shadow-gray-700 hover:shadow-lg"
+      className="group relative rounded-2xl overflow-hidden backdrop-blur-sm border border-zinc-800/50 transition-all duration-300 hover:shadow-gray-700 hover:shadow-lg block"
     >
+      {/* Badge indicators container */}
+      <div className="absolute inset-x-2 top-2 z-20 flex justify-between items-start">
+        {/* Free badge - left side */}
+        <div className="flex flex-col gap-1">
+          {!event.paid && (
+            <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm bg-green-500/20 text-green-300 border border-green-500/30">
+              <span className="whitespace-nowrap">Free</span>
+            </div>
+          )}
+        </div>
+
+        {/* Team size indicator - right side */}
+        <div className="flex flex-col gap-1">
+          <div
+            className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm ${
+              event.maxTeamSize === 1
+                ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                : "bg-purple-500/20 text-purple-300 border border-purple-500/30"
+            }`}
+          >
+            {event.maxTeamSize === 1 ? <User size={12} /> : <Users size={12} />}
+            <span className="whitespace-nowrap">
+              {event.maxTeamSize === 1 ? "Solo" : `Team (${event.maxTeamSize})`}
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div className="w-full aspect-square p-4 bg-zinc-800/50 rounded-t-xl">
         {renderImage()}
       </div>

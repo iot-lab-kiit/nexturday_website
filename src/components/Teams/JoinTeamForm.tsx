@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useState } from "react";
 import axios from "axios";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore.tsx";
 
 export const JoinTeamForm = ({
   isOpen,
@@ -16,7 +16,8 @@ export const JoinTeamForm = ({
 }) => {
   const [inviteCode, setInviteCode] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const { authData } = useAuthStore();
+  const setAuthData = useAuthStore((state) => state.setAuthData);
+  const authData = useAuthStore((state) => state.authData);
   const { eventID } = useParams();
   const navigate = useNavigate();
 
@@ -30,7 +31,9 @@ export const JoinTeamForm = ({
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/events/participants/team/join/${inviteCode}`,
+        `${
+          import.meta.env.VITE_SERVER_URL
+        }/events/participants/team/join/${inviteCode}`,
         {},
         {
           headers: {
@@ -41,15 +44,18 @@ export const JoinTeamForm = ({
       );
 
       if (response.data.success) {
+        // Update zustand store with joined teamId
+        setAuthData({ ...authData, teamId: response.data.teamId });
         toast.success("Successfully joined the team!");
-        navigate(`/event-details/${eventID}/teamsDashboard`);
+        navigate(`/event-details/${eventID}/teams`);
       }
     } catch (error) {
       console.error("Join team error:", error);
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to join team. Invalid or expired invite code."
-      );
+      let message = "Failed to join team. Invalid or expired invite code.";
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        message = error.response.data.message;
+      }
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -147,7 +153,9 @@ export const JoinTeamForm = ({
                     onClick={handleJoinTeam}
                     disabled={isLoading}
                     className={`w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg ${
-                      isLoading ? "opacity-50 cursor-not-allowed" : "hover:shadow-purple-500/40"
+                      isLoading
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:shadow-purple-500/40"
                     } transition-all duration-300`}
                   >
                     {isLoading ? "Joining..." : "Join Team"}

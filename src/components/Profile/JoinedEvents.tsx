@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuthStore } from "../../zustand/UseAuthStore";
+import { useAuthStore } from "../../zustand/UseAuthStore.tsx";
 import { EventCard } from "../Home/EventCard";
 import { Event } from "../../types/types";
 
@@ -11,7 +11,7 @@ const JoinedEvents = () => {
     const fetchJoinedEvents = async () => {
       try {
         const response = await fetch(
-          "https://nexterday.iotkiit.in/api/events/participants",
+          `${import.meta.env.VITE_SERVER_URL}/events/participants`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

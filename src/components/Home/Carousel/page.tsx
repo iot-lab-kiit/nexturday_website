@@ -1,98 +1,82 @@
-import { useEventStore } from "../../../zustand/useEventStore";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Navigation, Autoplay } from "swiper/modules";
-import "swiper/swiper-bundle.css";
+"use client";
 
-export default function App() {
+import { useEventStore } from "../../../zustand/useEventStore";
+import { Carousel } from "../../ui/carousel";
+import { useEffect, useState } from "react";
+
+export default function EventCarousel() {
   const eventDetails = useEventStore((state) => state.eventDetails);
+
   const filteredUpcomingEvents = eventDetails?.recent
     .sort((a, b) => {
-      const aDate: any = new Date(a.from);
-      const bDate: any = new Date(b.from);
-      return bDate - aDate;
+      return new Date(a.from).getTime() - new Date(b.from).getTime();
     })
-    .slice(0, 5);
+    .slice(0, 10);
+
+  const slideData = filteredUpcomingEvents?.map((event) => ({
+    title: event.name,
+    src: event.images[0]?.url,
+    href: `/event-details/${event.id}`,
+    date: new Date(event.from).toLocaleDateString(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    }),
+    button: "View Event",
+  }));
+
+  // Start from 2nd slide (index 1) and limit range to exclude first and last
+  const [current, setCurrent] = useState(1);
+
+  useEffect(() => {
+    if (!slideData || slideData.length <= 2) return;
+
+    const interval = setInterval(() => {
+      setCurrent((prev) => {
+        // Cycle from index 1 to slideData.length - 2 (second to second-last)
+        const next = prev + 1;
+        if (next >= slideData.length - 1) {
+          return 1; // Reset to second card
+        }
+        return next;
+      });
+    }, 4000); // Auto-rotate every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [slideData]);
+
+  // Navigation handlers - limited to second through second-last cards
+  const handlePrev = () => {
+    if (!slideData || slideData.length <= 2) return;
+    setCurrent((prev) => {
+      if (prev <= 1) {
+        return slideData.length - 2; // Go to second-last card
+      }
+      return prev - 1;
+    });
+  };
+
+  const handleNext = () => {
+    if (!slideData || slideData.length <= 2) return;
+    setCurrent((prev) => {
+      if (prev >= slideData.length - 2) {
+        return 1; // Go to second card
+      }
+      return prev + 1;
+    });
+  };
 
   return (
-    <div className="w-full max-w-[1400px] h-full mx-auto py-8 md:py-16 px-4">
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-indigo-500/10 to-purple-500/20 blur-[100px] -z-10" />
-        <Swiper
-          effect={"coverflow"}
-          grabCursor={true}
-          centeredSlides={true}
-          loop={true}
-          slidesPerView={1}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: 1.5,
-            },
-            768: {
-              slidesPerView: 2.2,
-            },
-            1024: {
-              slidesPerView: 3,
-            },
-          }}
-          coverflowEffect={{
-            rotate: 5,
-            stretch: -50,
-            depth: 200,
-            modifier: 2,
-            slideShadows: true,
-          }}
-          navigation={{
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          }}
-          modules={[EffectCoverflow, Navigation, Autoplay]}
-          className="mySwiper"
-        >
-          {filteredUpcomingEvents?.map((event, index) => (
-            <SwiperSlide key={index}>
-              <div className="w-full h-full flex justify-center items-center rounded-full transform transition-transform duration-300 hover:scale-105">
-                <a
-                  href={`/event-details/${event.id}`}
-                  rel="noreferrer"
-                  className="w-full block group"
-                >
-                  <div className="">
-
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <img
-                        src={event.images[0]?.url}
-                        alt={`Event ${index + 1}`}
-                        className="object-cover w-full h-full transform transition-transform duration-500 rounded-xl group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/40 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
-                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
-                        <h3 className="text-white font-bold text-xl mb-2 truncate transition-colors">
-                          {event.name}
-                        </h3>
-                        <div className="flex items-center space-x-2">
-                          <span className="inline-block w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
-                          <p className="text-purple-200 text-sm">
-                            {new Date(event.from).toLocaleDateString(undefined, {
-                              weekday: "long",
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            })}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+    <div className="relative w-full h-[200px] md:h-[250px] py-4 mb-8 md:mb-12 carousel-container">
+      {slideData && (
+        <Carousel
+          slides={slideData}
+          current={current}
+          onPrev={handlePrev}
+          onNext={handleNext}
+          showNavButtons={true}
+        />
+      )}
     </div>
   );
 }
