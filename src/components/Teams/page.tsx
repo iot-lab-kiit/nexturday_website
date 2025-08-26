@@ -24,8 +24,8 @@ const Teams = () => {
 
   // Check URL parameters to auto-open join team form
   useEffect(() => {
-    const action = searchParams.get('action');
-    if (action === 'join') {
+    const action = searchParams.get("action");
+    if (action === "join") {
       setShowJoinTeamForm(true);
     }
   }, [searchParams]);
@@ -53,34 +53,39 @@ const Teams = () => {
         // If we get a team ID, check payment status for paid events
         if (response.data?.data?.teamId) {
           const foundTeamId = response.data.data.teamId;
-          
+
           // For paid events, check payment status before allowing team dashboard access
           if (currentEvent?.paid) {
             try {
               const paymentResponse = await axios.get(
-                `${import.meta.env.VITE_SERVER_URL}/events/participants/team/paymentStatus/${foundTeamId}`,
+                `${
+                  import.meta.env.VITE_SERVER_URL
+                }/events/participants/team/paymentStatus/${foundTeamId}`,
                 {
                   headers: {
                     Authorization: `Bearer ${authData.token}`,
                   },
                 }
               );
-              
+
               const paymentStatus = paymentResponse.data?.data?.payment_status;
-              
-              if (paymentStatus === "APPROVED" || paymentStatus === "VERIFIED") {
+
+              if (
+                paymentStatus === "APPROVED" ||
+                paymentStatus === "VERIFIED"
+              ) {
                 // Payment approved, allow team dashboard access
                 navigate(`/event-details/${eventID}/teamsDashboard`);
                 return;
               } else {
                 // Check if user came here to join a team (from payment page)
-                const action = searchParams.get('action');
-                if (action === 'join') {
+                const action = searchParams.get("action");
+                if (action === "join") {
                   // Allow user to stay on teams page to join other teams
                   setIsCheckingTeam(false);
                   return;
                 }
-                
+
                 // Payment not approved, redirect to payment page
                 toast("Please complete payment to access team dashboard", {
                   icon: "💳",

@@ -62,10 +62,10 @@ const EventRegisterForm = () => {
 
   // Autofill email and extract roll number from email
   useEffect(() => {
-    if (authData?.email && authData.email.endsWith('@kiit.ac.in')) {
+    if (authData?.email && authData.email.endsWith("@kiit.ac.in")) {
       // Extract roll number from email (e.g., 2306124@kiit.ac.in -> 2306124)
-      const rollNumber = authData.email.split('@')[0];
-      
+      const rollNumber = authData.email.split("@")[0];
+
       setFormData((prev) => ({
         ...prev,
         email: authData.email || prev.email,
@@ -171,10 +171,10 @@ const EventRegisterForm = () => {
           const [firstName, lastName] = fullName.split(" ");
           const apiEmail = userProfile?.email || authData?.email || "";
           let apiRollNumber = userProfile?.rollNo || "";
-          
+
           // If roll number is not provided but email contains KIIT email, extract roll number from email
-          if (!apiRollNumber && apiEmail && apiEmail.endsWith('@kiit.ac.in')) {
-            apiRollNumber = apiEmail.split('@')[0];
+          if (!apiRollNumber && apiEmail && apiEmail.endsWith("@kiit.ac.in")) {
+            apiRollNumber = apiEmail.split("@")[0];
           }
 
           const fetchedBranch = userProfile?.detail?.branch || "";

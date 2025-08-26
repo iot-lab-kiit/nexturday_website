@@ -55,7 +55,6 @@ const CurrentTeam = () => {
   const [isRenaming, setIsRenaming] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
   const [isUpdatingName, setIsUpdatingName] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchTeamData = async () => {
@@ -122,7 +121,7 @@ const CurrentTeam = () => {
       setCurrentTeam({ ...currentTeam, name: newTeamName });
       setIsRenaming(false);
       toast.success("Team name updated successfully");
-    } catch (error) {
+    } catch {
       toast.error("Failed to update team name");
     } finally {
       setIsUpdatingName(false);
@@ -131,9 +130,7 @@ const CurrentTeam = () => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    setCopied(true);
     toast.success("Copied to clipboard!");
-    setTimeout(() => setCopied(false), 2000);
   };
 
   if (loading) {

@@ -47,7 +47,7 @@ export const Registration: React.FC = () => {
         if (res.data?.data?.teamId) {
           const foundTeamId = res.data.data.teamId;
           setTeamId(foundTeamId);
-          
+
           // For paid events, check payment status
           if (hasPayment) {
             try {
@@ -59,7 +59,7 @@ export const Registration: React.FC = () => {
                   },
                 }
               );
-              
+
               if (paymentRes.data?.data?.payment_status) {
                 setPaymentStatus(paymentRes.data.data.payment_status);
               }
@@ -114,7 +114,7 @@ export const Registration: React.FC = () => {
 
       if (response.status === 200 || response.status === 201) {
         markEventAsJoined(eventID);
-        
+
         // For solo paid events, redirect to payment page after registration
         if (isSolo && hasPayment) {
           navigate(`/event-details/${eventID}/payments`);
@@ -125,10 +125,10 @@ export const Registration: React.FC = () => {
       }
     } catch (err: unknown) {
       console.error("Registration API error:", err);
-      const errorMessage = axios.isAxiosError(err) 
+      const errorMessage = axios.isAxiosError(err)
         ? err.response?.data?.message || err.message
-        : err instanceof Error 
-        ? err.message 
+        : err instanceof Error
+        ? err.message
         : "An error occurred during registration.";
       setError(errorMessage);
     } finally {
@@ -148,13 +148,16 @@ export const Registration: React.FC = () => {
     // Function to get the appropriate status message and styling
     const getRegistrationStatus = () => {
       if (isSolo) {
-        if (hasPayment && (paymentStatus === "APPROVED" || paymentStatus === "VERIFIED")) {
+        if (
+          hasPayment &&
+          (paymentStatus === "APPROVED" || paymentStatus === "VERIFIED")
+        ) {
           return {
             message: "Payment Verified - Registered Successfully!",
             color: "text-green-400",
             bgColor: "bg-green-400/10",
             icon: CheckCircle2,
-            iconColor: "text-green-400"
+            iconColor: "text-green-400",
           };
         } else if (hasPayment && paymentStatus === "UNDER_VERIFICATION") {
           return {
@@ -162,7 +165,7 @@ export const Registration: React.FC = () => {
             color: "text-yellow-400",
             bgColor: "bg-yellow-400/10",
             icon: Clock,
-            iconColor: "text-yellow-400"
+            iconColor: "text-yellow-400",
           };
         } else if (hasPayment) {
           return {
@@ -170,7 +173,7 @@ export const Registration: React.FC = () => {
             color: "text-yellow-400",
             bgColor: "bg-yellow-400/10",
             icon: Clock,
-            iconColor: "text-yellow-400"
+            iconColor: "text-yellow-400",
           };
         } else {
           return {
@@ -178,7 +181,7 @@ export const Registration: React.FC = () => {
             color: "text-green-400",
             bgColor: "bg-green-400/10",
             icon: CheckCircle2,
-            iconColor: "text-green-400"
+            iconColor: "text-green-400",
           };
         }
       } else {
@@ -192,7 +195,7 @@ export const Registration: React.FC = () => {
                 color: "text-green-400",
                 bgColor: "bg-green-400/10",
                 icon: CheckCircle2,
-                iconColor: "text-green-400"
+                iconColor: "text-green-400",
               };
             case "UNDER_VERIFICATION":
               return {
@@ -200,7 +203,7 @@ export const Registration: React.FC = () => {
                 color: "text-yellow-400",
                 bgColor: "bg-yellow-400/10",
                 icon: Clock,
-                iconColor: "text-yellow-400"
+                iconColor: "text-yellow-400",
               };
             default:
               return {
@@ -208,7 +211,7 @@ export const Registration: React.FC = () => {
                 color: "text-red-400",
                 bgColor: "bg-red-400/10",
                 icon: AlertCircle,
-                iconColor: "text-red-400"
+                iconColor: "text-red-400",
               };
           }
         } else if (hasPayment) {
@@ -218,7 +221,7 @@ export const Registration: React.FC = () => {
             color: "text-yellow-400",
             bgColor: "bg-yellow-400/10",
             icon: Clock,
-            iconColor: "text-yellow-400"
+            iconColor: "text-yellow-400",
           };
         } else {
           // Free team event
@@ -227,7 +230,7 @@ export const Registration: React.FC = () => {
             color: "text-green-400",
             bgColor: "bg-green-400/10",
             icon: CheckCircle2,
-            iconColor: "text-green-400"
+            iconColor: "text-green-400",
           };
         }
       }
@@ -254,28 +257,41 @@ export const Registration: React.FC = () => {
           </div>
 
           <div className="flex justify-center lg:justify-end flex-1 gap-3">
-            {!isSolo && (!hasPayment || paymentStatus === "APPROVED" || paymentStatus === "VERIFIED") && (
-              <button
-                onClick={handleManageTeamClick}
-                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105"
-              >
-                Team Dashboard
-              </button>
-            )}
-            {hasPayment && isSolo && (paymentStatus !== "APPROVED" && paymentStatus !== "VERIFIED") && (
-              <a href={`/event-details/${eventID}/payments`}>
-                <button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
-                  {paymentStatus === "UNDER_VERIFICATION" ? "Check Payment Status" : "Proceed to Payment"}
+            {!isSolo &&
+              (!hasPayment ||
+                paymentStatus === "APPROVED" ||
+                paymentStatus === "VERIFIED") && (
+                <button
+                  onClick={handleManageTeamClick}
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105"
+                >
+                  Team Dashboard
                 </button>
-              </a>
-            )}
-            {hasPayment && !isSolo && (paymentStatus !== "APPROVED" && paymentStatus !== "VERIFIED") && (
-              <a href={`/event-details/${eventID}/payments`}>
-                <button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
-                  {paymentStatus === "UNDER_VERIFICATION" ? "Check Payment Status" : "Proceed to Payment"}
-                </button>
-              </a>
-            )}
+              )}
+            {hasPayment &&
+              isSolo &&
+              paymentStatus !== "APPROVED" &&
+              paymentStatus !== "VERIFIED" && (
+                <a href={`/event-details/${eventID}/payments`}>
+                  <button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
+                    {paymentStatus === "UNDER_VERIFICATION"
+                      ? "Check Payment Status"
+                      : "Proceed to Payment"}
+                  </button>
+                </a>
+              )}
+            {hasPayment &&
+              !isSolo &&
+              paymentStatus !== "APPROVED" &&
+              paymentStatus !== "VERIFIED" && (
+                <a href={`/event-details/${eventID}/payments`}>
+                  <button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
+                    {paymentStatus === "UNDER_VERIFICATION"
+                      ? "Check Payment Status"
+                      : "Proceed to Payment"}
+                  </button>
+                </a>
+              )}
           </div>
         </div>
       </div>

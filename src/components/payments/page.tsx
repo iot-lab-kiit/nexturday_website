@@ -47,7 +47,8 @@ export const Payments: React.FC = () => {
       }
 
       try {
-        const response = await axios.get( // teamid is fetched
+        const response = await axios.get(
+          // teamid is fetched
           `${
             import.meta.env.VITE_SERVER_URL
           }/events/participants/teamId/${eventID}`,
@@ -61,10 +62,11 @@ export const Payments: React.FC = () => {
           console.log("Existing teamId found:", response.data);
           const foundTeamId = response.data.data.teamId;
           setTeamId(foundTeamId);
-          
+
           // Check payment status after getting teamId
           try {
-            const response1 = await axios.get( //payment status is fetched
+            const response1 = await axios.get(
+              //payment status is fetched
               `${
                 import.meta.env.VITE_SERVER_URL
               }/events/participants/team/paymentStatus/${foundTeamId}`,
@@ -78,7 +80,7 @@ export const Payments: React.FC = () => {
             if (response1.data?.data?.payment_status) {
               const status = response1.data.data.payment_status;
               setPaymentStatus(status);
-              
+
               // If payment is approved, redirect to team dashboard
               if (status === "APPROVED" || status === "VERIFIED") {
                 toast.success("Payment verified successfully!");
@@ -124,11 +126,11 @@ export const Payments: React.FC = () => {
           },
         }
       );
-      
+
       if (response.data?.data?.payment_status) {
         const status = response.data.data.payment_status;
         setPaymentStatus(status);
-        
+
         if (status === "APPROVED" || status === "VERIFIED") {
           toast.success("Payment verified successfully!");
           navigate(`/event-details/${eventID}/teamsDashboard`);
@@ -173,7 +175,7 @@ export const Payments: React.FC = () => {
       toast.success("Transaction UID submitted for team.");
       setUid(""); // Clear the input
       setShowQR(false); // Hide QR after submission
-      
+
       // Check payment status after submission
       setTimeout(() => {
         checkPaymentStatus();
@@ -187,16 +189,18 @@ export const Payments: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black/95 text-white px-4">
       <h1 className="text-2xl font-bold mb-6">Event Payment</h1>
-      
+
       {/* Payment Status Display */}
       {paymentStatus && (
         <div className="mb-6 p-4 rounded-lg border max-w-sm w-full">
-          {(paymentStatus === "APPROVED" || paymentStatus === "VERIFIED") ? (
+          {paymentStatus === "APPROVED" || paymentStatus === "VERIFIED" ? (
             <div className="flex items-center gap-3 text-green-400">
               <CheckCircle2 className="w-5 h-5" />
               <div>
                 <p className="font-semibold">Payment Approved</p>
-                <p className="text-sm text-gray-400">Redirecting to team dashboard...</p>
+                <p className="text-sm text-gray-400">
+                  Redirecting to team dashboard...
+                </p>
               </div>
             </div>
           ) : paymentStatus === "UNDER_VERIFICATION" ? (
@@ -204,7 +208,9 @@ export const Payments: React.FC = () => {
               <Clock className="w-5 h-5" />
               <div>
                 <p className="font-semibold">Payment Under Verification</p>
-                <p className="text-sm text-gray-400">Please wait while we verify your payment</p>
+                <p className="text-sm text-gray-400">
+                  Please wait while we verify your payment
+                </p>
               </div>
             </div>
           ) : (
@@ -212,7 +218,9 @@ export const Payments: React.FC = () => {
               <AlertCircle className="w-5 h-5" />
               <div>
                 <p className="font-semibold">Payment not yet done</p>
-                <p className="text-sm text-gray-400">Please complete your payment</p>
+                <p className="text-sm text-gray-400">
+                  Please complete your payment
+                </p>
               </div>
             </div>
           )}
@@ -220,7 +228,9 @@ export const Payments: React.FC = () => {
       )}
 
       {/* Show QR and payment form when no approved payment or user wants to pay again */}
-      {(showQR || !paymentStatus || (paymentStatus !== "APPROVED" && paymentStatus !== "VERIFIED")) && (
+      {(showQR ||
+        !paymentStatus ||
+        (paymentStatus !== "APPROVED" && paymentStatus !== "VERIFIED")) && (
         <>
           {qrUrl ? (
             <img
@@ -254,18 +264,22 @@ export const Payments: React.FC = () => {
       )}
 
       {/* Payment Status Actions */}
-      {paymentStatus && (paymentStatus !== "APPROVED" && paymentStatus !== "VERIFIED") && (
-        <div className="mt-6 flex gap-3">
-          <button
-            onClick={checkPaymentStatus}
-            disabled={isCheckingStatus}
-            className="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-all disabled:opacity-50"
-          >
-            <RefreshCw className={`w-4 h-4 ${isCheckingStatus ? "animate-spin" : ""}`} />
-            {isCheckingStatus ? "Checking..." : "Check Status"}
-          </button>
-        </div>
-      )}
+      {paymentStatus &&
+        paymentStatus !== "APPROVED" &&
+        paymentStatus !== "VERIFIED" && (
+          <div className="mt-6 flex gap-3">
+            <button
+              onClick={checkPaymentStatus}
+              disabled={isCheckingStatus}
+              className="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-all disabled:opacity-50"
+            >
+              <RefreshCw
+                className={`w-4 h-4 ${isCheckingStatus ? "animate-spin" : ""}`}
+              />
+              {isCheckingStatus ? "Checking..." : "Check Status"}
+            </button>
+          </div>
+        )}
 
       {/* Back to Event Button */}
       <button

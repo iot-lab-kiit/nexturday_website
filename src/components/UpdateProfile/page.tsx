@@ -31,17 +31,6 @@ interface FormDataState {
   personalEmail: string;
 }
 
-interface OriginalProfileData {
-    name: string;
-    branch: string;
-    phoneNumber: string;
-    whatsappNumber: string;
-    studyYear: number;
-    personalEmail?: string;
-    countryCode?: string;
-    countryCodeWhatsapp?: string;
-}
-
 const ProfileUpdateForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -66,7 +55,6 @@ const ProfileUpdateForm = () => {
     personalEmail: "",
   });
 
-   const [originalProfileData, setOriginalProfileData] = useState<Partial<OriginalProfileData>>({});
    const [errors, setErrors] = useState<Record<string, string>>({});
    const authData = useAuthStore((state) => state.authData);
 
@@ -221,25 +209,22 @@ const ProfileUpdateForm = () => {
           };
           setFormData(fetchedData);
 
-          setOriginalProfileData({
-              name: userProfile.detail.name || "",
-              branch: userProfile.detail.branch || "",
-              phoneNumber: userProfile.detail.phoneNumber || "",
-              whatsappNumber: userProfile.detail.whatsappNumber || "",
-              studyYear: userProfile.detail.studyYear || 0,
-              personalEmail: userProfile.detail.personalEmail || "",
-          });
-
         } else {
              setFormData(prev => ({
                  ...prev,
                  email: authData.email || "",
                  rollNumber: authData.email?.replace("@kiit.ac.in", "") || "",
              }));
-             toast.info("Profile data not fully available. Please complete your profile.");
+             toast("Profile data not fully available. Please complete your profile.", {
+               icon: 'ℹ️',
+               style: {
+                 background: '#3b82f6',
+                 color: '#fff',
+               },
+             });
         }
 
-      } catch (err: any) {
+      } catch (err: unknown) {
         let errorMessage = "Failed to fetch profile data. Please try again later.";
 
         if (axios.isAxiosError(err) && err.response) {
@@ -327,21 +312,13 @@ const ProfileUpdateForm = () => {
 
       if (response.data.success === true) {
         toast.success("Profile updated successfully!");
-        setOriginalProfileData({
-             name: `${formData.firstName} ${formData.lastName}`,
-             branch: formData.branch,
-             phoneNumber: `${formData.countryCode}${formData.phone}`,
-             whatsappNumber: `${formData.countryCodeWhatsapp}${formData.whatsappNumber}`,
-             studyYear: Number(formData.studyYear),
-             personalEmail: formData.personalEmail,
-        });
       } else {
          const errorMessage = response.data.message || "Profile update failed. Please try again.";
          setError(errorMessage);
          toast.error(errorMessage);
       }
 
-    } catch (err: any) {
+    } catch (err: unknown) {
         let errorMessage = "An error occurred during profile update.";
 
         if (axios.isAxiosError(err) && err.response) {
@@ -604,7 +581,7 @@ const ProfileUpdateForm = () => {
           </div>
         </div>
       </div>
-       <style jsx global>{`
+       <style>{`
             @keyframes fadeIn {
               from { opacity: 0; transform: translateY(10px); }
               to { opacity: 1; transform: translateY(0); }
