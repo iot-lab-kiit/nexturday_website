@@ -30,7 +30,7 @@ export const VenueSection = () => {
             </p>
             {currentEvent?.details[subEventIndex]?.venue?.mapUrl && (
               <a
-                href={currentEvent?.details[0]?.venue?.mapUrl || "#"}
+                href={currentEvent?.details[subEventIndex]?.venue?.mapUrl || "#"}
                 target="_blank"
                 className="text-purple-400 hover:text-purple-300 transition-colors text-sm flex items-center gap-2"
               >

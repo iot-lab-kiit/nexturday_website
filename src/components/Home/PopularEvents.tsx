@@ -34,7 +34,7 @@ const PopularEvents = () => {
       <h1 className="text-2xl text-center font-bold text-white mb-8">
         Popular Events
       </h1>
-
+        
       <Swiper
         ref={swiperRef}
         spaceBetween={10}
