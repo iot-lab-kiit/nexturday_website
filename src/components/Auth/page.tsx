@@ -1,7 +1,6 @@
 import { signInWithGoogle, signOutUser } from "../../firebaseConfig";
 import { useAuthStore } from "../../zustand/UseAuthStore.tsx";
 // import { useNavigate } from "react-router-dom";
-import frame3Image from "../../assets/Frame3.webp";
 import { Icon } from "@iconify/react";
 import { useEventStore } from "../../zustand/useEventStore";
 const NexterLanding = () => {
@@ -15,13 +14,18 @@ const NexterLanding = () => {
 
   return (
     <div
-      className="h-full bg-[#03001]"
+      className="h-full bg-[#030014] relative"
       style={{
-        backgroundImage: `url(${frame3Image})`,
+        backgroundImage: `url('/Final.jpg')`,
         backgroundSize: "cover",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      <div className=" items-center justify-center md:justify-normal  h-[91vh] flex flex-col lg:flex-row ">
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/40"></div>
+
+      <div className="relative z-10 items-center justify-center md:justify-normal h-[91vh] flex flex-col lg:flex-row">
         <div className="space-y-6 p-6 text-center justify-center flex items-center md:items-start flex-col  lg:text-left lg:ml-[10%]">
           <header className="flex items-center justify-center lg:justify-start space-x-3">
             <img
