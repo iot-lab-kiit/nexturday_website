@@ -78,8 +78,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
     <div className="[perspective:1200px] [transform-style:preserve-3d]">
       <li
         ref={slideRef}
-        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[50vmin] h-[50vmin] mx-[3vmin] z-10 cursor-pointer"
-        onClick={handleClick}
+       className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[360px] md:h-[360px] lg:w-[400px] lg:h-[400px] mx-3 md:mx-4 z-10 cursor-pointer"        onClick={handleClick}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
@@ -92,7 +91,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
         }}
       >
         <div
-          className="absolute top-0 left-0 w-full h-full bg-[#1D1F2F] rounded-[1%] overflow-hidden transition-all duration-150 ease-out"
+        className="absolute top-0 left-0 w-full h-full bg-[#1D1F2F] rounded-xl overflow-hidden transition-all duration-150 ease-out"
           style={{
             transform:
               current === index
@@ -101,7 +100,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
           }}
         >
           <img
-            className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
+            className="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-600 ease-in-out"      
             style={{
               opacity: current === index ? 1 : 0.5,
             }}
@@ -123,14 +122,14 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
         >
           <div className="bg-black/50 backdrop-blur-sm rounded-md p-3 border border-white/10">
             <h2
-              className="text-sm md:text-lg lg:text-xl font-semibold text-white"
+             className="text-base sm:text-lg md:text-xl font-semibold text-white line-clamp-1"
               style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
             >
               {title}
             </h2>
             {date && (
               <p
-                className="text-xs md:text-sm mt-1 text-gray-200"
+                  className="text-sm md:text-base mt-1 text-gray-200"
                 style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}
               >
                 {date}
@@ -194,7 +193,7 @@ export function Carousel({
 
   return (
     <div
-      className="relative w-[50vmin] h-[50vmin] mx-auto"
+      className="relative w-[70vmin] h-[70vmin] p-12 mx-auto"
       aria-labelledby={`carousel-heading-${id}`}
     >
       <ul
