@@ -43,7 +43,7 @@ const NexterLanding = () => {
               }}
               className="text-white"
             >
-              NEXTER
+              NEXTUR
             </span>
             <span
               style={{
@@ -61,7 +61,7 @@ const NexterLanding = () => {
           </div>
 
           <p className="text-gray-200 ">
-            One app for all . Login with your <strong>kiit email</strong>!
+            One app for all . Login with your <strong>email address</strong>!
           </p>
           <div className="flex justify-center lg:justify-start">
             <img

@@ -201,7 +201,7 @@ const Dashboard = () => {
               Access Required
             </h2>
             <p className="text-zinc-400 text-sm sm:text-base mb-8">
-              Please sign in with your <b>kiit email</b> to explore amazing
+              Please login to explore amazing
               events and opportunities
             </p>
             <a href="/login">

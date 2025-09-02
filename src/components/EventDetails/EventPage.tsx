@@ -77,20 +77,20 @@ const EventPage: React.FC = () => {
     <div className="bg-black text-white">
       <Navbar />
       {loading ? (
-        <div className="max-w-7xl mx-auto px-4 pt-20 md:pt-[4.25rem]">
+        <div className="max-w-7xl mx-auto px-4 pt-4 md:pt-6">
           <div className="flex justify-center items-center h-[calc(100vh-4rem)]">
             <LoadingSpinner />
           </div>
         </div>
       ) : error ? (
-        <div className="max-w-7xl mx-auto px-4 pt-20 md:pt-[4.25rem]">
+        <div className="max-w-7xl mx-auto px-4 pt-4 md:pt-6">
           <ErrorDisplay
             message="Failed to load event details. Please try again later."
             onRetry={() => window.location.reload()}
           />
         </div>
       ) : (
-        <main className="max-w-7xl mx-auto px-4 pt-20 md:pt-[4.25rem]">
+        <main className="max-w-7xl mx-auto px-4 pt-4 md:pt-6">
           {/* Back to Home Button */}
           <div className="mb-4 md:mb-6">
             <button

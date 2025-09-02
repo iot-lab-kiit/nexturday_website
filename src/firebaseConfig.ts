@@ -34,12 +34,11 @@ export const signInWithGoogle = async () => {
     };
 
     console.log("User signed in: ", user);
-    if (!user.email?.endsWith("@kiit.ac.in")) {
-      toast.error("Please use a KIIT email address.");
+    
+    // Basic email validation
+    if (!user.email || !user.email.includes('@') || !user.email.includes('.')) {
+      toast.error("Please use a valid email address.");
       await signOutUser();
-      // setTimeout(() => {
-      //   window.location.href = "/login";
-      // }, 4000);
       return;
     }
 

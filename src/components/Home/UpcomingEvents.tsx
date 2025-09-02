@@ -2,7 +2,16 @@ import { useState, useMemo } from "react";
 import { useEventStore } from "../../zustand/useEventStore";
 import { EventCard } from "./EventCard";
 import EventCardSkeleton from "./EventCardSkeleton";
-import { Grid3X3, Monitor, Palette, Trophy, Music, Users, Wrench, MoreHorizontal } from "lucide-react";
+import {
+  Grid3X3,
+  Monitor,
+  Palette,
+  Trophy,
+  Music,
+  Users,
+  Wrench,
+  MoreHorizontal,
+} from "lucide-react";
 
 const UpcomingEvents = () => {
   const upcomingEvents = useEventStore((state) => state.eventDetails)?.upcoming;
@@ -18,7 +27,7 @@ const UpcomingEvents = () => {
     { value: "cultural", label: "Cultural", icon: Music },
     { value: "seminar", label: "Seminar", icon: Users },
     { value: "workshop", label: "Workshop", icon: Wrench },
-    { value: "others", label: "Others", icon: MoreHorizontal }
+    { value: "others", label: "Others", icon: MoreHorizontal },
   ];
 
   // Filter events based on selected category
@@ -26,30 +35,37 @@ const UpcomingEvents = () => {
     if (!upcomingEvents || selectedCategory === "all") {
       return upcomingEvents;
     }
-    
+
     return upcomingEvents.filter((event) => {
       // Check if any of the event's tags include the selected category
-      return event.tags && event.tags.some((tag: string) => 
-        tag.toLowerCase() === selectedCategory.toLowerCase()
+      return (
+        event.tags &&
+        event.tags.some(
+          (tag: string) => tag.toLowerCase() === selectedCategory.toLowerCase()
+        )
       );
     });
   }, [upcomingEvents, selectedCategory]);
 
   return (
-    <section id="upcomingevents" className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+    <section
+      id="upcomingevents"
+      className="max-w-7xl mx-auto px-4 py-8 md:py-12"
+    >
       <div className="text-center mb-8 md:mb-12">
         <h1 className="text-xl md:text-2xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text">
           Upcoming Events
           {filteredEvents && (
             <span className="text-xs md:text-sm text-zinc-500 ml-2">
-              ({filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''})
+              ({filteredEvents.length} event
+              {filteredEvents.length !== 1 ? "s" : ""})
             </span>
           )}
         </h1>
         <p className="text-zinc-400 text-sm md:text-base max-w-2xl mx-auto mb-6 md:mb-8">
           Don't miss out on these exciting events happening soon
         </p>
-        
+
         {/* Category Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-6 md:mb-8 max-w-4xl mx-auto">
           {categories.map((category) => {
@@ -66,7 +82,9 @@ const UpcomingEvents = () => {
               >
                 <Icon size={14} className="md:w-4 md:h-4" />
                 <span className="hidden sm:inline">{category.label}</span>
-                <span className="sm:hidden">{category.label.split(' ')[0]}</span>
+                <span className="sm:hidden">
+                  {category.label.split(" ")[0]}
+                </span>
               </button>
             );
           })}
@@ -91,13 +109,15 @@ const UpcomingEvents = () => {
           <div className="col-span-full flex flex-col items-center justify-center py-16">
             <div className="text-6xl mb-4">📅</div>
             <p className="text-zinc-400 text-xl mb-2">
-              {selectedCategory === "all" 
-                ? "No upcoming events found" 
-                : `No ${categories.find(c => c.value === selectedCategory)?.label} events found`}
+              {selectedCategory === "all"
+                ? "No upcoming events found"
+                : `No ${
+                    categories.find((c) => c.value === selectedCategory)?.label
+                  } events found`}
             </p>
             <p className="text-zinc-500 text-sm">
-              {selectedCategory === "all" 
-                ? "Check back later for new events!" 
+              {selectedCategory === "all"
+                ? "Check back later for new events!"
                 : "Try selecting a different category or check back later!"}
             </p>
           </div>

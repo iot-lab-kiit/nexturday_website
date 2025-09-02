@@ -25,50 +25,38 @@ export default function EventCarousel() {
     button: "View Event",
   }));
 
-  // Start from 2nd slide (index 1) and limit range to exclude first and last
-  const [current, setCurrent] = useState(1);
+  const [current, setCurrent] = useState(0);
+  const [isChanging, setIsChanging] = useState(false);
 
   useEffect(() => {
-    if (!slideData || slideData.length <= 2) return;
+    if (!slideData || slideData.length <= 1) return;
 
     const interval = setInterval(() => {
-      setCurrent((prev) => {
-        // Cycle from index 1 to slideData.length - 2 (second to second-last)
-        const next = prev + 1;
-        if (next >= slideData.length - 1) {
-          return 1; // Reset to second card
-        }
-        return next;
-      });
-    }, 4000); // Auto-rotate every 4 seconds
+      if (!isChanging) {
+        setCurrent((prev) => (prev + 1) % slideData.length);
+      }
+    }, 5000); // Increased to 5 seconds for better UX
 
     return () => clearInterval(interval);
-  }, [slideData]);
+  }, [slideData, isChanging]);
 
-  // Navigation handlers - limited to second through second-last cards
   const handlePrev = () => {
-    if (!slideData || slideData.length <= 2) return;
-    setCurrent((prev) => {
-      if (prev <= 1) {
-        return slideData.length - 2; // Go to second-last card
-      }
-      return prev - 1;
-    });
+    if (!slideData || slideData.length <= 1 || isChanging) return;
+    setIsChanging(true);
+    setCurrent((prev) => (prev - 1 + slideData.length) % slideData.length);
+    setTimeout(() => setIsChanging(false), 300);
   };
 
   const handleNext = () => {
-    if (!slideData || slideData.length <= 2) return;
-    setCurrent((prev) => {
-      if (prev >= slideData.length - 2) {
-        return 1; // Go to second card
-      }
-      return prev + 1;
-    });
+    if (!slideData || slideData.length <= 1 || isChanging) return;
+    setIsChanging(true);
+    setCurrent((prev) => (prev + 1) % slideData.length);
+    setTimeout(() => setIsChanging(false), 300);
   };
 
   return (
-<div className="relative w-full min-h-[180px] md:min-h-[220px] lg:min-h-[250px] py-2 md:py-4 mb-4 md:mb-6 carousel-container overflow-x-hidden overflow-y-visible">
-      {slideData && (
+    <div className="relative w-full py-4 md:py-6 mb-6 md:mb-8">
+      {slideData && slideData.length > 0 && (
         <Carousel
           slides={slideData}
           current={current}
