@@ -89,7 +89,7 @@ export const EventCard = (event: Event) => {
         {/* Free badge - left side */}
         <div className="flex flex-col gap-1">
           {!event.paid && (
-            <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm bg-green-500/20 text-green-300 border border-green-500/30">
+            <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm bg-green-500/80 text-white border border-green-500/50">
               <span className="whitespace-nowrap">Free</span>
             </div>
           )}
@@ -100,8 +100,8 @@ export const EventCard = (event: Event) => {
           <div
             className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm ${
               event.maxTeamSize === 1
-                ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                : "bg-purple-500/20 text-purple-300 border border-purple-500/30"
+                ? "bg-blue-500/80 text-white border border-blue-500/50"
+                : "bg-purple-500/80 text-white border border-purple-500/50"
             }`}
           >
             {event.maxTeamSize === 1 ? <User size={12} /> : <Users size={12} />}

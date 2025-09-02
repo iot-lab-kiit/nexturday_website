@@ -67,7 +67,7 @@ export default function EventCarousel() {
   };
 
   return (
-<div className="relative w-full min-h-[200px] md:min-h-[250px] py-4 mb-8 md:mb-12 carousel-container overflow-x-hidden overflow-y-visible">
+<div className="relative w-full min-h-[180px] md:min-h-[220px] lg:min-h-[250px] py-2 md:py-4 mb-4 md:mb-6 carousel-container overflow-x-hidden overflow-y-visible">
       {slideData && (
         <Carousel
           slides={slideData}

@@ -234,7 +234,7 @@ const Dashboard = () => {
           }}
         >
           <Carousel />
-          <div className="h-40 md:h-52"></div>
+          <div className="h-8 md:h-12"></div>
           <PopularEvents />
           <UpcomingEvents />
           <div className="flex justify-center items-center mt-4 space-x-4">

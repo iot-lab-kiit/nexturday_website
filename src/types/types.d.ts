@@ -84,6 +84,7 @@ export interface Event {
   updatedAt: string;
   society: Society;
   images: EventImage[];
+  tags: string[];
 }
 
 export interface TeamMember {

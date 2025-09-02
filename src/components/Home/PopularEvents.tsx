@@ -30,8 +30,8 @@ const PopularEvents = () => {
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-16 relative">
-      <h1 className="text-2xl text-center font-bold text-white mb-8">
+    <section className="max-w-7xl mx-auto px-4 py-4 md:py-6 relative">
+      <h1 className="text-xl md:text-2xl text-center font-bold text-white mb-6 md:mb-8">
         Popular Events
       </h1>
         

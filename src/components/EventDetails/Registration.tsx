@@ -349,6 +349,8 @@ export const Registration: React.FC = () => {
             <p className="text-xs text-gray-500 mt-1">
               {hasPayment && !currentEvent?.joined
                 ? "Register first to create or join a team."
+                : teamId
+                ? "Manage your team or create a new one."
                 : "Create or join a team to register."}
             </p>
           )}
@@ -376,7 +378,9 @@ export const Registration: React.FC = () => {
             >
               {hasPayment && !currentEvent?.joined
                 ? "Register Now"
-                : "Manage Teams"}
+                : teamId
+                ? "Manage Teams"
+                : "Register"}
             </button>
           )}
         </div>

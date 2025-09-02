@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold mb-4 text-white">Nexterday</h3>
+            <h3 className="text-2xl font-bold mb-4 text-white">Nexturday</h3>
             <p className="text-gray-300 text-sm leading-relaxed">
               Your one-stop destination for discovering and participating in
               exciting college events.

@@ -55,9 +55,9 @@ const EventPage: React.FC = () => {
           setCurrentEvent(eventDetailsApiResponse.data.data);
           toast.success("Event fetched successfully");
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
-        if (err.response?.status === 401) {
+        if (axios.isAxiosError(err) && err.response?.status === 401) {
           signOutUser();
           return;
         }
@@ -77,26 +77,28 @@ const EventPage: React.FC = () => {
     <div className="bg-black text-white">
       <Navbar />
       {loading ? (
-        <div className="max-w-7xl mx-auto px-4 pt-20 flex justify-center items-center h-[calc(100vh-4rem)]">
-          <LoadingSpinner />
+        <div className="max-w-7xl mx-auto px-4 pt-20 md:pt-[4.25rem]">
+          <div className="flex justify-center items-center h-[calc(100vh-4rem)]">
+            <LoadingSpinner />
+          </div>
         </div>
       ) : error ? (
-        <div className="max-w-7xl mx-auto px-4 pt-20">
+        <div className="max-w-7xl mx-auto px-4 pt-20 md:pt-[4.25rem]">
           <ErrorDisplay
             message="Failed to load event details. Please try again later."
             onRetry={() => window.location.reload()}
           />
         </div>
       ) : (
-        <main className="max-w-7xl mx-auto px-4 pt-20">
+        <main className="max-w-7xl mx-auto px-4 pt-20 md:pt-[4.25rem]">
           {/* Back to Home Button */}
-          <div className="mb-6">
+          <div className="mb-4 md:mb-6">
             <button
               onClick={() => navigate("/")}
-              className="flex items-center gap-2 px-3 py-2 text-zinc-400 hover:text-white transition-all duration-300 hover:bg-zinc-800/30 rounded-lg"
+              className="flex items-center gap-2 px-3 py-2 text-zinc-400 hover:text-white transition-all duration-300 hover:bg-zinc-800/30 rounded-lg text-sm md:text-base"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm">Back to Home</span>
+              <span>Back to Home</span>
             </button>
           </div>
 

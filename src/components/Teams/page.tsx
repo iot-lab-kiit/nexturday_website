@@ -106,16 +106,17 @@ const Teams = () => {
           }
         }
       } catch (error) {
-        // If error is 404 or team not found, it means user has no team yet
+        // If error is 404 or team not found, it means user has no team yet - this is expected
         if (
           axios.isAxiosError(error) &&
           (error.response?.status === 404 ||
-            error.response?.data?.message?.includes("not found"))
+            error.response?.data?.message?.includes("not found") ||
+            error.response?.data?.message?.includes("No team found"))
         ) {
-          // User has no team, continue to show team creation/join options
+          // User has no team, continue to show team creation/join options - no error needed
         } else {
           console.error("Error checking team status:", error);
-          toast.error("Failed to check team status");
+          // Only show toast for unexpected server errors, not for missing teams
         }
       } finally {
         setIsCheckingTeam(false);
