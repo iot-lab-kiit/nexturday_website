@@ -198,7 +198,7 @@ export function Carousel({
       aria-labelledby={`carousel-heading-${id}`}
     >
       <ul
-        className="absolute flex mx-[-3vmin] transition-transform duration-1000 ease-in-out carousel-container"
+        className="absolute flex mx-[-3vmin] transition-transform duration-1000 ease-in-out carousel-container "
         style={{
           transform: `translateX(-${current * (100 / slides.length)}%)`,
         }}
