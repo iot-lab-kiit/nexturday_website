@@ -47,7 +47,7 @@ const NexterLanding = () => {
               }}
               className="text-white"
             >
-              NEXTUR
+              NEXTER
             </span>
             <span
               style={{

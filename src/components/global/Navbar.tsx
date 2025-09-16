@@ -91,7 +91,7 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-full">
         <a href="/" className="hover:opacity-80 transition-opacity">
           <h1 className="text-xl text-white font-bold text-transparent">
-            Nexturday
+            Nexterday
           </h1>
         </a>
 
